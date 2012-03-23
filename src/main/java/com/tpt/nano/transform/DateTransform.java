@@ -1,7 +1,7 @@
 package com.tpt.nano.transform;
 
 import java.util.Date;
-import com.tpt.nano.util.ThreadSafeDateFormatter;
+import com.tpt.nano.util.DateFormatter;
 
 /**
  * Transformer between a string and a java.util.Date object
@@ -21,12 +21,12 @@ class DateTransform implements Transformable<Date> {
 
 	public Date read(String value) throws Exception {
 		String pattern = getPattern(value);
-		Date date = ThreadSafeDateFormatter.parse(value, pattern);
+		Date date = DateFormatter.parse(value, pattern);
 		return date;
 	}
 
 	public String write(Date value) throws Exception {
-		String text = ThreadSafeDateFormatter.format(value, FULL);
+		String text = DateFormatter.format(value, FULL);
 		return text;
 	}
 	

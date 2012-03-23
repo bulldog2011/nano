@@ -49,20 +49,30 @@ public class Transformer {
 	public static boolean isTransformable(Class<?> type) throws Exception {
 		return lookup(type) != null;
 	}
+	
+	/**
+	 * Register custom transformable for a Java primitive type or a frequently used Java type. 
+	 * 
+	 * @param type a Java primitive type or a frequently used Java type.
+	 * @param transform a class implementing @see com.tpt.nano.transform.Trnsformable interface.
+	 */
+	public static void register(Class<?> type, Transformable<?> transform) {
+		cache.put(type, transform);
+	}
 
 	private static Transformable<?> lookup(Class<?> type) {
-		Transformable<?> transfrom = cache.get(type);
+		Transformable<?> transform = cache.get(type);
 
-		if (transfrom != null) {
-			return transfrom;
+		if (transform != null) {
+			return transform;
 		}
 
-		transfrom = getTransform(type);
-		if (transfrom != null) {
-			cache.put(type, transfrom);
+		transform = getTransform(type);
+		if (transform != null) {
+			cache.put(type, transform);
 		}
 
-		return transfrom;
+		return transform;
 	}
 	
 	private static Transformable<?> getTransform(Class<?> type) {

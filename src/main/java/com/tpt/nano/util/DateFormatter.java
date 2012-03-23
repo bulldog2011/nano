@@ -15,7 +15,7 @@ import java.util.TimeZone;
  *
  */
 
-public class ThreadSafeDateFormatter {
+public class DateFormatter {
 	
 	private static final ThreadLocal<Map<String, DateFormat>> FORMATTERS 
 	        = new ThreadLocal<Map<String, DateFormat>>() {
