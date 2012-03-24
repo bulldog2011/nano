@@ -81,6 +81,12 @@ public class Transformer {
 		if (type.isPrimitive()) {
 			converter = getPrimitiveTransform(type);
 		}
+		
+		if (type.isArray()) {
+			if (type == byte[].class) {
+				return new Base64Transform();
+			}
+		}
 
 		if (type.isEnum()) {
 			converter = new EnumTransform(type);
