@@ -46,7 +46,7 @@ public class Transformer {
 		return transfrom.write(value);
 	}
 	
-	public static boolean isTransformable(Class<?> type) throws Exception {
+	public static boolean isTransformable(Class<?> type){
 		return lookup(type) != null;
 	}
 	

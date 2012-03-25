@@ -1,9 +1,11 @@
 package com.tpt.nano.util;
 
+import java.awt.List;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -56,6 +58,26 @@ public class TypeReflector {
 		}
 		cache.put(type, con);
 		return con;
+	}
+	
+	/**
+	 * check if a type is @see java.util.List type.
+	 * 
+	 * @param type a type to be check
+	 * @return true or false
+	 */
+	public static boolean isList(Class<?> type) {
+		return List.class.isAssignableFrom(type);
+	}
+	
+	/**
+	 * check if a type is @see java.util.Collection type.
+	 * 
+	 * @param type a type to be check
+	 * @return true or false
+	 */
+	public static boolean isCollection(Class<?> type) {
+		return Collection.class.isAssignableFrom(type);
 	}
 	
 }

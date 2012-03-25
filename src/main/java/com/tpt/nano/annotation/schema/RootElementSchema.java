@@ -1,4 +1,4 @@
-package com.tpt.nano.annotation.vo;
+package com.tpt.nano.annotation.schema;
 
 /**
  * 
@@ -7,7 +7,7 @@ package com.tpt.nano.annotation.vo;
  * @author bulldog
  *
  */
-public class RootElementInfo {
+public class RootElementSchema {
 	
 	private String xmlName;
 

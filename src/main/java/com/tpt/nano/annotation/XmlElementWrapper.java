@@ -24,6 +24,14 @@ public @interface XmlElementWrapper {
 	 */
 	public String name() default "";
 	
+	
+	/**
+	 * Entry XML Element name
+	 * 
+	 * @return entry name
+	 */
+	public String entryName() default "";
+	
 	/**
 	 * Wrapper XML element namespace 
 	 * 

@@ -1,4 +1,4 @@
-package com.tpt.nano.annotation.vo;
+package com.tpt.nano.annotation.schema;
 
 import java.lang.reflect.Field;
 
@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
  * @author bulldog
  *
  */
-public class ValueInfo {
+public class ValueSchema {
 
 	private boolean data;
 	

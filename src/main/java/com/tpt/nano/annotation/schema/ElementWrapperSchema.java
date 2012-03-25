@@ -1,25 +1,22 @@
-package com.tpt.nano.annotation.vo;
+package com.tpt.nano.annotation.schema;
 
 import java.lang.reflect.Field;
 
 /**
- * This bean stores mapping information between an XML element and a POJO field
+ * This bean stores mapping information between an XML wrapper element and a POJO list field
  * 
  * @author bulldog
  *
  */
-class ElementInfo {
-	
+public class ElementWrapperSchema {
 	private String xmlName;
 	
 	private String namespace;
 	
 	private Field field;
-	
-	private boolean data;
 
 	/**
-	 * Get XML element name
+	 * Get xml element name
 	 * 
 	 * @return xml element name
 	 */
@@ -28,7 +25,7 @@ class ElementInfo {
 	}
 
 	/**
-	 * Set XML element name
+	 * Set xml element name
 	 * 
 	 * @param xmlName
 	 */
@@ -37,16 +34,16 @@ class ElementInfo {
 	}
 
 	/**
-	 * Get XML namespace
+	 * Get xml namespace
 	 * 
-	 * @return xml namespace
+	 * @return
 	 */
 	public String getNamespace() {
 		return namespace;
 	}
 
 	/**
-	 * Set XML namespace
+	 * Set xml namespace
 	 * 
 	 * @param namespace
 	 */
@@ -57,7 +54,7 @@ class ElementInfo {
 	/**
 	 * Get POJO field
 	 * 
-	 * @return field
+	 * @return POJO field
 	 */
 	public Field getField() {
 		return field;
@@ -70,25 +67,5 @@ class ElementInfo {
 	 */
 	public void setField(Field field) {
 		this.field = field;
-	}
-
-	/**
-	 * Indicates if the string content of the field should be put 
-	 * in a CDATA container on serialization
-	 * 
-	 * @return true or false
-	 */
-	public boolean isData() {
-		return data;
-	}
-
-	/**
-	 * Set if the string content of the field should be put 
-	 * in a CDATA container on serialization
-	 * 
-	 * @param data
-	 */
-	public void setData(boolean data) {
-		this.data = data;
 	}
 }
