@@ -8,7 +8,8 @@ import java.lang.annotation.Target;
 
 /**
  * 
- * This annotation maps a POJO field to an XML attribute
+ * This annotation maps a POJO field to an XML attribute,
+ * this annotation can only annotate field primitive type, frequently used java type or enum type.
  * 
  * @author bulldog
  *
@@ -18,7 +19,8 @@ import java.lang.annotation.Target;
 public @interface XmlAttribute {
 
 	/**
-	 * The name of the XML attribute
+	 * The name of the XML attribute, if not provided, 
+	 * annotated field name will be used instead.
 	 * 
 	 * @return name
 	 */

@@ -8,7 +8,10 @@ import java.lang.annotation.Target;
 /**
  * 
  * This annotation, if presents on a POJO list field, 
- * indicates an XML wrapper element for the list
+ * indicates an XML wrapper element for the list.
+ * 
+ * This annotation can only annotate java.util.List<T> type field, and T must be
+ * a Nano bindable type.
  * 
  * @author bulldog
  *
@@ -18,7 +21,7 @@ import java.lang.annotation.Target;
 public @interface XmlElementWrapper {
     
 	/**
-	 * Wrapper XML element name
+	 * Wrapper XML element name, must be provided
 	 * 
 	 * @return name
 	 */
@@ -26,7 +29,7 @@ public @interface XmlElementWrapper {
 	
 	
 	/**
-	 * Entry XML Element name
+	 * Entry XML Element name, if not provided, field name will be used instead.
 	 * 
 	 * @return entry name
 	 */

@@ -2,8 +2,6 @@ package com.tpt.nano.annotation.schema;
 
 import java.lang.reflect.Field;
 
-import com.tpt.nano.util.TypeReflector;
-
 /**
  * This bean stores mapping information between an XML element and a POJO field
  * 
@@ -20,9 +18,9 @@ public class ElementSchema {
 	
 	private boolean data;
 	
-	private boolean list;
+	private boolean list = false;
 	
-	private boolean wrapperElement;
+	private boolean wrapperElement = false;
 	
 	private String entryXmlName;
 	
