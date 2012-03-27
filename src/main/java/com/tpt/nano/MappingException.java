@@ -1,13 +1,13 @@
 package com.tpt.nano;
 
 /**
- * This exception will be thrown if there is mapping error found by the framework.
+ * This exception indicates there is mapping error when the mapping schema is scanned.
  * 
  * @author bulldog
  *
  */
 @SuppressWarnings("serial")
-public class MappingException extends RuntimeException {
+public class MappingException extends Exception {
 
 	public MappingException() {
 	}

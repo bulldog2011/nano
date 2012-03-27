@@ -45,7 +45,7 @@ class MappingSchema {
 	// use LRU cache to limit memory consumption.
 	private static Map<Class<?>, MappingSchema> schemaCache = Collections.synchronizedMap(new LRUCache<Class<?>, MappingSchema>(CACHE_SIZE));
 	
-	private MappingSchema(Class<?> type) {
+	private MappingSchema(Class<?> type) throws MappingException {
 		this.type = type;
 		
 		// step 1
@@ -59,19 +59,21 @@ class MappingSchema {
 	}
 
 	private void buildRootElementSchema() {
+		rootElementSchema = new RootElementSchema();
 		if (type.isAnnotationPresent(XmlRootElement.class)) {
 			XmlRootElement xre = type.getAnnotation(XmlRootElement.class);
-			rootElementSchema = new RootElementSchema();
 			if (StringUtil.isEmpty(xre.name())) {
 				rootElementSchema.setXmlName(StringUtil.lowercaseFirstLetter(type.getSimpleName()));
 			} else {
 				rootElementSchema.setXmlName(xre.name());
 			}
 			rootElementSchema.setNamespace(xre.namespace());
+		} else { // if no XmlRootElement, use class name instead
+			rootElementSchema.setXmlName(StringUtil.lowercaseFirstLetter(type.getSimpleName()));
 		}
 	}
 	
-	private void buildField2SchemaMapping() {
+	private void buildField2SchemaMapping() throws MappingException {
 		field2SchemaMapping = this.scanFieldSchema(type);
 		
 		Class<?> superType = type.getSuperclass();
@@ -114,7 +116,7 @@ class MappingSchema {
 		}
 	}
 	
-	private Map<String, Object> scanFieldSchema(Class<?> type) {
+	private Map<String, Object> scanFieldSchema(Class<?> type) throws MappingException {
 		Map<String, Object> fieldsMap = new HashMap<String, Object>();
 		Field[] fields = type.getDeclaredFields();
 		
@@ -169,7 +171,7 @@ class MappingSchema {
 				Class<?> paramizedType = TypeReflector.getParameterizedType(field);
 				if (paramizedType == null) {
 					throw new MappingException("Can't get parameterized type of a List field, " +
-							"Nano framework only supports List<T> type collection field, and T must be a Nano bindable type, " +
+							"Nano framework only supports collection field of List<T> type, and T must be a Nano bindable type, " +
 							"field = " + field.getName() + ", type = " + type.getName());
 				} else {
 					elementSchema.setParameterizedType(paramizedType);
@@ -217,7 +219,17 @@ class MappingSchema {
 			} else if (field.isAnnotationPresent(XmlValue.class)) {
 				valueSchemaCount++;
 				
+				// validation
+				if (!Transformer.isTransformable(field.getType())) {
+					throw new MappingException("XmlValue can't annotate complex type field, " +
+							"only primivte type or frequently used java type or enum type field is allowed, " +
+							"field = " + field.getName() + ", type = " + type.getName());
+				}
+				
+				XmlValue xmlValue = field.getAnnotation(XmlValue.class);
+				
 				valueSchema = new ValueSchema();
+				valueSchema.setData(xmlValue.data());
 				valueSchema.setField(field);
 				
 			} else if (field.isAnnotationPresent(XmlIgnore.class)) {
@@ -229,6 +241,24 @@ class MappingSchema {
 				elementSchemaCount++;
 				
 				ElementSchema elementSchema = new ElementSchema();
+				
+				// List validation
+				if (TypeReflector.isCollection(field.getType())) {
+					if (!TypeReflector.isList(field.getType())) {
+						throw new MappingException("Nano framework only supports java.util.List as collection type, " +
+								"field = " + field.getName() + ", type = " + type.getName());
+					} else {
+						elementSchema.setList(true);
+						Class<?> paramizedType = TypeReflector.getParameterizedType(field);
+						if (paramizedType == null) {
+							throw new MappingException("Can't get parameterized type of a List field, " +
+									"Nano framework only supports collection field of List<T> type, and T must be a Nano bindable type, " +
+									"field = " + field.getName() + ", type = " + type.getName());
+						} else {
+							elementSchema.setParameterizedType(paramizedType);
+						}
+					}
+				}
 				
 				elementSchema.setXmlName(field.getName());
 				elementSchema.setField(field);
@@ -262,7 +292,7 @@ class MappingSchema {
 	 * @param object an object to get mapping schema from.
 	 * @return a MappingSchema instance.
 	 */
-	public static MappingSchema fromObject(Object object) {
+	public static MappingSchema fromObject(Object object) throws MappingException {
 		return fromClass(object.getClass());
 	}
 	
@@ -272,7 +302,7 @@ class MappingSchema {
 	 * @param type a Class type to get mapping schema from.
 	 * @return a MappingSchema instance.
 	 */
-	public static MappingSchema fromClass (Class<?> type) {
+	public static MappingSchema fromClass (Class<?> type) throws MappingException {
 		if (schemaCache.containsKey(type)) {
 			return schemaCache.get(type);
 		} else {
