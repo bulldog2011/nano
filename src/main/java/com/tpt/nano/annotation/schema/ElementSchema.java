@@ -20,47 +20,7 @@ public class ElementSchema {
 	
 	private boolean list = false;
 	
-	private boolean wrapperElement = false;
-	
-	private String entryXmlName;
-	
 	private Class<?> parameterizedType;
-	
-	/**
-	 * Check if this is a wrapper element for a list.
-	 * 
-	 * @return true or false
-	 */
-	public boolean isWrapperElement() {
-		return wrapperElement;
-	}
-
-	/**
-	 * Set if this is a wrapper element for a list.
-	 * 
-	 * @param wrapperElement
-	 */
-	public void setWrapperElement(boolean wrapperElement) {
-		this.wrapperElement = wrapperElement;
-	}
-
-	/**
-	 * Get the entry xml name if this is a wrapper element.
-	 * 
-	 * @return entry xml name
-	 */
-	public String getEntryXmlName() {
-		return entryXmlName;
-	}
-	
-	/**
-	 * Set the entry xml name if this is a wrapper element.
-	 * 
-	 * @param entryXmlName
-	 */
-	public void setEntryXmlName(String entryXmlName) {
-		this.entryXmlName = entryXmlName;
-	}
 
 	/**
 	 * Check if this is a java.util.List filed, such as List<T>

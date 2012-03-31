@@ -88,7 +88,7 @@ public class XmlPullWriter implements IWriter {
 			throw new IllegalArgumentException("Writer is null!");
 		}
 		
-		if (Transformer.isTransformable(source.getClass())) {
+		if (Transformer.isPrimitive(source.getClass())) {
 			throw new IllegalArgumentException("Can not write primitive or enum type object, " +
 					"only Nano bindable complex type object can be accepted!");
 		}
@@ -175,14 +175,8 @@ public class XmlPullWriter implements IWriter {
 	}
 	
 	private void writeElementList(XmlSerializer serializer, Object source, ElementSchema es) throws Exception {
-		if (es.isWrapperElement()) { // begin wrapper element
-			serializer.startTag(es.getNamespace(), es.getXmlName());
-		}
 		for(Object value : (List<?>)source) {
 			this.writeElement(serializer, value, es);
-		}
-		if (es.isWrapperElement()) { // end wrapper element
-			serializer.startTag(es.getNamespace(), es.getXmlName());
 		}
 	}
 	
@@ -193,12 +187,9 @@ public class XmlPullWriter implements IWriter {
 		
 		String namespace = es.getNamespace();
 		String xmlName = es.getXmlName();
-		if (es.isWrapperElement()) {
-			xmlName = es.getEntryXmlName();
-		}
 		
 		// primitives
-		if(Transformer.isTransformable(type)) {
+		if(Transformer.isPrimitive(type)) {
 			String value = Transformer.write(source, type);
 			if(StringUtil.isEmpty(value)) return;
 			

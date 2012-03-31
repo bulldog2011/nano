@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.tpt.nano.annotation.XmlAttribute;
 import com.tpt.nano.annotation.XmlElement;
-import com.tpt.nano.annotation.XmlElementWrapper;
 import com.tpt.nano.annotation.XmlIgnore;
 import com.tpt.nano.annotation.XmlRootElement;
 import com.tpt.nano.annotation.XmlValue;
@@ -19,6 +18,7 @@ import com.tpt.nano.transform.Transformer;
 import com.tpt.nano.util.LRUCache;
 import com.tpt.nano.util.StringUtil;
 import com.tpt.nano.util.TypeReflector;
+import com.tpt.nano.util.XmlUtil;
 
 /**
  * Factory class for OX mapping schema
@@ -32,11 +32,13 @@ class MappingSchema {
 	private RootElementSchema rootElementSchema;
 	private Map<String, Object> field2SchemaMapping;
 	private Map<String, Object> xml2SchemaMapping;
+	private Map<String, Object> xmlFullname2SchemaMapping;
 	
 	private Map<String, AttributeSchema> field2AttributeSchemaMapping;
 	//private Map<String, ElementSchema> field2ElementSchemaMapping;
 	private ValueSchema valueSchema;
 	private Map<String, AttributeSchema> xml2AttributeSchemaMapping;
+	private Map<String, AttributeSchema> xmlFullname2AttributeSchemaMapping;
 	//private Map<String, ElementSchema> xml2ElementSchemaMapping;
 	
 	private Class<?> type;
@@ -67,9 +69,11 @@ class MappingSchema {
 			} else {
 				rootElementSchema.setXmlName(xre.name());
 			}
-			rootElementSchema.setNamespace(xre.namespace());
+			String namespace = StringUtil.isEmpty(xre.namespace())?null:xre.namespace();
+			rootElementSchema.setNamespace(namespace);
 		} else { // if no XmlRootElement, use class name instead
 			rootElementSchema.setXmlName(StringUtil.lowercaseFirstLetter(type.getSimpleName()));
+			rootElementSchema.setNamespace(null);
 		}
 	}
 	
@@ -89,18 +93,25 @@ class MappingSchema {
 	
 	private void buildXml2SchemaMapping() {
 		xml2SchemaMapping = new HashMap<String, Object>();
+		xmlFullname2SchemaMapping = new HashMap<String, Object>();
 		xml2AttributeSchemaMapping = new HashMap<String, AttributeSchema>();
+		xmlFullname2AttributeSchemaMapping = new HashMap<String, AttributeSchema>();
 		
 		for(String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
 			if(schemaObj instanceof AttributeSchema) {
 				AttributeSchema as = (AttributeSchema)schemaObj;
+				String xmlFullname = XmlUtil.getXmlFullname(as.getNamespace(), as.getXmlName());
 				xml2SchemaMapping.put(as.getXmlName(), as);
+				xmlFullname2SchemaMapping.put(xmlFullname, as);
 				// build xml2AttributeSchemaMapping at the same time.
-				xml2AttributeSchemaMapping.put(fieldName, as);
+				xml2AttributeSchemaMapping.put(as.getXmlName(), as);
+				xmlFullname2AttributeSchemaMapping.put(xmlFullname, as);
 			} else if (schemaObj instanceof ElementSchema) {
 				ElementSchema es = (ElementSchema)schemaObj;
+				String xmlFullname = XmlUtil.getXmlFullname(es.getNamespace(), es.getXmlName());
 				xml2SchemaMapping.put(es.getXmlName(), es);
+				xmlFullname2SchemaMapping.put(xmlFullname, es);
 			}
 		}
 	}
@@ -145,58 +156,11 @@ class MappingSchema {
 				} else {
 					attributeSchema.setXmlName(xmlAttribute.name());
 				}
-				attributeSchema.setNamespace(xmlAttribute.namespace());
+				String namespace = StringUtil.isEmpty(xmlAttribute.namespace())?null:xmlAttribute.namespace();
+				attributeSchema.setNamespace(namespace);
 				attributeSchema.setField(field);
 				
 				fieldsMap.put(field.getName(), attributeSchema);
-			} else if (field.isAnnotationPresent(XmlElementWrapper.class)) {
-				
-				elementSchemaCount++;
-				
-				// validation
-				if (!TypeReflector.isList(field.getType())) {
-					if (TypeReflector.isCollection(field.getType())) {
-						throw new MappingException("Nano framework only supports java.util.List as collection type, " +
-								"field = " + field.getName() + ", type = " + type.getName());
-					} else {
-						throw new MappingException("XmlElementWrapper can't annotate non java.util.List type field, " +
-								"field = " + field.getName() + ", type = " + type.getName());
-					}
-				}
-				
-				XmlElementWrapper xmlElementWrapper = field.getAnnotation(XmlElementWrapper.class);
-				ElementSchema elementSchema = new ElementSchema();
-				
-				elementSchema.setList(true);
-				Class<?> paramizedType = TypeReflector.getParameterizedType(field);
-				if (paramizedType == null) {
-					throw new MappingException("Can't get parameterized type of a List field, " +
-							"Nano framework only supports collection field of List<T> type, and T must be a Nano bindable type, " +
-							"field = " + field.getName() + ", type = " + type.getName());
-				} else {
-					elementSchema.setParameterizedType(paramizedType);
-				}
-				
-				elementSchema.setWrapperElement(true);
-				elementSchema.setField(field);
-				
-				// wrapper element name must be provided
-				if (StringUtil.isEmpty(xmlElementWrapper.name())) {
-					throw new MappingException("Missing wrapper element name in XmlElementWrapper annotation, " +
-							"field = " + field.getName() + ", type = " + type.getName());
-				} else {
-					elementSchema.setXmlName(xmlElementWrapper.name());
-				}
-				// if wrapper element entry name was not provided, use field name instead.
-				if (StringUtil.isEmpty(xmlElementWrapper.entryName())) {
-					elementSchema.setEntryXmlName(field.getName());
-				} else {
-					elementSchema.setEntryXmlName(xmlElementWrapper.entryName());
-				}
-				
-				elementSchema.setNamespace(xmlElementWrapper.namespace());
-				
-				fieldsMap.put(field.getName(), elementSchema);
 			} else if (field.isAnnotationPresent(XmlElement.class)) {
 				
 				elementSchemaCount++;
@@ -211,7 +175,8 @@ class MappingSchema {
 				}
 				
 				elementSchema.setData(xmlElement.data());
-				elementSchema.setNamespace(xmlElement.namespace());
+				String namespace = StringUtil.isEmpty(xmlElement.namespace())?null:xmlElement.namespace();
+				elementSchema.setNamespace(namespace);
 				elementSchema.setField(field);
 				
 				fieldsMap.put(field.getName(), elementSchema);
@@ -262,6 +227,7 @@ class MappingSchema {
 				
 				elementSchema.setXmlName(field.getName());
 				elementSchema.setField(field);
+				elementSchema.setNamespace(null);
 				
 				fieldsMap.put(field.getName(), elementSchema);
 			}
@@ -320,6 +286,10 @@ class MappingSchema {
 		return xml2SchemaMapping;
 	}
 	
+	public Map<String, Object> getXmlFullname2SchemaMapping() {
+		return xmlFullname2SchemaMapping;
+	}
+	
 	public RootElementSchema getRootElementSchema() {
 		return rootElementSchema;
 	}
@@ -334,6 +304,10 @@ class MappingSchema {
 	
 	public Map<String, AttributeSchema> getXml2AttributeSchemaMapping() {
 		return xml2AttributeSchemaMapping;
+	}
+	
+	public Map<String, AttributeSchema> getXmlFullname2AttributeSchemaMapping() {
+		return xmlFullname2AttributeSchemaMapping;
 	}
 	
 }

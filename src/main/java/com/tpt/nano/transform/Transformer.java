@@ -50,6 +50,10 @@ public class Transformer {
 		return lookup(type) != null;
 	}
 	
+	public static boolean isPrimitive(Class<?> type) {
+		return isTransformable(type);
+	}
+	
 	/**
 	 * Register custom transformable for a Java primitive type or a frequently used Java type. 
 	 * 
