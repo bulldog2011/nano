@@ -62,16 +62,16 @@ public class FastStack<T> extends ArrayList<T> {
 		return get(size() - 1);
 	}
 	
-	/**
-	 * Peek the object at the second top of the stack,
-	 * if the stack does not have more than 2 elements, a @see java.util.EmptyStackException will be thrown.
-	 * 
-	 * @return the object at the second top of the stack
-	 */
-	public T peek2() {
-		int size = size();
-		if (size == 0 || size == 1) throw new EmptyStackException();
-		return get(size() - 2);
-	}
-	
+//	/**
+//	 * Peek the object at the second top of the stack,
+//	 * if the stack does not have more than 2 elements, a @see java.util.EmptyStackException will be thrown.
+//	 * 
+//	 * @return the object at the second top of the stack
+//	 */
+//	public T peek2() {
+//		int size = size();
+//		if (size == 0 || size == 1) throw new EmptyStackException();
+//		return get(size() - 2);
+//	}
+//	
 }

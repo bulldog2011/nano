@@ -13,6 +13,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.tpt.nano.annotation.schema.AttributeSchema;
 import com.tpt.nano.annotation.schema.ElementSchema;
 import com.tpt.nano.annotation.schema.RootElementSchema;
+import com.tpt.nano.annotation.schema.ValueSchema;
 import com.tpt.nano.transform.Transformer;
 import com.tpt.nano.util.StringUtil;
 import com.tpt.nano.util.TypeReflector;
@@ -137,7 +138,50 @@ class XmlReaderHandler extends DefaultHandler {
 						}
 					}
 				}
+			} else if (helper.depth == helper.valueStack.size()) { // handle object field
+				Object obj = helper.valueStack.pop();
+				MappingSchema ms = MappingSchema.fromObject(obj);
+				
+				if (helper.valueStack.size() == 0) {  // the end
+					helper.valueStack.push(obj);
+					helper.depth --;
+					return;
+				}
+				
+				ValueSchema vs = ms.getValueSchema();
+				if (vs != null) {
+					Field field = vs.getField();
+					String xmlData = helper.textBuilder.toString();
+					if (!StringUtil.isEmpty(xmlData)) {
+						Object value = Transformer.read(xmlData, field.getType());
+						field.set(obj, value);
+					}
+				}
+				
+				Object parentObj = helper.valueStack.peek();
+				MappingSchema parentMs = MappingSchema.fromObject(parentObj);
+				Map<String, Object> parentXmlFullname2SchemaMapping = parentMs.getXmlFullname2SchemaMapping();
+				
+				String xmlFullname = XmlUtil.getXmlFullname(uri, localName);
+				Object schema = parentXmlFullname2SchemaMapping.get(xmlFullname);
+				if(schema != null && schema instanceof ElementSchema) {
+					ElementSchema es = (ElementSchema)schema;
+					Field field = es.getField();
+					if (es.isList()) {
+						List list = (List)field.get(parentObj);
+						if (list == null) {
+							list = new ArrayList();
+							field.set(parentObj, list);
+						}
+						list.add(obj);
+					} else {
+						field.set(parentObj, obj);
+					}
+				}
+				
 			}
+			
+			helper.depth--;
     	} catch (Exception ex) {
     		throw new SAXException("Reading Exception in endElement, " + ex.getMessage(), ex);
     	}
