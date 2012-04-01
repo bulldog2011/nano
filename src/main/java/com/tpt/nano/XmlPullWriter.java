@@ -74,6 +74,8 @@ public class XmlPullWriter implements IWriter {
 			serializer.endDocument();
 		} catch (MappingException me) {
 			throw me;
+		} catch (IllegalArgumentException iae) {
+			throw new WriterException("Entry validation failure", iae);
 		} catch (Exception e) {
 			throw new WriterException("Error to write/serialize object", e);
 		}
