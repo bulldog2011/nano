@@ -174,6 +174,9 @@ class MappingSchema {
 					elementSchema.setXmlName(xmlElement.name());
 				}
 				
+				// List validation
+				handleList(field, elementSchema);
+				
 				elementSchema.setData(xmlElement.data());
 				String namespace = StringUtil.isEmpty(xmlElement.namespace())?null:xmlElement.namespace();
 				elementSchema.setNamespace(namespace);
@@ -208,22 +211,7 @@ class MappingSchema {
 				ElementSchema elementSchema = new ElementSchema();
 				
 				// List validation
-				if (TypeReflector.isCollection(field.getType())) {
-					if (!TypeReflector.isList(field.getType())) {
-						throw new MappingException("Nano framework only supports java.util.List as collection type, " +
-								"field = " + field.getName() + ", type = " + type.getName());
-					} else {
-						elementSchema.setList(true);
-						Class<?> paramizedType = TypeReflector.getParameterizedType(field);
-						if (paramizedType == null) {
-							throw new MappingException("Can't get parameterized type of a List field, " +
-									"Nano framework only supports collection field of List<T> type, and T must be a Nano bindable type, " +
-									"field = " + field.getName() + ", type = " + type.getName());
-						} else {
-							elementSchema.setParameterizedType(paramizedType);
-						}
-					}
-				}
+				handleList(field, elementSchema);
 				
 				elementSchema.setXmlName(field.getName());
 				elementSchema.setField(field);
@@ -246,6 +234,26 @@ class MappingSchema {
 		
 		return fieldsMap;
 		
+	}
+	
+	private void handleList(Field field, ElementSchema elementSchema) throws MappingException {
+		if (TypeReflector.isCollection(field.getType())) {
+			Class<?> type = field.getType();
+			if (!TypeReflector.isList(type)) {
+				throw new MappingException("Nano framework only supports java.util.List as collection type, " +
+						"field = " + field.getName() + ", type = " + type.getName());
+			} else {
+				elementSchema.setList(true);
+				Class<?> paramizedType = TypeReflector.getParameterizedType(field);
+				if (paramizedType == null) {
+					throw new MappingException("Can't get parameterized type of a List field, " +
+							"Nano framework only supports collection field of List<T> type, and T must be a Nano bindable type, " +
+							"field = " + field.getName() + ", type = " + type.getName());
+				} else {
+					elementSchema.setParameterizedType(paramizedType);
+				}
+			}
+		}
 	}
 	
 	public Class<?> getType() {

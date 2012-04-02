@@ -1,6 +1,6 @@
 package com.tpt.nano.util;
 
-import java.awt.List;
+import java.util.List;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
