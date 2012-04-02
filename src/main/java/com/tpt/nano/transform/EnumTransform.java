@@ -24,15 +24,9 @@ class EnumTransform implements Transformable<Enum> {
       
       try {
 		  this.valueMethod = type.getDeclaredMethod("value");
-	  } catch (Exception e) {
-		  //throw new ConvertException("Fail to get declared method 'value' from enum type " + type.getName(), e);
-		  customEnum = false;
-	  } 
-	
-      try {
 		  this.fromValueMethod = type.getDeclaredMethod("fromValue", String.class);
 	  } catch (Exception e) {
-		  //throw new ConvertException("Fail to get declared method 'fromValue' from enum type " + type.getName(), e);
+		  //throw new ConvertException("Fail to get declared method 'value' from enum type " + type.getName(), e);
 		  customEnum = false;
 	  }
    }
