@@ -96,7 +96,7 @@ public class XmlPullWriter implements IWriter {
 		}
 	}
 
-	public void wirte(Object source, OutputStream os) throws WriterException, MappingException {
+	public void write(Object source, OutputStream os) throws WriterException, MappingException {
 		try {
 			this.write(source, new OutputStreamWriter(os, format.getEncoding()));
 		} catch (UnsupportedEncodingException e) {

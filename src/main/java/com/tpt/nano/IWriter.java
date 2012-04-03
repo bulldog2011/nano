@@ -28,7 +28,7 @@ public interface IWriter {
 	 * @param os an output stream of bytes.
 	 * @throws WriterException if writes fail
 	 */
-	public void wirte(Object source, OutputStream os) throws WriterException, MappingException;
+	public void write(Object source, OutputStream os) throws WriterException, MappingException;
 	
 	/**
 	 * Write POJO into string.

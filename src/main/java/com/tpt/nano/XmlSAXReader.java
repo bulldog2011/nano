@@ -63,7 +63,12 @@ public class XmlSAXReader implements IReader {
 			
 			XmlReaderHelper helper = new XmlReaderHelper();
 			
-			Constructor con = TypeReflector.getConstructor(type);
+			Constructor con = null;
+			try {
+				con = TypeReflector.getConstructor(type);
+			} catch (NoSuchMethodException nsme) {
+				throw new ReaderException("No-arg contructor is missing, type = " + type.getName());
+			}
 			Object obj = con.newInstance();
 			helper.valueStack.push(obj);
 			
@@ -81,6 +86,10 @@ public class XmlSAXReader implements IReader {
 			if (se.getException() instanceof MappingException) {
 				MappingException me = (MappingException)(se.getException());
 				throw me;
+			}
+			if (se.getException() instanceof ReaderException) {
+				ReaderException re = (ReaderException)(se.getException());
+				throw re;
 			}
 			throw new ReaderException("Error to read/descrialize object", se);
 		} catch (IllegalArgumentException iae) {

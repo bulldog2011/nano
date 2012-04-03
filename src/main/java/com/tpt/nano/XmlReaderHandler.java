@@ -89,7 +89,12 @@ class XmlReaderHandler extends DefaultHandler {
 					}
 					if (!Transformer.isPrimitive(type)) {
 						MappingSchema newMs = MappingSchema.fromClass(type);
-						Constructor con = TypeReflector.getConstructor(type);
+						Constructor con = null;
+						try {
+							con = TypeReflector.getConstructor(type);
+						} catch (NoSuchMethodException nsme) {
+							throw new ReaderException("No-arg contructor is missing, type = " + type.getName());
+						}
 						Object newObj = con.newInstance();
 						if (attrs != null && attrs.getLength() > 0) {
 							this.populateAttributes(newObj, attrs, newMs);
