@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface XmlRootElement {
+public @interface RootElement {
 
 	/**
 	 * The name of the root XML element

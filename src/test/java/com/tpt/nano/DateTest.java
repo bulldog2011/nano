@@ -2,8 +2,8 @@ package com.tpt.nano;
 
 import java.util.Date;
 
-import com.tpt.nano.annotation.XmlElement;
-import com.tpt.nano.annotation.XmlRootElement;
+import com.tpt.nano.annotation.Element;
+import com.tpt.nano.annotation.RootElement;
 
 import junit.framework.TestCase;
 
@@ -13,9 +13,9 @@ public class DateTest extends TestCase {
 			                                   "<time>2012-01-02T05:22:15.000Z</time>\n" +
                                                "</dateTime>\n";
 	
-	@XmlRootElement
+	@RootElement
 	public static class DateTime {
-		@XmlElement
+		@Element
 		private Date time;
 		
 		public Date getTime() {

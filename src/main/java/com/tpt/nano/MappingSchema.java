@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.tpt.nano.annotation.XmlAttribute;
-import com.tpt.nano.annotation.XmlElement;
-import com.tpt.nano.annotation.XmlIgnore;
-import com.tpt.nano.annotation.XmlRootElement;
-import com.tpt.nano.annotation.XmlValue;
+import com.tpt.nano.annotation.Attribute;
+import com.tpt.nano.annotation.Element;
+import com.tpt.nano.annotation.Ignore;
+import com.tpt.nano.annotation.RootElement;
+import com.tpt.nano.annotation.Value;
 import com.tpt.nano.annotation.schema.AttributeSchema;
 import com.tpt.nano.annotation.schema.ElementSchema;
 import com.tpt.nano.annotation.schema.RootElementSchema;
@@ -62,8 +62,8 @@ class MappingSchema {
 
 	private void buildRootElementSchema() {
 		rootElementSchema = new RootElementSchema();
-		if (type.isAnnotationPresent(XmlRootElement.class)) {
-			XmlRootElement xre = type.getAnnotation(XmlRootElement.class);
+		if (type.isAnnotationPresent(RootElement.class)) {
+			RootElement xre = type.getAnnotation(RootElement.class);
 			if (StringUtil.isEmpty(xre.name())) {
 				rootElementSchema.setXmlName(StringUtil.lowercaseFirstLetter(type.getSimpleName()));
 			} else {
@@ -140,7 +140,7 @@ class MappingSchema {
 				field.setAccessible(true);
 			}
 			
-			if (field.isAnnotationPresent(XmlAttribute.class)) {
+			if (field.isAnnotationPresent(Attribute.class)) {
 				// validation
 				if (!Transformer.isTransformable(field.getType())) {
 					throw new MappingException("XmlAttribute can't annotate complex type field, " +
@@ -148,7 +148,7 @@ class MappingSchema {
 							"field = " + field.getName() + ", type = " + type.getName());
 				}
 				
-				XmlAttribute xmlAttribute = field.getAnnotation(XmlAttribute.class);
+				Attribute xmlAttribute = field.getAnnotation(Attribute.class);
 				AttributeSchema attributeSchema = new AttributeSchema();
 				// if attribute name was not provided, use field name instead
 				if (StringUtil.isEmpty(xmlAttribute.name())) {
@@ -161,11 +161,11 @@ class MappingSchema {
 				attributeSchema.setField(field);
 				
 				fieldsMap.put(field.getName(), attributeSchema);
-			} else if (field.isAnnotationPresent(XmlElement.class)) {
+			} else if (field.isAnnotationPresent(Element.class)) {
 				
 				elementSchemaCount++;
 				
-				XmlElement xmlElement = field.getAnnotation(XmlElement.class);
+				Element xmlElement = field.getAnnotation(Element.class);
 				ElementSchema elementSchema = new ElementSchema();
 				
 				if(StringUtil.isEmpty(xmlElement.name())) {
@@ -184,7 +184,7 @@ class MappingSchema {
 				
 				fieldsMap.put(field.getName(), elementSchema);
 				
-			} else if (field.isAnnotationPresent(XmlValue.class)) {
+			} else if (field.isAnnotationPresent(Value.class)) {
 				valueSchemaCount++;
 				
 				// validation
@@ -194,13 +194,13 @@ class MappingSchema {
 							"field = " + field.getName() + ", type = " + type.getName());
 				}
 				
-				XmlValue xmlValue = field.getAnnotation(XmlValue.class);
+				Value xmlValue = field.getAnnotation(Value.class);
 				
 				valueSchema = new ValueSchema();
 				valueSchema.setData(xmlValue.data());
 				valueSchema.setField(field);
 				
-			} else if (field.isAnnotationPresent(XmlIgnore.class)) {
+			} else if (field.isAnnotationPresent(Ignore.class)) {
 				
 				// ignore this field
 				

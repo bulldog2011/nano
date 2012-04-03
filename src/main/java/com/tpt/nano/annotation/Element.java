@@ -8,26 +8,34 @@ import java.lang.annotation.Target;
 
 /**
  * 
- * This annotation maps a POJO field to an XML attribute,
- * this annotation can only annotate field primitive type, frequently used java type or enum type.
+ * This annotation maps a POJO field to an XML element
  * 
  * @author bulldog
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface XmlAttribute {
+public @interface Element {
 
+	
 	/**
-	 * The name of the XML attribute, if not provided, 
-	 * annotated field name will be used instead.
+	 * The name of the XML element
 	 * 
 	 * @return name
 	 */
 	public String name() default "";
 	
 	/**
-	 * The namespace of the XML attribute
+	 * Indicates if the string content of the field should
+	 * be put in a CDATA container or not.
+	 * 
+	 * @return true or false
+	 */
+	public boolean data() default false;
+	
+	
+	/**
+	 * The namespace of the XML element
 	 * 
 	 * @return namespace
 	 */

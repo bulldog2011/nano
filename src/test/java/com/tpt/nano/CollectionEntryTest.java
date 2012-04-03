@@ -3,9 +3,9 @@ package com.tpt.nano;
 import java.io.StringWriter;
 import java.util.List;
 
-import com.tpt.nano.annotation.XmlAttribute;
-import com.tpt.nano.annotation.XmlElement;
-import com.tpt.nano.annotation.XmlRootElement;
+import com.tpt.nano.annotation.Attribute;
+import com.tpt.nano.annotation.Element;
+import com.tpt.nano.annotation.RootElement;
 
 import junit.framework.TestCase;
 
@@ -36,7 +36,7 @@ public class CollectionEntryTest extends TestCase {
     
     private static class ExamplePrimitiveCollection {
     	
-    	@XmlElement(name="substitute")
+    	@Element(name="substitute")
     	private List<Character> list;
     	
     	public List<Character> getList() {
@@ -45,10 +45,10 @@ public class CollectionEntryTest extends TestCase {
     }
     
     private static class Entry {
-    	@XmlAttribute
+    	@Attribute
     	private int id;
     	
-    	@XmlElement
+    	@Element
     	private String text;
     	
     	public String getText() {
@@ -61,10 +61,10 @@ public class CollectionEntryTest extends TestCase {
     	
     }
     
-    @XmlRootElement(name="exampleCollection")
+    @RootElement(name="exampleCollection")
     private static class ExampleCollection {
     	
-    	@XmlElement(name="substitute")
+    	@Element(name="substitute")
     	private List<Entry> list;
     	
     	public List<Entry> getList() {

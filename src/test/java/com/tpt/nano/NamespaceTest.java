@@ -1,21 +1,21 @@
 package com.tpt.nano;
 
-import com.tpt.nano.annotation.XmlElement;
-import com.tpt.nano.annotation.XmlRootElement;
+import com.tpt.nano.annotation.Element;
+import com.tpt.nano.annotation.RootElement;
 
 import junit.framework.TestCase;
 
 public class NamespaceTest extends TestCase {
 	
-	@XmlRootElement(namespace="namespace1")
+	@RootElement(namespace="namespace1")
 	private static class Aaa {
-		@XmlElement(name="bbb", namespace="namespace2")
+		@Element(name="bbb", namespace="namespace2")
 		public Bbb bbb;
 	}
 	
 	//@XmlRootElement(namespace="namespace2")
 	private static class Bbb {
-		@XmlElement(name="aaa", namespace="namespace1")
+		@Element(name="aaa", namespace="namespace1")
 		public Aaa aaa;
 	}
 	

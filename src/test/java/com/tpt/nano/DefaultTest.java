@@ -17,10 +17,10 @@ public class DefaultTest extends TestCase {
 	   
 	   private static class DefaultTextList {
 		   
-		   @XmlElement(name="textEntry")
+		   @Element(name="textEntry")
 		   private List<TextEntry> list;
 		   
-		   @XmlAttribute
+		   @Attribute
 		   private Version version;
 		   
 		   public TextEntry get(int index) {
@@ -29,13 +29,13 @@ public class DefaultTest extends TestCase {
 	   }
 	   
 	   private static class TextEntry {
-		   @XmlAttribute
+		   @Attribute
 		   private String name;
 		   
-		   @XmlAttribute
+		   @Attribute
 		   private Version version;
 		   
-		   @XmlValue
+		   @Value
 		   private String text;
 	   }
 

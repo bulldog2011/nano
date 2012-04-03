@@ -2,8 +2,8 @@ package com.tpt.nano;
 
 import java.util.List;
 
-import com.tpt.nano.annotation.XmlElement;
-import com.tpt.nano.annotation.XmlRootElement;
+import com.tpt.nano.annotation.Element;
+import com.tpt.nano.annotation.RootElement;
 
 import junit.framework.TestCase;
 
@@ -32,10 +32,10 @@ public class EnumTest extends TestCase {
         B;
     }
     
-    @XmlRootElement
+    @RootElement
     public static class EnumVariableArgumentsBug {
     	
-    	@XmlElement
+    	@Element
     	private List<PartType> types;
     	
     	public List<PartType> getTypes() {
@@ -43,10 +43,10 @@ public class EnumTest extends TestCase {
     	}
     }
     
-    @XmlRootElement
+    @RootElement
     public static class EnumBug {
     	
-    	@XmlElement
+    	@Element
     	private PartType type;
     	
     	public PartType getType() {

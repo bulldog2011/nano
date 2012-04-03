@@ -2,10 +2,10 @@ package com.tpt.nano;
 
 import java.util.List;
 
-import com.tpt.nano.annotation.XmlAttribute;
-import com.tpt.nano.annotation.XmlElement;
-import com.tpt.nano.annotation.XmlRootElement;
-import com.tpt.nano.annotation.XmlValue;
+import com.tpt.nano.annotation.Attribute;
+import com.tpt.nano.annotation.Element;
+import com.tpt.nano.annotation.RootElement;
+import com.tpt.nano.annotation.Value;
 
 import junit.framework.TestCase;
 
@@ -38,18 +38,18 @@ public class ScatterTest extends TestCase {
 	   "   <exclude name='5' file='5.txt'/>\r\n"+
 	   "</test>";  
     
-    @XmlRootElement(name="test")
+    @RootElement(name="test")
     private static class InlineTextList {
-    	@XmlElement
+    	@Element
     	private String message;
     	
-    	@XmlElement
+    	@Element
     	private List<Double> numbers;
     	
-    	@XmlElement
+    	@Element
     	private List<TextEntry> list;
     	
-    	@XmlAttribute
+    	@Attribute
     	private Version version;
     	
     	private List<Double> getNumbers() {
@@ -61,15 +61,15 @@ public class ScatterTest extends TestCase {
     	}
     }
     
-    @XmlRootElement(name="test")
+    @RootElement(name="test")
     private static class InlinePrimitiveList {
-    	@XmlElement
+    	@Element
     	private String message;
     	
-    	@XmlElement
+    	@Element
     	private List<String> list;
     	
-    	@XmlAttribute
+    	@Attribute
     	private Version version;
     	
     	public String get(int index) {
@@ -78,13 +78,13 @@ public class ScatterTest extends TestCase {
     }
 
     private static class TextEntry {
-    	@XmlAttribute
+    	@Attribute
     	private String name;
     	
-    	@XmlAttribute
+    	@Attribute
     	private Version version;
     	
-    	@XmlValue
+    	@Value
     	private String text;
     }
     

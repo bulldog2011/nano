@@ -3,10 +3,10 @@ package com.tpt.nano;
 import java.io.StringWriter;
 import java.util.List;
 
-import com.tpt.nano.annotation.XmlAttribute;
-import com.tpt.nano.annotation.XmlElement;
-import com.tpt.nano.annotation.XmlRootElement;
-import com.tpt.nano.annotation.XmlValue;
+import com.tpt.nano.annotation.Attribute;
+import com.tpt.nano.annotation.Element;
+import com.tpt.nano.annotation.RootElement;
+import com.tpt.nano.annotation.Value;
 
 import junit.framework.TestCase;
 
@@ -38,40 +38,40 @@ public class CaseTest extends TestCase {
 		   "   </TextEntry>\n" +
 		   "</Example>";
     
-    @XmlRootElement(name="Example")
+    @RootElement(name="Example")
     private static class CaseExample {
     
-    	@XmlElement(name="ListEntry")
+    	@Element(name="ListEntry")
     	private List<TextEntry> list;
     	
-    	@XmlElement(name="URLEntry")
+    	@Element(name="URLEntry")
     	private List<URLEntry> domainList;
     	
-    	@XmlElement(name="TextEntry")
+    	@Element(name="TextEntry")
     	private List<TextEntry> textList;
     	
-    	@XmlAttribute(name="Version")
+    	@Attribute(name="Version")
     	private float version;
     	
-    	@XmlAttribute(name="Name")
+    	@Attribute(name="Name")
     	private String name;
     	
-    	@XmlAttribute(name="URL")
+    	@Attribute(name="URL")
     	private String URL;
     }
     
     private static class TextEntry {
     	
-    	@XmlAttribute(name="id")
+    	@Attribute(name="id")
     	private int id;
     	
-    	@XmlElement(name="Text")
+    	@Element(name="Text")
     	private String text;
     }
     
     private static class URLEntry {
     	
-    	@XmlValue
+    	@Value
     	private String location;
     }
 

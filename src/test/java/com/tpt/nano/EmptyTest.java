@@ -2,8 +2,8 @@ package com.tpt.nano;
 
 import java.util.List;
 
-import com.tpt.nano.annotation.XmlAttribute;
-import com.tpt.nano.annotation.XmlElement;
+import com.tpt.nano.annotation.Attribute;
+import com.tpt.nano.annotation.Element;
 
 import junit.framework.TestCase;
 
@@ -16,13 +16,13 @@ public class EmptyTest extends TestCase {
     
     private static class DefaultExample {
     	
-    	@XmlElement
+    	@Element
     	private List<String> stringList;
     	
-    	@XmlAttribute
+    	@Attribute
     	private String name;
     	
-    	@XmlElement
+    	@Element
     	private String text;
     	
     	public DefaultExample() {

@@ -1,8 +1,8 @@
 package com.tpt.nano;
 
-import com.tpt.nano.annotation.XmlAttribute;
-import com.tpt.nano.annotation.XmlElement;
-import com.tpt.nano.annotation.XmlRootElement;
+import com.tpt.nano.annotation.Attribute;
+import com.tpt.nano.annotation.Element;
+import com.tpt.nano.annotation.RootElement;
 
 import junit.framework.TestCase;
 
@@ -27,22 +27,22 @@ public class RootElementTest extends TestCase {
        "  <text>Some text example</text>\n"+
        "</explicitOverride>";
 	
-	@XmlRootElement
+	@RootElement
 	private static class RootExample {
-		@XmlAttribute
+		@Attribute
 		private int version;
-		@XmlElement
+		@Element
 		private String text;
 	}
 	
 	private static class ExtendedRootExample extends RootExample {
 	}
 	
-	@XmlRootElement
+	@RootElement
 	private static class ExtendedOverriddenRootExample extends ExtendedRootExample {
 	}
 	
-	@XmlRootElement(name="explicitOverride")
+	@RootElement(name="explicitOverride")
 	private static class ExtendedExplicitlyOverriddenRootExample extends ExtendedRootExample {
 		
 	}
