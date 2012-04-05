@@ -9,13 +9,11 @@ package com.tpt.nano.transform;
 public class ShortTransform implements Transformable<Short> {
 
 	public Short read(String value) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return Short.valueOf(value);
 	}
 
 	public String write(Short value) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return value.toString();
 	}
 
 }
