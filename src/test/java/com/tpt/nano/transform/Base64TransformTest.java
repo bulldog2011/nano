@@ -15,6 +15,8 @@ public class Base64TransformTest extends TestCase {
 		System.out.println(new String(copy));
 
 		assertTrue(Arrays.equals(data, copy));
+		
+		
 	}
 
 }
