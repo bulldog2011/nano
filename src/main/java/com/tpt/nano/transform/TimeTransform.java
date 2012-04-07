@@ -1,6 +1,6 @@
 package com.tpt.nano.transform;
 
-import com.tpt.nano.custom.types.Time;
+import java.sql.Time;
 
 /**
  * Transformer between a string and a custom Time object
@@ -11,7 +11,7 @@ import com.tpt.nano.custom.types.Time;
 class TimeTransform implements Transformable<Time> {
 
 	public Time read(String value) throws Exception {
-		return new Time(value);
+		return Time.valueOf(value);
 	}
 
 	public String write(Time value) throws Exception {

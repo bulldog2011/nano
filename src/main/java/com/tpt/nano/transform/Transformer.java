@@ -11,7 +11,7 @@ import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.tpt.nano.custom.types.Duration;
-import com.tpt.nano.custom.types.Time;
+import java.sql.Time;
 
 /**
  * Transformer for java primitive types and frequently used java types
