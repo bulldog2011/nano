@@ -12,8 +12,6 @@ public class ElementSchema {
 	
 	private String xmlName;
 	
-	private String namespace;
-	
 	private Field field;
 	
 	private boolean data;
@@ -74,24 +72,6 @@ public class ElementSchema {
 	 */
 	public void setXmlName(String xmlName) {
 		this.xmlName = xmlName;
-	}
-
-	/**
-	 * Get XML namespace
-	 * 
-	 * @return xml namespace
-	 */
-	public String getNamespace() {
-		return namespace;
-	}
-
-	/**
-	 * Set XML namespace
-	 * 
-	 * @param namespace
-	 */
-	public void setNamespace(String namespace) {
-		this.namespace = namespace;
 	}
 
 	/**

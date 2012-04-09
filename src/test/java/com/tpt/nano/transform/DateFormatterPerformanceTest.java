@@ -13,9 +13,9 @@ public class DateFormatterPerformanceTest extends TestCase {
 	
 	private static final String FORMAT = "yyyy-MM-dd HH:mm:ss z";
 	
-	private static final int CONCURRENCY = 10;
+	private static final int CONCURRENCY = 1;
 	
-	private static final int COUNT = 100;
+	private static final int COUNT = 10;
 	
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
 
@@ -83,7 +83,8 @@ public class DateFormatterPerformanceTest extends TestCase {
 	    }
 	    threadLocalFinisher.await();
 	    
-	    System.out.printf("thread-local: %s, pool: %s, new: %s, synchronized: %s", threadLocalCount.get(), formatterCount.get(), simpleDateFormatCount.get(), synchronizedCount.get());	    
+	    System.out.printf("thread-local: %s, pool: %s, new: %s, synchronized: %s", threadLocalCount.get(), formatterCount.get(), simpleDateFormatCount.get(), synchronizedCount.get());
+	    System.out.println();
 	}
 	
     private class ThreadLocalFormatterTask implements Runnable {

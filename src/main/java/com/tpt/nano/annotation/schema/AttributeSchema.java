@@ -12,8 +12,6 @@ public class AttributeSchema {
 	
 	private String xmlName;
 	
-	private String namespace;
-	
 	private Field field;
 
 	/**
@@ -32,24 +30,6 @@ public class AttributeSchema {
 	 */
 	public void setXmlName(String xmlName) {
 		this.xmlName = xmlName;
-	}
-
-	/**
-	 * Get the XML namespace
-	 * 
-	 * @return namespace
-	 */
-	public String getNamespace() {
-		return namespace;
-	}
-
-	/**
-	 * Set the XML namespace
-	 * 
-	 * @param namespace
-	 */
-	public void setNamespace(String namespace) {
-		this.namespace = namespace;
 	}
 
 	/**

@@ -26,11 +26,11 @@ public @interface Attribute {
 	 */
 	public String name() default "";
 	
-	/**
-	 * The namespace of the XML attribute
-	 * 
-	 * @return namespace
-	 */
-	public String namespace() default "";
+//	/**
+//	 * The namespace of the XML attribute
+//	 * 
+//	 * @return namespace
+//	 */
+//	public String namespace() default "";
 	
 }

@@ -9,13 +9,13 @@ public class NamespaceTest extends TestCase {
 	
 	@RootElement(namespace="namespace1")
 	private static class Aaa {
-		@Element(name="bbb", namespace="namespace2")
+		@Element
 		public Bbb bbb;
 	}
 	
 	//@XmlRootElement(namespace="namespace2")
 	private static class Bbb {
-		@Element(name="aaa", namespace="namespace1")
+		@Element
 		public Aaa aaa;
 	}
 	
@@ -29,6 +29,7 @@ public class NamespaceTest extends TestCase {
 		
 		IWriter xmlWriter = NanoFactory.getXMLWriter();
 		String str1 = xmlWriter.write(parent);
+		System.out.println(str1);
 		
 		IReader xmlReader = NanoFactory.getXMLReader();
 		Aaa target = xmlReader.read(Aaa.class, str1);

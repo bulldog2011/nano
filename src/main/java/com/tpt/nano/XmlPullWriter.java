@@ -68,7 +68,7 @@ public class XmlPullWriter implements IWriter {
 			String xmlName = res.getXmlName();
 			
 			serializer.startTag(namespace, xmlName);
-			this.writeObject(serializer, source);
+			this.writeObject(serializer, source, namespace);
 			serializer.endTag(namespace, xmlName);
 			
 			serializer.endDocument();
@@ -110,7 +110,7 @@ public class XmlPullWriter implements IWriter {
 		return out.toString();
 	}
 	
-	private void writeObject(XmlSerializer serializer, Object source) throws Exception {
+	private void writeObject(XmlSerializer serializer, Object source, String namespace) throws Exception {
 		MappingSchema ms = MappingSchema.fromObject(source);
 		
 		// write xml attributes first
@@ -120,7 +120,7 @@ public class XmlPullWriter implements IWriter {
 		writeValue(serializer, source, ms);
 		
 		// write xml elements last
-		writeElements(serializer, source, ms);
+		writeElements(serializer, source, ms, namespace);
 
 	}
 	
@@ -131,9 +131,9 @@ public class XmlPullWriter implements IWriter {
 			Field field = as.getField();
 			Object value = field.get(source);
 			if (value != null) {
-				String attValue = Transformer.write(value, value.getClass());
+				String attValue = Transformer.write(value, field.getType());
 				if (!StringUtil.isEmpty(attValue)) {
-					serializer.attribute(as.getNamespace(), as.getXmlName(), attValue);
+					serializer.attribute(null, as.getXmlName(), attValue);
 				}
 			}
 		}
@@ -146,7 +146,7 @@ public class XmlPullWriter implements IWriter {
 		Field field = vs.getField();
 		Object value = field.get(source);
 		if (value != null) {
-			String text = Transformer.write(value, value.getClass());
+			String text = Transformer.write(value, field.getType());
 			if (!StringUtil.isEmpty(text)) {
 				if(vs.isData()) {
 					serializer.cdsect(text);
@@ -157,7 +157,7 @@ public class XmlPullWriter implements IWriter {
 		}
 	}
 	
-	private void writeElements(XmlSerializer serializer, Object source, MappingSchema ms) throws Exception {
+	private void writeElements(XmlSerializer serializer, Object source, MappingSchema ms, String namespace) throws Exception {
 		Map<String, Object> field2SchemaMapping = ms.getField2SchemaMapping();
 		for (String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
@@ -167,27 +167,31 @@ public class XmlPullWriter implements IWriter {
 				Object value = field.get(source);
 				if (value != null) {
 					if (es.isList()) {
-						this.writeElementList(serializer, value, es);
+						this.writeElementList(serializer, value, es, namespace);
 					} else {
-						this.writeElement(serializer, value, es);
+						this.writeElement(serializer, value, es, namespace);
 					}
 				}
 			}
 		}
 	}
 	
-	private void writeElementList(XmlSerializer serializer, Object source, ElementSchema es) throws Exception {
+	private void writeElementList(XmlSerializer serializer, Object source, ElementSchema es, String namespace) throws Exception {
 		for(Object value : (List<?>)source) {
-			this.writeElement(serializer, value, es);
+			this.writeElement(serializer, value, es, namespace);
 		}
 	}
 	
-	private void writeElement(XmlSerializer serializer, Object source, ElementSchema es) throws Exception {
-		Class<?> type = source.getClass();
+	private void writeElement(XmlSerializer serializer, Object source, ElementSchema es, String namespace) throws Exception {
+		Class<?> type = null;
+		if (es.isList()) {
+			type = es.getParameterizedType();
+		} else {
+			type = es.getField().getType();
+		}
 		
 		if (source == null) return; // do nothing
 		
-		String namespace = es.getNamespace();
 		String xmlName = es.getXmlName();
 		
 		// primitives
@@ -208,7 +212,7 @@ public class XmlPullWriter implements IWriter {
 		
 		// object
 		serializer.startTag(namespace, xmlName);
-		this.writeObject(serializer, source);
+		this.writeObject(serializer, source, namespace);
 		serializer.endTag(namespace, xmlName);
 	}
 

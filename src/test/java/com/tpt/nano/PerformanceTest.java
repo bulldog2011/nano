@@ -16,7 +16,7 @@ import junit.framework.TestCase;
 
 public class PerformanceTest extends TestCase {
 
-	private static final int ITERATIONS = 100; 
+	private static final int ITERATIONS = 10; 
 	
 	public static final String BASIC_ENTRY =
 	   "<?xml version=\"1.0\"?>\n"+

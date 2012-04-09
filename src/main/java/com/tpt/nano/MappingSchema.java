@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.tpt.nano.annotation.Attribute;
 import com.tpt.nano.annotation.Element;
-import com.tpt.nano.annotation.Ignore;
 import com.tpt.nano.annotation.RootElement;
 import com.tpt.nano.annotation.Value;
 import com.tpt.nano.annotation.schema.AttributeSchema;
@@ -18,7 +17,6 @@ import com.tpt.nano.transform.Transformer;
 import com.tpt.nano.util.LRUCache;
 import com.tpt.nano.util.StringUtil;
 import com.tpt.nano.util.TypeReflector;
-import com.tpt.nano.util.XmlUtil;
 
 /**
  * Factory class for OX mapping schema
@@ -32,14 +30,10 @@ class MappingSchema {
 	private RootElementSchema rootElementSchema;
 	private Map<String, Object> field2SchemaMapping;
 	private Map<String, Object> xml2SchemaMapping;
-	private Map<String, Object> xmlFullname2SchemaMapping;
 	
 	private Map<String, AttributeSchema> field2AttributeSchemaMapping;
-	//private Map<String, ElementSchema> field2ElementSchemaMapping;
 	private ValueSchema valueSchema;
 	private Map<String, AttributeSchema> xml2AttributeSchemaMapping;
-	private Map<String, AttributeSchema> xmlFullname2AttributeSchemaMapping;
-	//private Map<String, ElementSchema> xml2ElementSchemaMapping;
 	
 	private Class<?> type;
 	
@@ -93,25 +87,18 @@ class MappingSchema {
 	
 	private void buildXml2SchemaMapping() {
 		xml2SchemaMapping = new HashMap<String, Object>();
-		xmlFullname2SchemaMapping = new HashMap<String, Object>();
 		xml2AttributeSchemaMapping = new HashMap<String, AttributeSchema>();
-		xmlFullname2AttributeSchemaMapping = new HashMap<String, AttributeSchema>();
 		
 		for(String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
 			if(schemaObj instanceof AttributeSchema) {
 				AttributeSchema as = (AttributeSchema)schemaObj;
-				String xmlFullname = XmlUtil.getXmlFullname(as.getNamespace(), as.getXmlName());
 				xml2SchemaMapping.put(as.getXmlName(), as);
-				xmlFullname2SchemaMapping.put(xmlFullname, as);
 				// build xml2AttributeSchemaMapping at the same time.
 				xml2AttributeSchemaMapping.put(as.getXmlName(), as);
-				xmlFullname2AttributeSchemaMapping.put(xmlFullname, as);
 			} else if (schemaObj instanceof ElementSchema) {
 				ElementSchema es = (ElementSchema)schemaObj;
-				String xmlFullname = XmlUtil.getXmlFullname(es.getNamespace(), es.getXmlName());
 				xml2SchemaMapping.put(es.getXmlName(), es);
-				xmlFullname2SchemaMapping.put(xmlFullname, es);
 			}
 		}
 	}
@@ -156,8 +143,6 @@ class MappingSchema {
 				} else {
 					attributeSchema.setXmlName(xmlAttribute.name());
 				}
-				String namespace = StringUtil.isEmpty(xmlAttribute.namespace())?null:xmlAttribute.namespace();
-				attributeSchema.setNamespace(namespace);
 				attributeSchema.setField(field);
 				
 				fieldsMap.put(field.getName(), attributeSchema);
@@ -178,8 +163,6 @@ class MappingSchema {
 				handleList(field, elementSchema);
 				
 				elementSchema.setData(xmlElement.data());
-				String namespace = StringUtil.isEmpty(xmlElement.namespace())?null:xmlElement.namespace();
-				elementSchema.setNamespace(namespace);
 				elementSchema.setField(field);
 				
 				fieldsMap.put(field.getName(), elementSchema);
@@ -200,24 +183,6 @@ class MappingSchema {
 				valueSchema.setData(xmlValue.data());
 				valueSchema.setField(field);
 				
-			} else if (field.isAnnotationPresent(Ignore.class)) {
-				
-				// ignore this field
-				
-			} else { // default to XmlElement
-				
-				elementSchemaCount++;
-				
-				ElementSchema elementSchema = new ElementSchema();
-				
-				// List validation
-				handleList(field, elementSchema);
-				
-				elementSchema.setXmlName(field.getName());
-				elementSchema.setField(field);
-				elementSchema.setNamespace(null);
-				
-				fieldsMap.put(field.getName(), elementSchema);
 			}
 		}
 		
@@ -228,7 +193,7 @@ class MappingSchema {
 		}
 		
 		if (valueSchemaCount == 1 && elementSchemaCount >= 1) {
-			throw new MappingException("XmlValue and XmlElement(or XmlElementWrapper) annotations can't coexist in same class," + 
+			throw new MappingException("XmlValue and XmlElement annotations can't coexist in same class," + 
 					" type = " + type.getName());
 		}
 		
@@ -294,10 +259,6 @@ class MappingSchema {
 		return xml2SchemaMapping;
 	}
 	
-	public Map<String, Object> getXmlFullname2SchemaMapping() {
-		return xmlFullname2SchemaMapping;
-	}
-	
 	public RootElementSchema getRootElementSchema() {
 		return rootElementSchema;
 	}
@@ -312,10 +273,6 @@ class MappingSchema {
 	
 	public Map<String, AttributeSchema> getXml2AttributeSchemaMapping() {
 		return xml2AttributeSchemaMapping;
-	}
-	
-	public Map<String, AttributeSchema> getXmlFullname2AttributeSchemaMapping() {
-		return xmlFullname2AttributeSchemaMapping;
 	}
 	
 }

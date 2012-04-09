@@ -32,13 +32,4 @@ public @interface Element {
 	 * @return true or false
 	 */
 	public boolean data() default false;
-	
-	
-	/**
-	 * The namespace of the XML element
-	 * 
-	 * @return namespace
-	 */
-	public String namespace() default "";
-	
 }

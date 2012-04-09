@@ -17,7 +17,6 @@ import com.tpt.nano.annotation.schema.ValueSchema;
 import com.tpt.nano.transform.Transformer;
 import com.tpt.nano.util.StringUtil;
 import com.tpt.nano.util.TypeReflector;
-import com.tpt.nano.util.XmlUtil;
 
 /**
  * SAX handler implementation for XmlSaxReader
@@ -34,13 +33,11 @@ class XmlReaderHandler extends DefaultHandler {
 	}
 
 	private void populateAttributes(Object obj, Attributes attrs, MappingSchema ms) throws Exception {
-		Map<String, AttributeSchema> xmlFullname2AttributeSchemaMapping = ms.getXmlFullname2AttributeSchemaMapping();
+		Map<String, AttributeSchema> xml2AttributeSchemaMapping = ms.getXml2AttributeSchemaMapping();
 		for(int index = 0; index < attrs.getLength(); index++) {
 			String attrName = attrs.getLocalName(index);
-			String attrNamespace = attrs.getURI(index);
-			String attrFullname = XmlUtil.getXmlFullname(attrNamespace, attrName);
 			
-			AttributeSchema as = xmlFullname2AttributeSchemaMapping.get(attrFullname);
+			AttributeSchema as = xml2AttributeSchemaMapping.get(attrName);
 			if (as == null) continue;
 			
 			String attrValue = attrs.getValue(index);
@@ -67,8 +64,9 @@ class XmlReaderHandler extends DefaultHandler {
 				RootElementSchema res = ms.getRootElementSchema();
 				String xmlName = res.getXmlName();
 				String namespace = res.getNamespace();
-				String srcXmlFullname = XmlUtil.getXmlFullname(uri, localName);
-				String targetXmlFullname = XmlUtil.getXmlFullname(namespace, xmlName);
+				// validation only for root element
+				String srcXmlFullname = StringUtil.isEmpty(uri)?localName:"{" + uri + "}#" + localName;
+				String targetXmlFullname = StringUtil.isEmpty(namespace)?xmlName:"{" + namespace + "}#" + xmlName;
 				if (!srcXmlFullname.equals(targetXmlFullname)) {
 					throw new ReaderException("Root element name mismatch, " + targetXmlFullname + " != " + srcXmlFullname);
 				}
@@ -76,9 +74,8 @@ class XmlReaderHandler extends DefaultHandler {
 					this.populateAttributes(obj, attrs, ms);
 				}
 			} else { // sub element mapping
-				Map<String, Object> xmlFullname2SchemaMapping = ms.getXmlFullname2SchemaMapping();
-				String xmlFullname = XmlUtil.getXmlFullname(uri, localName);
-				Object schema = xmlFullname2SchemaMapping.get(xmlFullname);
+				Map<String, Object> xml2SchemaMapping = ms.getXml2SchemaMapping();
+				Object schema = xml2SchemaMapping.get(localName);
 				if (schema != null && schema instanceof ElementSchema) {
 					ElementSchema es = (ElementSchema)schema;
 					
@@ -120,9 +117,8 @@ class XmlReaderHandler extends DefaultHandler {
 			} else if (helper.depth == helper.valueStack.size() + 1) { // handle primitive field
 				Object obj = helper.valueStack.peek();
 				MappingSchema ms = MappingSchema.fromObject(obj);
-				Map<String, Object> xmlFullname2SchemaMapping = ms.getXmlFullname2SchemaMapping();
-				String xmlFullname = XmlUtil.getXmlFullname(uri, localName);
-				Object schema = xmlFullname2SchemaMapping.get(xmlFullname);
+				Map<String, Object> xml2SchemaMapping = ms.getXml2SchemaMapping();
+				Object schema = xml2SchemaMapping.get(localName);
 				if (schema != null && schema instanceof ElementSchema) {
 					ElementSchema es = (ElementSchema)schema;
 					Field field = es.getField();
@@ -165,10 +161,9 @@ class XmlReaderHandler extends DefaultHandler {
 				
 				Object parentObj = helper.valueStack.peek();
 				MappingSchema parentMs = MappingSchema.fromObject(parentObj);
-				Map<String, Object> parentXmlFullname2SchemaMapping = parentMs.getXmlFullname2SchemaMapping();
+				Map<String, Object> parentXml2SchemaMapping = parentMs.getXml2SchemaMapping();
 				
-				String xmlFullname = XmlUtil.getXmlFullname(uri, localName);
-				Object schema = parentXmlFullname2SchemaMapping.get(xmlFullname);
+				Object schema = parentXml2SchemaMapping.get(localName);
 				if(schema != null && schema instanceof ElementSchema) {
 					ElementSchema es = (ElementSchema)schema;
 					Field field = es.getField();
