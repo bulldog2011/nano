@@ -61,22 +61,22 @@ public class TypeReflector {
 	}
 	
 	/**
-	 * check if a type is @see java.util.List type.
+	 * check if a type is <code>java.util.List</code> type.
 	 * 
-	 * @param type a type to be check
+	 * @param type a type to be checked
 	 * @return true or false
 	 */
 	public static boolean isList(Class<?> type) {
-		return List.class.isAssignableFrom(type);
+		return List.class == type;
 	}
 	
 	/**
-	 * check if a type is @see java.util.Collection type.
+	 * check if a type is <code>java.util.Collection</code> type.
 	 * 
-	 * @param type a type to be check
+	 * @param type a type to be checked
 	 * @return true or false
 	 */
-	public static boolean isCollection(Class<?> type) {
+	public static boolean collectionAssignable(Class<?> type) {
 		return Collection.class.isAssignableFrom(type);
 	}
 	

@@ -47,6 +47,27 @@ public class DateTransformTest extends TestCase {
 		assertEquals(date, copy);
 	}
 	
+	public void testLongDate() throws Exception {
+		String dateString = "2012-04-10 06:57:14 UTC";
+		DateTransform transform = new DateTransform();
+		Date date = transform.read(dateString);
+		assertEquals("10 Apr 2012 06:57:14 GMT", date.toGMTString());
+	}
+	
+	public void testNormalDate() throws Exception {
+		String dateString = "2012-04-10 UTC";
+		DateTransform transform = new DateTransform();
+		Date date = transform.read(dateString);
+		assertEquals("10 Apr 2012 00:00:00 GMT", date.toGMTString());
+	}
+	
+	public void testShortDate() throws Exception {
+		String dateString = "2012-04-10";
+		DateTransform transform = new DateTransform();
+		Date date = transform.read(dateString);
+		assertEquals("10 Apr 2012 00:00:00 GMT", date.toGMTString());
+	}
+	
 	public void testDateExample() throws Exception {
 		long now = System.currentTimeMillis();
 		Date date = new Date(now);

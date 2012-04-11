@@ -58,7 +58,7 @@ public class Transformer {
 	 * Register custom transformable for a Java primitive type or a frequently used Java type. 
 	 * 
 	 * @param type a Java primitive type or a frequently used Java type.
-	 * @param transform a class implementing @see com.tpt.nano.transform.Trnsformable interface.
+	 * @param transform a class implementing @see com.tpt.nano.transform.Transformable interface.
 	 */
 	public static void register(Class<?> type, Transformable<?> transform) {
 		cache.put(type, transform);
@@ -110,7 +110,10 @@ public class Transformer {
 		if (name.startsWith("java.net")) {
 			converter = new UrlTransform();
 		}
-		if (name.startsWith("com.ebay.jxb.type")) {
+		if (name.startsWith("java.sql")) {
+			converter = new TimeTransform();
+		}
+		if (name.startsWith("com.tpt.nano.custom.types")) {
 			converter = getCustomTransform(type);
 		}
 
@@ -121,9 +124,6 @@ public class Transformer {
 	private static Transformable<?> getCustomTransform(Class<?> type) {
 		if (type == Duration.class) {
 			return new DurationTransform();
-		}
-		if (type == Time.class) {
-			return new TimeTransform();
 		}
 		return null;
 	}

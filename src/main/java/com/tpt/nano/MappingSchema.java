@@ -76,7 +76,7 @@ class MappingSchema {
 		
 		Class<?> superType = type.getSuperclass();
 		// scan super class fields
-		while(superType != null && superType != Object.class) {
+		while(superType != Object.class && superType != null) {
 			Map<String, Object> parentField2SchemaMapping = this.scanFieldSchema(superType);
 			// redefined fields in sub-class will overwrite corresponding fields in super-class.
 			parentField2SchemaMapping.putAll(field2SchemaMapping);
@@ -130,7 +130,7 @@ class MappingSchema {
 			if (field.isAnnotationPresent(Attribute.class)) {
 				// validation
 				if (!Transformer.isTransformable(field.getType())) {
-					throw new MappingException("XmlAttribute can't annotate complex type field, " +
+					throw new MappingException("Attribute annotation can't annotate complex type field, " +
 							"only primivte type or frequently used java type or enum type field is allowed, " +
 							"field = " + field.getName() + ", type = " + type.getName());
 				}
@@ -172,7 +172,7 @@ class MappingSchema {
 				
 				// validation
 				if (!Transformer.isTransformable(field.getType())) {
-					throw new MappingException("XmlValue can't annotate complex type field, " +
+					throw new MappingException("Value annotation can't annotate complex type field, " +
 							"only primivte type or frequently used java type or enum type field is allowed, " +
 							"field = " + field.getName() + ", type = " + type.getName());
 				}
@@ -188,12 +188,12 @@ class MappingSchema {
 		
 		// more validation
 		if (valueSchemaCount > 1) {
-			throw new MappingException("XmlValue can't annotate more than one fields in same class," + 
+			throw new MappingException("Value annotation can't annotate more than one fields in same class," + 
 					" type = " + type.getName());
 		}
 		
 		if (valueSchemaCount == 1 && elementSchemaCount >= 1) {
-			throw new MappingException("XmlValue and XmlElement annotations can't coexist in same class," + 
+			throw new MappingException("Value and Element annotations can't coexist in same class," + 
 					" type = " + type.getName());
 		}
 		
@@ -202,10 +202,10 @@ class MappingSchema {
 	}
 	
 	private void handleList(Field field, ElementSchema elementSchema) throws MappingException {
-		if (TypeReflector.isCollection(field.getType())) {
+		if (TypeReflector.collectionAssignable(field.getType())) {
 			Class<?> type = field.getType();
 			if (!TypeReflector.isList(type)) {
-				throw new MappingException("Nano framework only supports java.util.List as collection type, " +
+				throw new MappingException("Current nano framework only supports java.util.List<T> as collection type, " +
 						"field = " + field.getName() + ", type = " + type.getName());
 			} else {
 				elementSchema.setList(true);

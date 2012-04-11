@@ -1,7 +1,7 @@
 package com.tpt.nano;
 
 /**
- * Format controls Xml format info like encoding and indent.
+ * Format controls XML format info like encoding and indent.
  * 
  * @author bulldog
  *

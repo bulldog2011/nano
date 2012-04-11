@@ -78,6 +78,12 @@ public class CustomEnumTest extends TestCase {
     	EnumBug bug = xmlReader.read(EnumBug.class, SOURCE);
     
     	assertEquals(bug.getType(), PartType.A);
+    	
+    	IWriter xmlWriter = NanoFactory.getXMLWriter();
+    	String bugStr = xmlWriter.write(bug);
+    	
+    	EnumBug bugCopy = xmlReader.read(EnumBug.class, bugStr);
+    	assertTrue(bug.getType() == bugCopy.getType());
     }
     
     public void testInvalidEnum() throws Exception {
@@ -95,6 +101,14 @@ public class CustomEnumTest extends TestCase {
         assertEquals(bug.getTypes().get(1), PartType.B);
         assertEquals(bug.getTypes().get(2), PartType.A);
         assertEquals(bug.getTypes().get(3), PartType.A);
+        
+    	IWriter xmlWriter = NanoFactory.getXMLWriter();
+    	String bugStr = xmlWriter.write(bug);
+    	EnumVariableArgumentsBug bugCopy = xmlReader.read(EnumVariableArgumentsBug.class, bugStr);
+        assertEquals(bugCopy.getTypes().get(0), PartType.A);
+        assertEquals(bugCopy.getTypes().get(1), PartType.B);
+        assertEquals(bugCopy.getTypes().get(2), PartType.A);
+        assertEquals(bugCopy.getTypes().get(3), PartType.A);
     }
 
 }

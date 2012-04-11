@@ -1,5 +1,15 @@
 package com.tpt.nano.transform;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.net.URL;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.TimeZone;
+
+import com.tpt.nano.custom.types.Duration;
+
 import junit.framework.TestCase;
 
 public class TransformerTest extends TestCase {
@@ -80,4 +90,17 @@ public class TransformerTest extends TestCase {
         assertEquals(text, "12");
     }
 
+    public void testTransformable() throws Exception {
+    	assertTrue(Transformer.isTransformable(byte[].class));
+    	assertTrue(Transformer.isTransformable(char.class));
+    	assertTrue(Transformer.isTransformable(BigDecimal.class));
+    	assertTrue(Transformer.isTransformable(BigInteger.class));
+    	assertTrue(Transformer.isTransformable(Currency.class));
+    	assertTrue(Transformer.isTransformable(TimeZone.class));
+    	assertTrue(Transformer.isTransformable(Duration.class));
+    	assertTrue(Transformer.isTransformable(URL.class));
+    	assertTrue(Transformer.isTransformable(Time.class));
+    	assertFalse(Transformer.isTransformable(ArrayList.class));
+    }
+    
 }
