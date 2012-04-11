@@ -90,7 +90,7 @@ class XmlReaderHandler extends DefaultHandler {
 						try {
 							con = TypeReflector.getConstructor(type);
 						} catch (NoSuchMethodException nsme) {
-							throw new ReaderException("No-arg contructor is missing, type = " + type.getName());
+							throw new ReaderException("No-arg constructor is missing, type = " + type.getName());
 						}
 						Object newObj = con.newInstance();
 						if (attrs != null && attrs.getLength() > 0) {
