@@ -1,4 +1,4 @@
-package com.tpt.nano;
+package com.tpt.nano.impl;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,6 +14,10 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import com.tpt.nano.Format;
+import com.tpt.nano.IReader;
+import com.tpt.nano.exception.MappingException;
+import com.tpt.nano.exception.ReaderException;
 import com.tpt.nano.transform.Transformer;
 import com.tpt.nano.util.TypeReflector;
 

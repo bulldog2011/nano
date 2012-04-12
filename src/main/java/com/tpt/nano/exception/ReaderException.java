@@ -1,4 +1,4 @@
-package com.tpt.nano;
+package com.tpt.nano.exception;
 
 /**
  * This exception indicates there is reading error at runtime.

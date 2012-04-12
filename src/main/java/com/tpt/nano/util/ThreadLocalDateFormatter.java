@@ -29,8 +29,8 @@ public class ThreadLocalDateFormatter {
 		DateFormat df = formatterMap.get(pattern);
 		if ( null == df) {
 			df = new SimpleDateFormat(pattern);
-			TimeZone timeZoneUTC = TimeZone.getTimeZone("UTC");
-			df.setTimeZone(timeZoneUTC);
+			TimeZone timeZoneGMT = TimeZone.getTimeZone("GMT");
+			df.setTimeZone(timeZoneGMT);
 			formatterMap.put(pattern, df);
 		}
 		return df;

@@ -3,6 +3,9 @@ package com.tpt.nano;
 import java.io.OutputStream;
 import java.io.Writer;
 
+import com.tpt.nano.exception.MappingException;
+import com.tpt.nano.exception.WriterException;
+
 /**
  * IWriter writes/serialize POJO into XML or JSON format.
  * 

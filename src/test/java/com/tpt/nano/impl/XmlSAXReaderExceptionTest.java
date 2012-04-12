@@ -1,9 +1,14 @@
-package com.tpt.nano;
+package com.tpt.nano.impl;
 
 import java.io.Reader;
 
+import com.tpt.nano.IReader;
+import com.tpt.nano.NanoFactory;
 import com.tpt.nano.annotation.Attribute;
 import com.tpt.nano.annotation.Element;
+import com.tpt.nano.exception.MappingException;
+import com.tpt.nano.exception.ReaderException;
+
 import junit.framework.TestCase;
 
 public class XmlSAXReaderExceptionTest extends TestCase {

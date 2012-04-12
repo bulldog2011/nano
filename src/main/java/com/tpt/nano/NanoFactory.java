@@ -1,5 +1,8 @@
 package com.tpt.nano;
 
+import com.tpt.nano.impl.XmlPullWriter;
+import com.tpt.nano.impl.XmlSAXReader;
+
 /**
  * Factory class to get IReader/IWriter instance,
  * main entry of the Nano framework.

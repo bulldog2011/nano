@@ -1,4 +1,4 @@
-package com.tpt.nano;
+package com.tpt.nano.impl;
 
 import java.util.List;
 import java.util.Set;
@@ -6,6 +6,8 @@ import java.util.Set;
 import com.tpt.nano.annotation.Attribute;
 import com.tpt.nano.annotation.Element;
 import com.tpt.nano.annotation.Value;
+import com.tpt.nano.exception.MappingException;
+import com.tpt.nano.impl.MappingSchema;
 
 import junit.framework.TestCase;
 

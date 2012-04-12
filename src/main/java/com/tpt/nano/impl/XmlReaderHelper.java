@@ -1,4 +1,4 @@
-package com.tpt.nano;
+package com.tpt.nano.impl;
 
 import com.tpt.nano.util.FastStack;
 

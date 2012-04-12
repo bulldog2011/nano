@@ -1,4 +1,4 @@
-package com.tpt.nano;
+package com.tpt.nano.impl;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
@@ -13,6 +13,7 @@ import com.tpt.nano.annotation.schema.AttributeSchema;
 import com.tpt.nano.annotation.schema.ElementSchema;
 import com.tpt.nano.annotation.schema.RootElementSchema;
 import com.tpt.nano.annotation.schema.ValueSchema;
+import com.tpt.nano.exception.MappingException;
 import com.tpt.nano.transform.Transformer;
 import com.tpt.nano.util.LRUCache;
 import com.tpt.nano.util.StringUtil;

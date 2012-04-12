@@ -48,14 +48,14 @@ public class DateTransformTest extends TestCase {
 	}
 	
 	public void testLongDate() throws Exception {
-		String dateString = "2012-04-10 06:57:14 UTC";
+		String dateString = "2012-04-10 06:57:14 GMT";
 		DateTransform transform = new DateTransform();
 		Date date = transform.read(dateString);
 		assertEquals("10 Apr 2012 06:57:14 GMT", date.toGMTString());
 	}
 	
 	public void testNormalDate() throws Exception {
-		String dateString = "2012-04-10 UTC";
+		String dateString = "2012-04-10 GMT";
 		DateTransform transform = new DateTransform();
 		Date date = transform.read(dateString);
 		assertEquals("10 Apr 2012 00:00:00 GMT", date.toGMTString());

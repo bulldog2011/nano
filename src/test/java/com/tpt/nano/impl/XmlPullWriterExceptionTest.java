@@ -1,10 +1,15 @@
-package com.tpt.nano;
+package com.tpt.nano.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import com.tpt.nano.Format;
+import com.tpt.nano.IWriter;
 import com.tpt.nano.annotation.Attribute;
+import com.tpt.nano.exception.MappingException;
+import com.tpt.nano.exception.WriterException;
+import com.tpt.nano.impl.XmlPullWriter;
 
 import junit.framework.TestCase;
 

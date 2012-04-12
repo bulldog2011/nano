@@ -3,6 +3,9 @@ package com.tpt.nano;
 import java.io.InputStream;
 import java.io.Reader;
 
+import com.tpt.nano.exception.MappingException;
+import com.tpt.nano.exception.ReaderException;
+
 /**
  * IReader read/de-serialize XML or JSON into POJO.
  * 
