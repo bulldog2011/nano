@@ -15,6 +15,7 @@ import com.tpt.nano.Format;
 import com.tpt.nano.IWriter;
 import com.tpt.nano.annotation.schema.AttributeSchema;
 import com.tpt.nano.annotation.schema.ElementSchema;
+import com.tpt.nano.annotation.schema.RootElementSchema;
 import com.tpt.nano.annotation.schema.ValueSchema;
 import com.tpt.nano.exception.MappingException;
 import com.tpt.nano.exception.WriterException;
@@ -32,7 +33,7 @@ import com.tpt.nano.transform.Transformer;
  */
 public class JsonWriter implements IWriter {
 
-	private static final String VALUE_KEY = "Value";
+	static final String VALUE_KEY = "__value__";
 	
 	private Format format;
 	
@@ -67,7 +68,7 @@ public class JsonWriter implements IWriter {
 		}
 		
 		try {
-			this.write(source, new OutputStreamWriter(os, "utf-8"));
+			this.write(source, new OutputStreamWriter(os, format.getEncoding()));
 		} catch (UnsupportedEncodingException e) {
 			throw new WriterException("Error to serialize object", e);
 		}
@@ -86,8 +87,15 @@ public class JsonWriter implements IWriter {
 			
 			JSONStringer stringer = new JSONStringer();
 			
+			stringer.object();
+			
+			MappingSchema ms = MappingSchema.fromObject(source);
+			RootElementSchema res = ms.getRootElementSchema();
+			
+			stringer.key(res.getXmlName());
 			this.writeObject(stringer, source);
 			
+			stringer.endObject();
 			// output
 			return stringer.toString();
 		
@@ -134,7 +142,7 @@ public class JsonWriter implements IWriter {
 			Field field = as.getField();
 			Object value = field.get(source);
 			if (value != null) {
-				stringer.key(as.getXmlName());
+				stringer.key("@" + as.getXmlName());
 				stringer.value(getJSONValue(value, field.getType()));
 			}
 		}

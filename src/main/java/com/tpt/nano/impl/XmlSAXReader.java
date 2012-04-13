@@ -59,8 +59,9 @@ public class XmlSAXReader implements IReader {
 	public <T> T read(Class<? extends T> type, Reader source)
 			throws ReaderException, MappingException {
 		
+		validate(type, source);
+		
 		try {
-			validate(type, source);
 			
 			SAXParser saxParser = spf.newSAXParser();
 			XMLReader xmlReader = saxParser.getXMLReader();
@@ -96,8 +97,6 @@ public class XmlSAXReader implements IReader {
 				throw re;
 			}
 			throw new ReaderException("Error to read/descrialize object", se);
-		} catch (IllegalArgumentException iae) {
-			throw new ReaderException("Entry validation failure", iae);
 		} catch (ReaderException re) {
 			throw re;
 		} catch (Exception e) {
@@ -106,17 +105,17 @@ public class XmlSAXReader implements IReader {
 		
 	}
 	
-	private <T> void validate(Class<? extends T> type, Reader reader) {
+	private <T> void validate(Class<? extends T> type, Reader reader) throws ReaderException {
 		if (type == null) {
-			throw new IllegalArgumentException("Can not read, type is null!");
+			throw new ReaderException("Can not read, type is null!");
 		}
 		
 		if (reader == null) {
-			throw new IllegalArgumentException("Reader is null!");
+			throw new ReaderException("Reader is null!");
 		}
 		
 		if (Transformer.isPrimitive(type)) {
-			throw new IllegalArgumentException("Can not read primitive or enum type object, " +
+			throw new ReaderException("Can not read primitive or enum type object, " +
 					"only Nano bindable complex type object can be accepted!");
 		}
 	}
