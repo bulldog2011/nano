@@ -75,7 +75,7 @@ public class CaseTest extends TestCase {
     	private String location;
     }
 
-    public void testCase() throws Exception {
+    public void testCaseXML() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	
     	// deserialize
@@ -94,6 +94,38 @@ public class CaseTest extends TestCase {
 	    
 		// deserialize again
 		example = xmlReader.read(CaseExample.class, text);
+	    assertEquals(1.0f, example.version);
+	    assertEquals("example", example.name);
+	    assertEquals("http://domain.com/", example.URL);
+	    TextEntry te = example.textList.get(1);
+	    assertEquals(5, te.id);
+	    assertEquals("example 5", te.text);
+	    te = example.list.get(2);
+	    assertEquals(3, te.id);
+	    assertEquals("three", te.text);   
+	    URLEntry ue = example.domainList.get(2);
+	    assertEquals("http://c.com/", ue.location);
+    }
+    
+    public void testCaseJSON() throws Exception {
+    	IReader xmlReader = NanoFactory.getXMLReader();
+    	
+    	// deserialize
+    	CaseExample example = xmlReader.read(CaseExample.class, SOURCE);
+    	
+	    assertEquals(1.0f, example.version);
+	    assertEquals("example", example.name);
+	    assertEquals("http://domain.com/", example.URL);
+	    
+	    // serialize
+    	IWriter jsonWriter = NanoFactory.getJSONWriter();
+    	StringWriter writer = new StringWriter();
+    	jsonWriter.write(example, writer);
+		String text = writer.toString();
+		
+	    IReader jsonReader = NanoFactory.getJSONReader();
+		// deserialize again
+		example = jsonReader.read(CaseExample.class, text);
 	    assertEquals(1.0f, example.version);
 	    assertEquals("example", example.name);
 	    assertEquals("http://domain.com/", example.URL);

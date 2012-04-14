@@ -58,18 +58,33 @@ public class DateTest extends TestCase {
 		assertEquals("2 Jan 2012 05:22:15 GMT", dateTime.getTime().toGMTString());
 	}
 	
-	public void testWrite() throws Exception {
+	public void testWriteXML() throws Exception {
 		DateTime dateTime = new DateTime();
 		dateTime.setTime(new Date(Date.UTC(112, 2, 3, 11, 20, 59)));
 		String xmlStr = NanoFactory.getXMLWriter().write(dateTime);
 		assertTrue(xmlStr.indexOf("<time>2012-03-03T11:20:59.000Z</time>") > 0);
 	}
 	
-	public void testReadWrite() throws Exception {
+	public void testWriteJSON() throws Exception {
+		DateTime dateTime = new DateTime();
+		dateTime.setTime(new Date(Date.UTC(112, 2, 3, 11, 20, 59)));
+		String jsonStr = NanoFactory.getJSONWriter().write(dateTime);
+		assertTrue(jsonStr.indexOf("{\"time\":\"2012-03-03T11:20:59.000Z\"}") > 0);
+	}
+	
+	public void testReadWriteXML() throws Exception {
 		DateTime dateTime = new DateTime();
 		dateTime.setTime(new Date(Date.UTC(111, 10, 10, 2, 3, 25)));
 		String xmlStr = NanoFactory.getXMLWriter().write(dateTime);
 		DateTime dateTimeNew = NanoFactory.getXMLReader().read(DateTime.class, xmlStr);
+		assertEquals(dateTimeNew, dateTime);
+	}
+	
+	public void testReadWriteJSON() throws Exception {
+		DateTime dateTime = new DateTime();
+		dateTime.setTime(new Date(Date.UTC(111, 10, 10, 2, 3, 25)));
+		String jsonStr = NanoFactory.getJSONWriter().write(dateTime);
+		DateTime dateTimeNew = NanoFactory.getJSONReader().read(DateTime.class, jsonStr);
 		assertEquals(dateTimeNew, dateTime);
 	}
 }

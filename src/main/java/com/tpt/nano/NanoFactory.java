@@ -1,5 +1,7 @@
 package com.tpt.nano;
 
+import com.tpt.nano.impl.JsonReader;
+import com.tpt.nano.impl.JsonWriter;
 import com.tpt.nano.impl.XmlPullWriter;
 import com.tpt.nano.impl.XmlSAXReader;
 
@@ -33,8 +35,25 @@ public class NanoFactory {
 		return new XmlSAXReader(format);
 	}
 	
+	/**
+	 * Get IReader instance with default format(encoding is utf-8),
+	 * the IReader instance cna be used to read JSON into POJO.
+	 * 
+	 * @return an instance of IReader implementation
+	 */
 	public static IReader getJSONReader() {
-		return null; // TODO
+		return new JsonReader();
+	}
+	
+	/**
+	 * Get IReader instance with specific format,
+	 * the IReader instance can be used to read JSON into POJO.
+	 * 
+	 * @param format info about encoding
+	 * @return an instance of IReader implementation.
+	 */
+	public static IReader getJSONReader(Format format) {
+		return new JsonReader(format);
 	}
 	
 	/**
@@ -58,8 +77,23 @@ public class NanoFactory {
 		return new XmlPullWriter(format);
 	}
 	
+	/**
+	 * Get IWriter instance with default format(encoding is utf-8),
+	 * the IWriter instance can be used to write Java POJO into JSON.
+	 * 
+	 * @return an instance of IWriter implementation
+	 */
 	public static IWriter getJSONWriter() {
-		return null; // TODO
+		return new JsonWriter();
 	}
 
+	/**
+	 * Get IWriter instance with specific format,
+	 * the IWriter instance can be used to write Java POJO into JSON.
+	 * 
+	 * @return an instance of IWriter implementation
+	 */
+	public static IWriter getJSONWriter(Format format) {
+		return new JsonWriter(format);
+	}
 }

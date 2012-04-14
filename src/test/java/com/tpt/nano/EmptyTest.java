@@ -35,7 +35,7 @@ public class EmptyTest extends TestCase {
     	}
     }
     
-	public void testDefaults() throws Exception {
+	public void testDefaultsXML() throws Exception {
 		IReader xmlReader = NanoFactory.getXMLReader();
 		DefaultExample example = xmlReader.read(DefaultExample.class, SOURCE);
 		
@@ -47,6 +47,24 @@ public class EmptyTest extends TestCase {
 		String str = xmlWriter.write(example);
 		
 		example = xmlReader.read(DefaultExample.class, str);
+		assertEquals("test", example.name);
+		assertEquals("some text", example.text);
+		assertNull(example.stringList);
+	}
+	
+	public void testDefaultsJSON() throws Exception {
+		IReader xmlReader = NanoFactory.getXMLReader();
+		DefaultExample example = xmlReader.read(DefaultExample.class, SOURCE);
+		
+		assertEquals("test", example.name);
+		assertEquals("some text", example.text);
+		assertNull(example.stringList);
+		
+		IWriter jsonWriter = NanoFactory.getJSONWriter();
+		String str = jsonWriter.write(example);
+		
+		IReader jsonReader = NanoFactory.getJSONReader();
+		example = jsonReader.read(DefaultExample.class, str);
 		assertEquals("test", example.name);
 		assertEquals("some text", example.text);
 		assertNull(example.stringList);

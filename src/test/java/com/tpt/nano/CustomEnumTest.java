@@ -73,7 +73,7 @@ public class CustomEnumTest extends TestCase {
     	}
     }
     
-    public void testEnum() throws Exception {
+    public void testEnumXML() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	EnumBug bug = xmlReader.read(EnumBug.class, SOURCE);
     
@@ -86,6 +86,20 @@ public class CustomEnumTest extends TestCase {
     	assertTrue(bug.getType() == bugCopy.getType());
     }
     
+    public void testEnumJSON() throws Exception {
+    	IReader xmlReader = NanoFactory.getXMLReader();
+    	EnumBug bug = xmlReader.read(EnumBug.class, SOURCE);
+    
+    	assertEquals(bug.getType(), PartType.A);
+    	
+    	IWriter jsonWriter = NanoFactory.getJSONWriter();
+    	String bugStr = jsonWriter.write(bug);
+    	
+    	IReader jsonReader = NanoFactory.getJSONReader();
+    	EnumBug bugCopy = jsonReader.read(EnumBug.class, bugStr);
+    	assertTrue(bug.getType() == bugCopy.getType());
+    }
+    
     public void testInvalidEnum() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	EnumBug bug = xmlReader.read(EnumBug.class, INVALID_SOURCE);
@@ -93,7 +107,7 @@ public class CustomEnumTest extends TestCase {
     	assertNull(bug.getType());
     }
     
-    public void testVargsEnum() throws Exception {
+    public void testVargsEnumXML() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	EnumVariableArgumentsBug bug = xmlReader.read(EnumVariableArgumentsBug.class, LIST);
     	
@@ -105,6 +119,25 @@ public class CustomEnumTest extends TestCase {
     	IWriter xmlWriter = NanoFactory.getXMLWriter();
     	String bugStr = xmlWriter.write(bug);
     	EnumVariableArgumentsBug bugCopy = xmlReader.read(EnumVariableArgumentsBug.class, bugStr);
+        assertEquals(bugCopy.getTypes().get(0), PartType.A);
+        assertEquals(bugCopy.getTypes().get(1), PartType.B);
+        assertEquals(bugCopy.getTypes().get(2), PartType.A);
+        assertEquals(bugCopy.getTypes().get(3), PartType.A);
+    }
+    
+    public void testVargsEnumJSON() throws Exception {
+    	IReader xmlReader = NanoFactory.getXMLReader();
+    	EnumVariableArgumentsBug bug = xmlReader.read(EnumVariableArgumentsBug.class, LIST);
+    	
+        assertEquals(bug.getTypes().get(0), PartType.A);
+        assertEquals(bug.getTypes().get(1), PartType.B);
+        assertEquals(bug.getTypes().get(2), PartType.A);
+        assertEquals(bug.getTypes().get(3), PartType.A);
+        
+    	IWriter jsonWriter = NanoFactory.getJSONWriter();
+    	String bugStr = jsonWriter.write(bug);
+    	IReader jsonReader = NanoFactory.getJSONReader();
+    	EnumVariableArgumentsBug bugCopy = jsonReader.read(EnumVariableArgumentsBug.class, bugStr);
         assertEquals(bugCopy.getTypes().get(0), PartType.A);
         assertEquals(bugCopy.getTypes().get(1), PartType.B);
         assertEquals(bugCopy.getTypes().get(2), PartType.A);

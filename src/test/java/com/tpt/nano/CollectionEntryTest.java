@@ -73,7 +73,7 @@ public class CollectionEntryTest extends TestCase {
     }
     
 	   
-    public void testExampleCollection() throws Exception {
+    public void testExampleCollectionXML() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
 		
     	ExampleCollection exampleCollection = xmlReader.read(ExampleCollection.class, LIST);
@@ -92,7 +92,28 @@ public class CollectionEntryTest extends TestCase {
 		assertEquals("three", e.text);
     }
     
-    public void testExamplePrimitiveCollection() throws Exception {
+    public void testExampleCollectionJSON() throws Exception {
+    	IReader xmlReader = NanoFactory.getXMLReader();
+		
+    	ExampleCollection exampleCollection = xmlReader.read(ExampleCollection.class, LIST);
+    	
+    	IWriter jsonWriter = NanoFactory.getJSONWriter();
+    	StringWriter writer = new StringWriter();
+    	jsonWriter.write(exampleCollection, writer);
+		String text = writer.toString();
+		
+		IReader jsonReader = NanoFactory.getJSONReader();
+		exampleCollection = jsonReader.read(ExampleCollection.class, text);
+		
+		assertTrue(exampleCollection.list.size() == 3);
+		
+		Entry e = exampleCollection.list.get(2);
+		assertEquals(3, e.id);
+		assertEquals("three", e.text);
+    }
+    
+    
+    public void testExamplePrimitiveCollectionXML() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	
     	ExamplePrimitiveCollection examplePrimitiveCollection = xmlReader.read(ExamplePrimitiveCollection.class, PRIMITIVE_LIST);
@@ -103,6 +124,22 @@ public class CollectionEntryTest extends TestCase {
 		String text = writer.toString();
 		
 		examplePrimitiveCollection = xmlReader.read(ExamplePrimitiveCollection.class, text);
+		assertEquals(4, examplePrimitiveCollection.list.size());
+		assertEquals(new Character('c'), examplePrimitiveCollection.list.get(2));
+    }
+    
+    public void testExamplePrimitiveCollectionJSON() throws Exception {
+    	IReader xmlReader = NanoFactory.getXMLReader();
+    	
+    	ExamplePrimitiveCollection examplePrimitiveCollection = xmlReader.read(ExamplePrimitiveCollection.class, PRIMITIVE_LIST);
+    	
+    	IWriter jsonWriter = NanoFactory.getJSONWriter();
+    	StringWriter writer = new StringWriter();
+    	jsonWriter.write(examplePrimitiveCollection, writer);
+		String text = writer.toString();
+		
+		IReader jsonReader = NanoFactory.getJSONReader();
+		examplePrimitiveCollection = jsonReader.read(ExamplePrimitiveCollection.class, text);
 		assertEquals(4, examplePrimitiveCollection.list.size());
 		assertEquals(new Character('c'), examplePrimitiveCollection.list.get(2));
     }

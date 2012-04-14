@@ -45,7 +45,7 @@ public class DefaultTest extends TestCase {
 		   THREE
 	   }
 	   
-	   public void testList() throws Exception {
+	   public void testListXML() throws Exception {
 		   IReader xmlReader = NanoFactory.getXMLReader();
 		   // deserialize
 		   DefaultTextList list = xmlReader.read(DefaultTextList.class, SOURCE);
@@ -70,6 +70,43 @@ public class DefaultTest extends TestCase {
 	       
 	       // deserialize again
 	       list = xmlReader.read(DefaultTextList.class, text);
+		   assertEquals(Version.ONE, list.version);
+		   assertEquals(Version.ONE, list.get(0).version);
+		   assertEquals("a", list.get(0).name);
+		   assertEquals("Example 1", list.get(0).text);
+		   assertEquals(Version.TWO, list.get(1).version);
+		   assertEquals("b", list.get(1).name);
+		   assertEquals("Example 2", list.get(1).text);
+		   assertEquals(Version.THREE, list.get(2).version);
+		   assertEquals("c", list.get(2).name);
+		   assertEquals("Example 3", list.get(2).text);
+	   }
+	   
+	   public void testListJSON() throws Exception {
+		   IReader xmlReader = NanoFactory.getXMLReader();
+		   // deserialize
+		   DefaultTextList list = xmlReader.read(DefaultTextList.class, SOURCE);
+		   
+		   assertEquals(Version.ONE, list.version);
+	       assertEquals(Version.ONE, list.get(0).version);
+	       assertEquals("a", list.get(0).name);
+	       assertEquals("Example 1", list.get(0).text);
+	       assertEquals(Version.TWO, list.get(1).version);
+	       assertEquals("b", list.get(1).name);
+	       assertEquals("Example 2", list.get(1).text);
+	       assertEquals(Version.THREE, list.get(2).version);
+	       assertEquals("c", list.get(2).name);
+	       assertEquals("Example 3", list.get(2).text);
+	       
+	       // serialize
+	       StringWriter buffer = new StringWriter();
+	       IWriter jsonWriter = NanoFactory.getJSONWriter();
+	       jsonWriter.write(list, buffer);
+	       String text = buffer.toString();
+	       
+	       // deserialize again
+	       IReader jsonReader = NanoFactory.getJSONReader();
+	       list = jsonReader.read(DefaultTextList.class, text);
 		   assertEquals(Version.ONE, list.version);
 		   assertEquals(Version.ONE, list.get(0).version);
 		   assertEquals("a", list.get(0).name);
