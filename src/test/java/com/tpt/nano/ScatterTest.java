@@ -94,7 +94,7 @@ public class ScatterTest extends TestCase {
     	THREE;
     }
     
-    public void testList() throws Exception {
+    public void testListXML() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	InlineTextList list = xmlReader.read(InlineTextList.class, INLINE_LIST);
     	
@@ -130,7 +130,44 @@ public class ScatterTest extends TestCase {
         assertEquals("Example 3", list.get(2).text);
     }
     
-    public void testPrimitiveList() throws Exception {
+    public void testListJSON() throws Exception {
+    	IReader xmlReader = NanoFactory.getXMLReader();
+    	InlineTextList list = xmlReader.read(InlineTextList.class, INLINE_LIST);
+    	
+        assertEquals(Version.ONE, list.version);
+        assertEquals("Some example message", list.message);
+        assertEquals(Version.ONE, list.get(0).version);
+        assertEquals("a", list.get(0).name);
+        assertEquals("Example 1", list.get(0).text);
+        assertEquals(Version.TWO, list.get(1).version);
+        assertEquals("b", list.get(1).name);
+        assertEquals("Example 2", list.get(1).text);
+        assertEquals(Version.THREE, list.get(2).version);
+        assertEquals("c", list.get(2).name);
+        assertEquals("Example 3", list.get(2).text);
+        assertTrue(list.getNumbers().contains(1.0));
+        assertTrue(list.getNumbers().contains(2.0));
+        assertTrue(list.getNumbers().contains(3.0));
+        
+        IWriter jsonWriter = NanoFactory.getJSONWriter();
+        IReader jsonReader = NanoFactory.getJSONReader();
+        String str = jsonWriter.write(list);
+        list = jsonReader.read(InlineTextList.class, str);
+        
+        assertEquals(Version.ONE, list.version);
+        assertEquals("Some example message", list.message);
+        assertEquals(Version.ONE, list.get(0).version);
+        assertEquals("a", list.get(0).name);
+        assertEquals("Example 1", list.get(0).text);
+        assertEquals(Version.TWO, list.get(1).version);
+        assertEquals("b", list.get(1).name);
+        assertEquals("Example 2", list.get(1).text);
+        assertEquals(Version.THREE, list.get(2).version);
+        assertEquals("c", list.get(2).name);
+        assertEquals("Example 3", list.get(2).text);
+    }
+    
+    public void testPrimitiveListXML() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	InlinePrimitiveList list = xmlReader.read(InlinePrimitiveList.class, INLINE_PRIMITIVE_LIST);
     	
@@ -152,5 +189,28 @@ public class ScatterTest extends TestCase {
         assertEquals("Example 2", list.get(1));
         assertEquals("Example 3", list.get(2));
     }
-			   
+
+    public void testPrimitiveListJSON() throws Exception {
+    	IReader xmlReader = NanoFactory.getXMLReader();
+    	InlinePrimitiveList list = xmlReader.read(InlinePrimitiveList.class, INLINE_PRIMITIVE_LIST);
+    	
+        assertEquals(Version.ONE, list.version);
+        assertEquals("Some example message", list.message);
+
+        assertEquals("Example 1", list.get(0));
+        assertEquals("Example 2", list.get(1));
+        assertEquals("Example 3", list.get(2));
+        
+        IWriter jsonWriter = NanoFactory.getJSONWriter();
+        IReader jsonReader = NanoFactory.getJSONReader();
+        String str = jsonWriter.write(list);
+        list = jsonReader.read(InlinePrimitiveList.class, str);
+        
+        assertEquals(Version.ONE, list.version);
+        assertEquals("Some example message", list.message);
+
+        assertEquals("Example 1", list.get(0));
+        assertEquals("Example 2", list.get(1));
+        assertEquals("Example 3", list.get(2));
+    }
 }

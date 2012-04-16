@@ -47,7 +47,7 @@ public class RootElementTest extends TestCase {
 		
 	}
 	
-	public void testRoot() throws Exception {
+	public void testRootXML() throws Exception {
 		IReader xmlReader = NanoFactory.getXMLReader();
 		RootExample example = xmlReader.read(RootExample.class, ROOT_EXAMPLE);
 		

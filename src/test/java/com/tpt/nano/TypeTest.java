@@ -103,7 +103,7 @@ public class TypeTest extends TestCase {
 	   THREE
    }
    
-   public void testType() throws Exception {
+   public void testTypeXML() throws Exception {
 	   IReader xmlReader = NanoFactory.getXMLReader();
 	   Entry entry = xmlReader.read(Entry.class, SOURCE);
 	   
@@ -129,6 +129,35 @@ public class TypeTest extends TestCase {
        String xmlStr = xmlWriter.write(entry);
        
        entry = xmlReader.read(Entry.class, SOURCE);
+       
+       assertEquals(true, entry.primitive.booleanValue);
+       assertEquals(16, entry.primitive.byteValue);
+       assertEquals(120, entry.primitive.shortValue);
+       assertEquals(1234, entry.primitive.intValue);
+       assertEquals(1234.56f, entry.primitive.floatValue);
+       assertEquals(1234567l, entry.primitive.longValue);
+       assertEquals(1234567.89d, entry.primitive.doubleValue);
+
+       assertEquals(Boolean.TRUE, entry.object.booleanValue);
+       assertEquals(new Byte("16"), entry.object.byteValue);
+       assertEquals(new Short("120"), entry.object.shortValue);
+       assertEquals(new Integer(1234), entry.object.intValue);
+       assertEquals(new Float(1234.56), entry.object.floatValue);
+       assertEquals(new Long(1234567), entry.object.longValue);
+       assertEquals(new Double(1234567.89), entry.object.doubleValue);
+       assertEquals("text value", entry.object.stringValue);
+       assertEquals(TestEnum.TWO, entry.object.enumValue);       
+   }
+   
+   public void testType() throws Exception {
+	   IReader xmlReader = NanoFactory.getXMLReader();
+	   Entry entry = xmlReader.read(Entry.class, SOURCE);
+       
+       IWriter jsonWriter = NanoFactory.getJSONWriter();
+       String xmlStr = jsonWriter.write(entry);
+       
+       IReader jsonReader = NanoFactory.getJSONReader();
+       entry = jsonReader.read(Entry.class, xmlStr);
        
        assertEquals(true, entry.primitive.booleanValue);
        assertEquals(16, entry.primitive.byteValue);

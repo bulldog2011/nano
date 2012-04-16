@@ -79,6 +79,14 @@ public class StackOverflowTest extends TestCase {
 	   
 	   assertEquals(delivery.listBenefitMutation.size() + delivery.listNewBenefit.size(), ITERATIONS);
 	   
+	   // test json
+	   IWriter jsonWriter = NanoFactory.getJSONWriter();
+	   String str = jsonWriter.write(delivery);
+	   
+	   IReader jsonReader = NanoFactory.getJSONReader();
+	   delivery = jsonReader.read(Delivery.class, str);
+	   
+	   assertEquals(delivery.listBenefitMutation.size() + delivery.listNewBenefit.size(), ITERATIONS);
    }
 
 }

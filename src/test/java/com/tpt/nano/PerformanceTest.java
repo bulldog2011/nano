@@ -133,16 +133,31 @@ public class PerformanceTest extends TestCase {
 	private IReader xmlReader = NanoFactory.getXMLReader();
 	private IWriter xmlWriter = NanoFactory.getXMLWriter();
 	
+	private IReader jsonReader = NanoFactory.getJSONReader();
+	private IWriter jsonWriter = NanoFactory.getJSONWriter();
+	
 	public void testCompareToJavaSerializer() throws Exception {
 		RootEntry entry = xmlReader.read(RootEntry.class, BASIC_ENTRY);
-		ByteArrayOutputStream nanoBuffer = new ByteArrayOutputStream();
+		ByteArrayOutputStream nanoXmlBuffer = new ByteArrayOutputStream();
+		ByteArrayOutputStream nanoJsonBuffer = new ByteArrayOutputStream();
 		ByteArrayOutputStream javaBuffer = new ByteArrayOutputStream();
 		ObjectOutputStream javaSerializer = new ObjectOutputStream(javaBuffer);
 		
-		xmlWriter.write(entry, nanoBuffer);
-		System.out.println(nanoBuffer.toString());
+		xmlWriter.write(entry, nanoXmlBuffer);
+		System.out.println(nanoXmlBuffer.toString());
 		
-		entry = xmlReader.read(RootEntry.class, nanoBuffer.toString());
+		jsonWriter.write(entry, nanoJsonBuffer);
+		System.out.println(nanoJsonBuffer.toString());
+		
+		entry = xmlReader.read(RootEntry.class, nanoXmlBuffer.toString());
+		// some validations
+		assertTrue(entry.bool);
+		assertTrue(entry.number == 1234);
+		assertEquals(entry.constant, "some constant");
+		assertEquals(entry.entry.name, "first");
+		assertTrue(entry.list.size() == 5);
+		
+		entry = jsonReader.read(RootEntry.class, nanoJsonBuffer.toString());
 		// some validations
 		assertTrue(entry.bool);
 		assertTrue(entry.number == 1234);
@@ -152,22 +167,36 @@ public class PerformanceTest extends TestCase {
 		
 		javaSerializer.writeObject(entry);
 		
-		byte[] nanoByteArray = nanoBuffer.toByteArray();
+		byte[] nanoXmlByteArray = nanoXmlBuffer.toByteArray();
+		byte[] nanoJsonByteArray = nanoJsonBuffer.toByteArray();
 		byte[] javaByteArray = javaBuffer.toByteArray();
 
-		long timeToReadWithNano = timeToReadWithNano(RootEntry.class, nanoByteArray, ITERATIONS);
+		long timeToReadWithNanoXml = timeToReadWithNanoXML(RootEntry.class, nanoXmlByteArray, ITERATIONS);
+		long timeToReadWithNanoJson = timeToReadWithNanoJSON(RootEntry.class, nanoJsonByteArray, ITERATIONS);
 		long timeToReadWithJava = timeToReadWithJava(RootEntry.class, javaByteArray, ITERATIONS);
 		
-		System.out.println("NANO took '" +  timeToReadWithNano + "' ms to read " + ITERATIONS + " documents.");
+		System.out.println("NANO XML took '" +  timeToReadWithNanoXml + "' ms to read " + ITERATIONS + " documents.");
+		System.out.println("NANO JSON took '" +  timeToReadWithNanoJson + "' ms to read " + ITERATIONS + " documents.");
 		System.out.println("JAVA took '" +  timeToReadWithJava + "' ms to read " + ITERATIONS + " documents.");		
 	}
 	
-	private long timeToReadWithNano(Class<?> type, byte[] buffer, int count) throws Exception {
-		xmlReader.read(RootEntry.class, new ByteArrayInputStream(buffer));
+	private long timeToReadWithNanoXML(Class<?> type, byte[] xmlBuffer, int count) throws Exception {
+		xmlReader.read(RootEntry.class, new ByteArrayInputStream(xmlBuffer));
 		long now = System.currentTimeMillis();
 		
 		for(int i= 0; i < count; i++) {
-			xmlReader.read(RootEntry.class, new ByteArrayInputStream(buffer));
+			xmlReader.read(RootEntry.class, new ByteArrayInputStream(xmlBuffer));
+		}
+		
+		return System.currentTimeMillis() - now;
+	}
+	
+	private long timeToReadWithNanoJSON(Class<?> type, byte[] jsonBuffer, int count) throws Exception {
+		jsonReader.read(RootEntry.class, new ByteArrayInputStream(jsonBuffer));
+		long now = System.currentTimeMillis();
+		
+		for(int i= 0; i < count; i++) {
+			jsonReader.read(RootEntry.class, new ByteArrayInputStream(jsonBuffer));
 		}
 		
 		return System.currentTimeMillis() - now;
@@ -185,7 +214,7 @@ public class PerformanceTest extends TestCase {
 		return System.currentTimeMillis() - now;
 	}
 	
-	public void testBinding() throws Exception {
+	public void testBindingXML() throws Exception {
 		RootEntry root = xmlReader.read(RootEntry.class, BASIC_ENTRY);
 		
 		String xmlStr = xmlWriter.write(root);
@@ -198,8 +227,20 @@ public class PerformanceTest extends TestCase {
 		assertTrue(root.list.size() == 5);
 	}
 	
+	public void testBindingJSON() throws Exception {
+		RootEntry root = xmlReader.read(RootEntry.class, BASIC_ENTRY);
+		
+		String xmlStr = jsonWriter.write(root);
+		
+		root = jsonReader.read(RootEntry.class, xmlStr);
+		assertTrue(root.bool);
+		assertTrue(root.number == 1234);
+		assertEquals("some constant", root.constant);
+		assertEquals("first", root.entry.name);
+		assertTrue(root.list.size() == 5);
+	}
 	
-	public void testNanoWrite() throws Exception {
+	public void testNanoXMLWrite() throws Exception {
 		RootEntry entry = xmlReader.read(RootEntry.class, BASIC_ENTRY);
 		long start = System.currentTimeMillis();
 		
@@ -212,11 +253,37 @@ public class PerformanceTest extends TestCase {
 		
 		long duration = System.currentTimeMillis() - start;
 		
-		System.out.printf("NANO took '%s' ms to write %s documents\n", duration, ITERATIONS);
+		System.out.printf("NANO XML took '%s' ms to write %s documents\n", duration, ITERATIONS);
 		
 		// some validations
 		String xmlStr = xmlWriter.write(entry);
 		entry = xmlReader.read(RootEntry.class, xmlStr);
+		
+		assertTrue(entry.bool);
+		assertTrue(entry.number == 1234);
+		assertEquals(">><<", entry.constant);
+		assertEquals("first", entry.entry.name);
+		assertTrue(entry.list.size() == 5);
+	}
+	
+	public void testNanoJSONWrite() throws Exception {
+		RootEntry entry = xmlReader.read(RootEntry.class, BASIC_ENTRY);
+		long start = System.currentTimeMillis();
+		
+		entry.constant = ">><<"; // this should be escaped
+		entry.text = "this is text>> some more<<"; // this should be escaped
+		
+		for(int i = 0; i < ITERATIONS; i++) {
+			jsonWriter.write(entry, new StringWriter());
+		}
+		
+		long duration = System.currentTimeMillis() - start;
+		
+		System.out.printf("NANO JSON took '%s' ms to write %s documents\n", duration, ITERATIONS);
+		
+		// some validations
+		String xmlStr = jsonWriter.write(entry);
+		entry = jsonReader.read(RootEntry.class, xmlStr);
 		
 		assertTrue(entry.bool);
 		assertTrue(entry.number == 1234);

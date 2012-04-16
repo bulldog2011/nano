@@ -41,14 +41,14 @@ public class MultiThreadTest extends TestCase {
 	
 	private static class Worker extends Thread {
 		private final CountDownLatch latch;
-		private final IReader xmlReader;
-		private final IWriter xmlWriter;
+		private final IReader reader;
+		private final IWriter writer;
 		private final Queue<Status> queue;
 		private final Example example;
 		
-		public Worker(CountDownLatch latch, IReader xmlReader, IWriter xmlWriter, Queue<Status> queue, Example example) {
-			this.xmlReader = xmlReader;
-			this.xmlWriter = xmlWriter;
+		public Worker(CountDownLatch latch, IReader reader, IWriter writer, Queue<Status> queue, Example example) {
+			this.reader = reader;
+			this.writer = writer;
 			this.example = example;
 			this.latch = latch;
 			this.queue = queue;
@@ -59,8 +59,8 @@ public class MultiThreadTest extends TestCase {
 				latch.countDown();
 				latch.await();
 				for(int i = 0; i < INNER_LOOP; i++) {
-					String text = xmlWriter.write(example);
-					Example copy = xmlReader.read(Example.class, text);
+					String text = writer.write(example);
+					Example copy = reader.read(Example.class, text);
 					assertEquals(example.name, copy.name);
 		            assertEquals(example.value, copy.value);
 		            assertEquals(example.number, copy.number);
@@ -74,7 +74,7 @@ public class MultiThreadTest extends TestCase {
 		}
 	}
 
-	public void testCurrency() throws Exception {
+	public void testCurrencyXML() throws Exception {
 		IReader xmlReader = NanoFactory.getXMLReader();
 		IWriter xmlWriter = NanoFactory.getXMLWriter();
 		CountDownLatch latch = new CountDownLatch(20);
@@ -89,6 +89,28 @@ public class MultiThreadTest extends TestCase {
 		
 		for(int i = 0; i < OUTER_LOOP; i++) {
 			Worker worker = new Worker(latch, xmlReader, xmlWriter, status, example);
+			worker.start();
+		}
+		for(int i = 0; i < OUTER_LOOP; i++) {
+			assertEquals("Serialization fails when used concurrently", status.take(), Status.SUCCESS);
+		}
+	}
+	
+	public void testCurrencyJSON() throws Exception {
+		IReader jsonReader = NanoFactory.getJSONReader();
+		IWriter jsonWriter = NanoFactory.getJSONWriter();
+		CountDownLatch latch = new CountDownLatch(20);
+		BlockingQueue<Status> status = new LinkedBlockingQueue<Status>();
+		Example example = new Example();
+		
+		example.name = "Example Name";
+		example.value = "Some Value";
+		example.number = 10;
+		example.date = new Date();
+		example.locale = Locale.CHINA;
+		
+		for(int i = 0; i < OUTER_LOOP; i++) {
+			Worker worker = new Worker(latch, jsonReader, jsonWriter, status, example);
 			worker.start();
 		}
 		for(int i = 0; i < OUTER_LOOP; i++) {

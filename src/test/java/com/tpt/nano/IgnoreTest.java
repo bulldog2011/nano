@@ -52,7 +52,7 @@ public class IgnoreTest extends TestCase {
 	}
 	
 	
-	public void testEmployee() throws Exception {
+	public void testEmployeeXML() throws Exception {
 		IReader xmlReader = NanoFactory.getXMLReader();
 		
 		Employee employee = xmlReader.read(Employee.class, SOURCE);
@@ -74,5 +74,30 @@ public class IgnoreTest extends TestCase {
 		assertTrue(copy.age == 0);
 		assertEquals(employee.birthday, copy.birthday);
 	}
+	
+	public void testEmployeeJSON() throws Exception {
+		IReader xmlReader = NanoFactory.getXMLReader();
+		
+		Employee employee = xmlReader.read(Employee.class, SOURCE);
+		
+		assertEquals(10, employee.id);
+		assertEquals("Smith", employee.lastName);
+		assertEquals("Bob", employee.firstName);
+		assertTrue(employee.responsibilities.responsibilityList.size() == 3);
+		assertTrue(employee.age == 0);
+		
+		IWriter jsonWriter = NanoFactory.getJSONWriter();
+		String text = jsonWriter.write(employee);
+		
+		IReader jsonReader = NanoFactory.getJSONReader();
+		Employee copy = jsonReader.read(Employee.class, text);
+		assertEquals(10, copy.id);
+		assertEquals("Smith", copy.lastName);
+		assertEquals("Bob", copy.firstName);
+		assertTrue(copy.responsibilities.responsibilityList.size() == 3);
+		assertTrue(copy.age == 0);
+		assertEquals(employee.birthday, copy.birthday);
+	}
+
 
 }
