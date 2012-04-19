@@ -6,46 +6,41 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.json.JSONStringer;
 
 import com.tpt.nano.Format;
 import com.tpt.nano.IWriter;
 import com.tpt.nano.annotation.schema.AttributeSchema;
 import com.tpt.nano.annotation.schema.ElementSchema;
-import com.tpt.nano.annotation.schema.RootElementSchema;
 import com.tpt.nano.annotation.schema.ValueSchema;
 import com.tpt.nano.exception.MappingException;
 import com.tpt.nano.exception.WriterException;
 import com.tpt.nano.transform.Transformer;
 import com.tpt.nano.util.StringUtil;
 
-
 /**
- * IWriter implementation using org.json library,
+ * IWriter implementation,
  * 
- * JsonWriter serializes POJO into JSON string, the serialization 
+ * NVWriter serializes POJO into name-value query string, the serialization 
  * is guided by mapping schema defined in the POJO using Nano annotations.
  * 
  * @author bulldog
  *
  */
-public class JsonWriter implements IWriter {
-
-	static final String VALUE_KEY = "__value__";
+public class NVWriter implements IWriter {
 	
 	private Format format;
 	
-	public JsonWriter() {
+	public NVWriter() {
 		this(new Format());
 	}
 	
-	public JsonWriter(Format format) {
+	public NVWriter(Format format) {
 		this.format = format;
 	}
-	
+
 	public void write(Object source, Writer out) throws WriterException,
 			MappingException {
 		if (out == null) {
@@ -58,12 +53,10 @@ public class JsonWriter implements IWriter {
 		} catch (IOException e) {
 			throw new WriterException("IO error", e);
 		}
-
 	}
 
 	public void write(Object source, OutputStream os) throws WriterException,
 			MappingException {
-
 		if (os == null) {
 			throw new WriterException("Entry validation failure, OutputStream is null!");
 		}
@@ -73,6 +66,7 @@ public class JsonWriter implements IWriter {
 		} catch (UnsupportedEncodingException e) {
 			throw new WriterException("Error to serialize object", e);
 		}
+
 	}
 
 	public String write(Object source) throws WriterException, MappingException {
@@ -86,22 +80,20 @@ public class JsonWriter implements IWriter {
 						"only Nano bindable complex type object can be accepted!");
 			}
 			
-			JSONStringer stringer = new JSONStringer();
+			List<NameValuePair> nvs = new ArrayList<NameValuePair>();
+			String prefix = "";
 			
-			stringer.object();
+			writeObject(nvs, prefix, source);
 			
-			MappingSchema ms = MappingSchema.fromObject(source);
-			RootElementSchema res = ms.getRootElementSchema();
-			
-			stringer.key(res.getXmlName());
-			this.writeObject(stringer, source);
-			
-			stringer.endObject();
-			// output
-			return stringer.toString();
-		
+			if (nvs.size() == 0) {
+				throw new WriterException("Error to serialize object, empty result.");
+			} else {
+				return join(nvs, "&");
+			}
 		} catch (MappingException me) {
 			throw me;
+		} catch (WriterException we) {
+			throw we;
 		} catch (IllegalArgumentException iae) {
 			throw new WriterException("Entry validation failure", iae);
 		} catch (Exception e) {
@@ -109,59 +101,66 @@ public class JsonWriter implements IWriter {
 		}
 	}
 	
-//	private void string2Writer(String source, Writer out) throws IOException {
-//		
-//		char[] buffer = source.toCharArray();
-//		for(int i = 0; i < buffer.length; i++) {
-//			out.append(buffer[i]);
-//		}
-//		out.flush();
-//	}
-	
-	private void writeObject(JSONStringer stringer, Object source) throws Exception {
-		MappingSchema ms = MappingSchema.fromObject(source);
-		
-		stringer.object();
-		
-		// write attributes first
-		writeAttributes(stringer, source, ms);
-		
-		// write value if any
-		writeValue(stringer, source, ms);
-		
-		// write elements last
-		writeElements(stringer, source, ms);
-		
-		stringer.endObject();
-
+	// convert nv list to query string
+	private String join(List<NameValuePair> nvs, String delimiter) {
+		StringBuffer sb = new StringBuffer();
+		for(NameValuePair nv : nvs) {
+			sb.append(nv.toString());
+			sb.append(delimiter);
+		}
+		int length = sb.length();
+		if (length > 0) {
+			// remove last &
+			sb.setLength(length - delimiter.length());
+		}
+		return sb.toString();
 	}
 	
-	private void writeAttributes(JSONStringer stringer, Object source, MappingSchema ms) throws Exception {
+	private void writeObject(List<NameValuePair> nvs, String prefix, Object source) throws Exception {
+		MappingSchema ms = MappingSchema.fromObject(source);
+		
+		writeAttributes(nvs, prefix, source, ms);
+		
+		writeValue(nvs, prefix, source, ms);
+		
+		writeElements(nvs, prefix, source, ms);
+		
+	}
+	
+	private void writeAttributes(List<NameValuePair> nvs, String prefix, Object source, MappingSchema ms) throws Exception {
+		if (!prefix.isEmpty()) {
+			prefix = prefix + ".";
+		}
 		Map<String, AttributeSchema> field2AttributeSchemaMapping = ms.getField2AttributeSchemaMapping();
 		for(String fieldName : field2AttributeSchemaMapping.keySet()) {
 			AttributeSchema as = field2AttributeSchemaMapping.get(fieldName);
 			Field field = as.getField();
-			Object value = field.get(source);
-			if (value != null) {
-				stringer.key("@" + as.getXmlName());
-				stringer.value(getJSONValue(value, field.getType()));
+			Object obj = field.get(source);
+			if (obj != null) {
+				String name = prefix + "@" + fieldName;
+				String value = Transformer.write(obj, field.getType());
+				nvs.add(new NameValuePair(name, value));
 			}
 		}
 	}
 	
-	private void writeValue(JSONStringer stringer, Object source, MappingSchema ms) throws Exception {
+	private void writeValue(List<NameValuePair> nvs, String prefix, Object source, MappingSchema ms) throws Exception {
 		ValueSchema vs = ms.getValueSchema();
 		if (vs == null) return; // no ValueSchema, do nothing
 		
 		Field field = vs.getField();
-		Object value = field.get(source);
-		if (value != null) {
-			stringer.key(VALUE_KEY);
-			stringer.value(getJSONValue(value, field.getType()));
+		Object obj = field.get(source);
+		if (obj != null) {
+			String name = prefix;
+			String value = Transformer.write(obj, field.getType());
+			nvs.add(new NameValuePair(name, value));
 		}
 	}
 	
-	private void writeElements(JSONStringer stringer, Object source, MappingSchema ms) throws Exception {
+	private void writeElements(List<NameValuePair> nvs, String prefix, Object source, MappingSchema ms) throws Exception {
+		if (!prefix.isEmpty()) {
+			prefix = prefix + ".";
+		}
 		Map<String, Object> field2SchemaMapping = ms.getField2SchemaMapping();
 		for (String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
@@ -170,32 +169,31 @@ public class JsonWriter implements IWriter {
 				Field field = es.getField();
 				Object value = field.get(source);
 				if (value != null) {
+					prefix = prefix + es.getXmlName();
 					if (es.isList()) {
-						this.writeElementList(stringer, value, es);
+						this.writeElementList(nvs, prefix, value, es);
 					} else {
-						stringer.key(es.getXmlName());
-						this.writeElement(stringer, value, es);
+						this.writeElement(nvs, prefix, value, es);
 					}
 				}
 			}
 		}
 	}
 	
-	private void writeElementList(JSONStringer stringer, Object source, ElementSchema es) throws Exception {
+	private void writeElementList(List<NameValuePair> nvs, String prefix, Object source, ElementSchema es) throws Exception {
 		List<?> list = (List<?>)source;
 		if (list.size() > 0) {
-			stringer.key(es.getXmlName());
-			stringer.array();
+			int index = 0;
 			for(Object value : list) {
 				if (value == null) continue;
-				this.writeElement(stringer, value, es);
+				prefix = prefix + "(" + index + ")";
+				index++;
+				this.writeElement(nvs, prefix, value, es);
 			}
-			stringer.endArray();
 		}
 	}
 	
-	
-	private void writeElement(JSONStringer stringer, Object source, ElementSchema es) throws Exception {
+	private void writeElement(List<NameValuePair> nvs, String prefix, Object source, ElementSchema es) throws Exception {
 		Class<?> type = null;
 		if (es.isList()) {
 			type = es.getParameterizedType();
@@ -205,21 +203,16 @@ public class JsonWriter implements IWriter {
 		
 		// primitives
 		if(Transformer.isPrimitive(type)) {
-			stringer.value(getJSONValue(source, type));
+			String name = prefix;
+			String value = Transformer.write(source, type);
+			
+			nvs.add(new NameValuePair(name, value));
 			
 			return;
 		}
 		
 		// object
-		this.writeObject(stringer, source);
-	}
-	
-	private Object getJSONValue(Object value, Class<?> type) throws Exception {
-		if (value instanceof Number || value instanceof Boolean) {
-			return value;
-		}
-		String stringValue = Transformer.write(value, type);
-		return stringValue;
+		this.writeObject(nvs, prefix, source);
 	}
 
 }
