@@ -23,6 +23,7 @@ import com.tpt.nano.annotation.schema.ValueSchema;
 import com.tpt.nano.exception.MappingException;
 import com.tpt.nano.exception.ReaderException;
 import com.tpt.nano.transform.Transformer;
+import com.tpt.nano.util.StringUtil;
 import com.tpt.nano.util.TypeReflector;
 
 /**
@@ -119,8 +120,8 @@ public class JsonReader implements IReader {
 		if (type == null) {
 			throw new ReaderException("Cannot read, type is null!");
 		}
-		if (source == null) {
-			throw new ReaderException("Source is null!");			
+		if (StringUtil.isEmpty(source)) {
+			throw new ReaderException("Source is empty!");			
 		}
 		
 		if (Transformer.isPrimitive(type)) {
