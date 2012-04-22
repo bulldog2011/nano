@@ -1,6 +1,7 @@
 package com.tpt.nano.util;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 
 public class StringUtil {
@@ -22,6 +23,18 @@ public class StringUtil {
 			out.append(buffer[i]);
 		}
 		out.flush();
+	}
+	
+	public static String reader2String(Reader source) throws IOException {
+		char[] cbuf = new char[65535];
+		StringBuffer stringbuf = new StringBuffer();
+		
+		int count = 0;
+		while ((count = source.read(cbuf, 0, 65535)) != -1) {
+			stringbuf.append(cbuf, 0, count);
+		}
+		
+		return stringbuf.toString();
 	}
 	
 }

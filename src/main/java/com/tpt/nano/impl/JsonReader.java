@@ -97,24 +97,24 @@ public class JsonReader implements IReader {
 			throws ReaderException, MappingException {
 
 		try {
-			return this.read(type, this.reader2String(source));
+			return this.read(type, StringUtil.reader2String(source));
 		} catch (IOException e) {
 			throw new ReaderException("IO error!", e);
 		}
 		
 	}
 	
-	private String reader2String(Reader source) throws IOException {
-		char[] cbuf = new char[65535];
-		StringBuffer stringbuf = new StringBuffer();
-		
-		int count = 0;
-		while ((count = source.read(cbuf, 0, 65535)) != -1) {
-			stringbuf.append(cbuf, 0, count);
-		}
-		
-		return stringbuf.toString();
-	}
+//	private String reader2String(Reader source) throws IOException {
+//		char[] cbuf = new char[65535];
+//		StringBuffer stringbuf = new StringBuffer();
+//		
+//		int count = 0;
+//		while ((count = source.read(cbuf, 0, 65535)) != -1) {
+//			stringbuf.append(cbuf, 0, count);
+//		}
+//		
+//		return stringbuf.toString();
+//	}
 	
 	private <T> void validate(Class<? extends T> type, String source) throws ReaderException {
 		if (type == null) {
