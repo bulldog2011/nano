@@ -83,7 +83,8 @@ public class NVWriter implements IWriter {
 			}
 			
 			List<NVP> nvs = new ArrayList<NVP>();
-			String prefix = "";
+			MappingSchema ms = MappingSchema.fromObject(source);
+			String prefix = ms.getRootElementSchema().getXmlName();
 			
 			writeObject(nvs, prefix, source);
 			
@@ -121,6 +122,8 @@ public class NVWriter implements IWriter {
 	private void writeObject(List<NVP> nvs, String prefix, Object source) throws Exception {
 		MappingSchema ms = MappingSchema.fromObject(source);
 		
+		prefix = prefix + ".";
+		
 		writeAttributes(nvs, prefix, source, ms);
 		
 		writeValue(nvs, prefix, source, ms);
@@ -130,16 +133,13 @@ public class NVWriter implements IWriter {
 	}
 	
 	private void writeAttributes(List<NVP> nvs, String prefix, Object source, MappingSchema ms) throws Exception {
-		if (!prefix.isEmpty()) {
-			prefix = prefix + ".";
-		}
 		Map<String, AttributeSchema> field2AttributeSchemaMapping = ms.getField2AttributeSchemaMapping();
 		for(String fieldName : field2AttributeSchemaMapping.keySet()) {
 			AttributeSchema as = field2AttributeSchemaMapping.get(fieldName);
 			Field field = as.getField();
 			Object obj = field.get(source);
 			if (obj != null) {
-				String name = prefix + "@" + fieldName;
+				String name = prefix + "@" + as.getXmlName();
 				String value = Transformer.write(obj, field.getType());
 				nvs.add(new NVP(name, value));
 			}
@@ -153,16 +153,13 @@ public class NVWriter implements IWriter {
 		Field field = vs.getField();
 		Object obj = field.get(source);
 		if (obj != null) {
-			String name = prefix + "." + VALUE_NAME;
+			String name = prefix + VALUE_NAME;
 			String value = Transformer.write(obj, field.getType());
 			nvs.add(new NVP(name, value));
 		}
 	}
 	
 	private void writeElements(List<NVP> nvs, String prefix, Object source, MappingSchema ms) throws Exception {
-		if (!prefix.isEmpty()) {
-			prefix = prefix + ".";
-		}
 		Map<String, Object> field2SchemaMapping = ms.getField2SchemaMapping();
 		for (String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
@@ -171,11 +168,11 @@ public class NVWriter implements IWriter {
 				Field field = es.getField();
 				Object value = field.get(source);
 				if (value != null) {
-					prefix = prefix + es.getXmlName();
+					String newPrefix = prefix + es.getXmlName();
 					if (es.isList()) {
-						this.writeElementList(nvs, prefix, value, es);
+						this.writeElementList(nvs, newPrefix, value, es);
 					} else {
-						this.writeElement(nvs, prefix, value, es);
+						this.writeElement(nvs, newPrefix, value, es);
 					}
 				}
 			}
@@ -188,9 +185,9 @@ public class NVWriter implements IWriter {
 			int index = 0;
 			for(Object value : list) {
 				if (value == null) continue;
-				prefix = prefix + "(" + index + ")";
+				String newPrefix = prefix + "(" + index + ")";
 				index++;
-				this.writeElement(nvs, prefix, value, es);
+				this.writeElement(nvs, newPrefix, value, es);
 			}
 		}
 	}

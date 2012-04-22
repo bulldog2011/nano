@@ -72,18 +72,32 @@ public class CollectionEntryTest extends TestCase {
     	}
     }
     
-	   
-    public void testExampleCollectionXML() throws Exception {
+    
+    private ExampleCollection getExampleCollectionFromXMLSource() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
 		
     	ExampleCollection exampleCollection = xmlReader.read(ExampleCollection.class, LIST);
     	
-    	IWriter xmlWriter = NanoFactory.getXMLWriter();
-    	StringWriter writer = new StringWriter();
-    	xmlWriter.write(exampleCollection, writer);
-		String text = writer.toString();
+    	return exampleCollection;
+    }
+	   
+    public void testExampleCollectionXML() throws Exception {
 		
-		exampleCollection = xmlReader.read(ExampleCollection.class, text);
+    	ExampleCollection exampleCollection = getExampleCollectionFromXMLSource();
+    	
+    	IWriter xmlWriter = NanoFactory.getXMLWriter();
+    	IReader xmlReader = NanoFactory.getXMLReader();
+    	
+    	validateExampleCollection(xmlWriter, xmlReader, exampleCollection);
+    }
+    
+    private void validateExampleCollection(IWriter writer, IReader reader, ExampleCollection exampleCollection) throws Exception {
+    	StringWriter stringWriter = new StringWriter();
+    	writer.write(exampleCollection, stringWriter);
+		String text = stringWriter.toString();
+		System.out.println(text);
+		
+		exampleCollection = reader.read(ExampleCollection.class, text);
 		
 		assertTrue(exampleCollection.list.size() == 3);
 		
@@ -93,55 +107,67 @@ public class CollectionEntryTest extends TestCase {
     }
     
     public void testExampleCollectionJSON() throws Exception {
-    	IReader xmlReader = NanoFactory.getXMLReader();
-		
-    	ExampleCollection exampleCollection = xmlReader.read(ExampleCollection.class, LIST);
+    	ExampleCollection exampleCollection = getExampleCollectionFromXMLSource();
     	
     	IWriter jsonWriter = NanoFactory.getJSONWriter();
-    	StringWriter writer = new StringWriter();
-    	jsonWriter.write(exampleCollection, writer);
-		String text = writer.toString();
-		
 		IReader jsonReader = NanoFactory.getJSONReader();
-		exampleCollection = jsonReader.read(ExampleCollection.class, text);
 		
-		assertTrue(exampleCollection.list.size() == 3);
-		
-		Entry e = exampleCollection.list.get(2);
-		assertEquals(3, e.id);
-		assertEquals("three", e.text);
+    	validateExampleCollection(jsonWriter, jsonReader, exampleCollection);
     }
     
+    public void testExampleCollectionNV() throws Exception {
+    	ExampleCollection exampleCollection = getExampleCollectionFromXMLSource();
+    	
+    	IWriter nvWriter = NanoFactory.getNVWriter();
+		IReader nvReader = NanoFactory.getNVReader();
+		
+    	validateExampleCollection(nvWriter, nvReader, exampleCollection);
+    }
     
-    public void testExamplePrimitiveCollectionXML() throws Exception {
+    private ExamplePrimitiveCollection getExamplePrimitiveCollectionFromXMLSource() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	
     	ExamplePrimitiveCollection examplePrimitiveCollection = xmlReader.read(ExamplePrimitiveCollection.class, PRIMITIVE_LIST);
     	
+    	return examplePrimitiveCollection;
+    }
+    
+    
+    public void testExamplePrimitiveCollectionXML() throws Exception {
+    	ExamplePrimitiveCollection examplePrimitiveCollection = getExamplePrimitiveCollectionFromXMLSource();
+    	
     	IWriter xmlWriter = NanoFactory.getXMLWriter();
-    	StringWriter writer = new StringWriter();
-    	xmlWriter.write(examplePrimitiveCollection, writer);
-		String text = writer.toString();
+    	IReader xmlReader = NanoFactory.getXMLReader();
+    	
+    	validateExamplePrimitiveCollection(xmlWriter, xmlReader, examplePrimitiveCollection);
+    }
+    
+    private void validateExamplePrimitiveCollection(IWriter writer, IReader reader, ExamplePrimitiveCollection examplePrimitiveCollection) throws Exception {
+    	StringWriter stringWriter = new StringWriter();
+    	writer.write(examplePrimitiveCollection, stringWriter);
+		String text = stringWriter.toString();
 		
-		examplePrimitiveCollection = xmlReader.read(ExamplePrimitiveCollection.class, text);
+		examplePrimitiveCollection = reader.read(ExamplePrimitiveCollection.class, text);
 		assertEquals(4, examplePrimitiveCollection.list.size());
 		assertEquals(new Character('c'), examplePrimitiveCollection.list.get(2));
     }
     
     public void testExamplePrimitiveCollectionJSON() throws Exception {
-    	IReader xmlReader = NanoFactory.getXMLReader();
-    	
-    	ExamplePrimitiveCollection examplePrimitiveCollection = xmlReader.read(ExamplePrimitiveCollection.class, PRIMITIVE_LIST);
+    	ExamplePrimitiveCollection examplePrimitiveCollection = getExamplePrimitiveCollectionFromXMLSource();
     	
     	IWriter jsonWriter = NanoFactory.getJSONWriter();
-    	StringWriter writer = new StringWriter();
-    	jsonWriter.write(examplePrimitiveCollection, writer);
-		String text = writer.toString();
-		
 		IReader jsonReader = NanoFactory.getJSONReader();
-		examplePrimitiveCollection = jsonReader.read(ExamplePrimitiveCollection.class, text);
-		assertEquals(4, examplePrimitiveCollection.list.size());
-		assertEquals(new Character('c'), examplePrimitiveCollection.list.get(2));
+		
+    	validateExamplePrimitiveCollection(jsonWriter, jsonReader, examplePrimitiveCollection);
+    }
+    
+    public void testExamplePrimitiveCollectionNV() throws Exception {
+    	ExamplePrimitiveCollection examplePrimitiveCollection = getExamplePrimitiveCollectionFromXMLSource();
+    	
+    	IWriter nvWriter = NanoFactory.getNVWriter();
+		IReader nvReader = NanoFactory.getNVReader();
+		
+    	validateExamplePrimitiveCollection(nvWriter, nvReader, examplePrimitiveCollection);
     }
 
 }

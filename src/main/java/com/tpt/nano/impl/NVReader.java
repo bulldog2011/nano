@@ -84,6 +84,13 @@ public class NVReader implements IReader {
 	
 	private void buildObject(Object rootObject, FastStack<String> namePartStack, String strValue) throws Exception {
 		
+		String rootName = namePartStack.pop();
+		MappingSchema ms = MappingSchema.fromObject(rootObject);
+		if (!ms.getRootElementSchema().getXmlName().equals(rootName)) {
+			throw new ReaderException("Root name mismatch, can not find root name : " + 
+		                              ms.getRootElementSchema().getXmlName() + " in the nv string!");
+		}
+		
 		Object leafObject = buildParentObjectChain(rootObject, namePartStack);
 		
 		buildLeafFields(leafObject, namePartStack, strValue);

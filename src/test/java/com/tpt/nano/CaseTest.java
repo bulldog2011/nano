@@ -74,58 +74,60 @@ public class CaseTest extends TestCase {
     	@Value
     	private String location;
     }
-
-    public void testCaseXML() throws Exception {
+    
+    private CaseExample readObjectFromXMLSource() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	
     	// deserialize
     	CaseExample example = xmlReader.read(CaseExample.class, SOURCE);
     	
+    	return example;
+    }
+
+    public void testCaseXML() throws Exception {
+    	CaseExample example = this.readObjectFromXMLSource();
+    	
 	    assertEquals(1.0f, example.version);
 	    assertEquals("example", example.name);
 	    assertEquals("http://domain.com/", example.URL);
 	    
-	    // serialize
     	IWriter xmlWriter = NanoFactory.getXMLWriter();
-    	StringWriter writer = new StringWriter();
-    	xmlWriter.write(example, writer);
-		String text = writer.toString();
-		
+    	IReader xmlReader = NanoFactory.getXMLReader();
 	    
-		// deserialize again
-		example = xmlReader.read(CaseExample.class, text);
-	    assertEquals(1.0f, example.version);
-	    assertEquals("example", example.name);
-	    assertEquals("http://domain.com/", example.URL);
-	    TextEntry te = example.textList.get(1);
-	    assertEquals(5, te.id);
-	    assertEquals("example 5", te.text);
-	    te = example.list.get(2);
-	    assertEquals(3, te.id);
-	    assertEquals("three", te.text);   
-	    URLEntry ue = example.domainList.get(2);
-	    assertEquals("http://c.com/", ue.location);
+	    validate(xmlWriter, xmlReader, example);
     }
     
     public void testCaseJSON() throws Exception {
-    	IReader xmlReader = NanoFactory.getXMLReader();
-    	
-    	// deserialize
-    	CaseExample example = xmlReader.read(CaseExample.class, SOURCE);
-    	
-	    assertEquals(1.0f, example.version);
-	    assertEquals("example", example.name);
-	    assertEquals("http://domain.com/", example.URL);
+    	CaseExample example = this.readObjectFromXMLSource();
 	    
 	    // serialize
     	IWriter jsonWriter = NanoFactory.getJSONWriter();
-    	StringWriter writer = new StringWriter();
-    	jsonWriter.write(example, writer);
-		String text = writer.toString();
-		
 	    IReader jsonReader = NanoFactory.getJSONReader();
+	    
+	    
+    	validate(jsonWriter, jsonReader, example);
+    }
+    
+    public void testCaseNV() throws Exception {
+    	CaseExample example = this.readObjectFromXMLSource();
+
+    	// serialize to NV
+    	IWriter nvWriter = NanoFactory.getNVWriter();
+    	IReader nvReader = NanoFactory.getNVReader();
+    	
+    	validate(nvWriter, nvReader, example);
+    }
+
+    private void validate(IWriter writer, IReader reader, CaseExample example) throws Exception {
+	    // serialize
+    	StringWriter stringWriter = new StringWriter();
+    	writer.write(example, stringWriter);
+		String text = stringWriter.toString();
+	    
 		// deserialize again
-		example = jsonReader.read(CaseExample.class, text);
+		example = reader.read(CaseExample.class, text);
+		
+		// validate
 	    assertEquals(1.0f, example.version);
 	    assertEquals("example", example.name);
 	    assertEquals("http://domain.com/", example.URL);

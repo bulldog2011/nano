@@ -2,6 +2,8 @@ package com.tpt.nano;
 
 import com.tpt.nano.impl.JsonReader;
 import com.tpt.nano.impl.JsonWriter;
+import com.tpt.nano.impl.NVReader;
+import com.tpt.nano.impl.NVWriter;
 import com.tpt.nano.impl.XmlPullWriter;
 import com.tpt.nano.impl.XmlSAXReader;
 
@@ -95,5 +97,46 @@ public class NanoFactory {
 	 */
 	public static IWriter getJSONWriter(Format format) {
 		return new JsonWriter(format);
+	}
+	
+	/**
+	 * Get IWriter instance with default format(encoding is utf-8),
+	 * the IWriter instance can be used to write Java POJO into name value pair style query string.
+	 * 
+	 * @return an instance of IWriter implementation
+	 */
+	public static IWriter getNVWriter() {
+		return new NVWriter();
+	}
+	
+	/**
+	 * Get IWriter instance with specific format,
+	 * the IWriter instance can be used to write Java POJO into name value pair style query string.
+	 * 
+	 * @return an instance of IWriter implementation
+	 */
+	public static IWriter getNVWriter(Format format) {
+		return new NVWriter(format);
+	}
+
+	/**
+	 * Get IReader instance with default format(encoding is utf-8),
+	 * the IReader instance can be used to read name value pair style query string into POJO.
+	 * 
+	 * @return an instance of IReader implementation
+	 */
+	public static IReader getNVReader() {
+		return new NVReader();
+	}
+	
+	/**
+	 * Get IReader instance with specific format,
+	 * the IReader instance can be used to read name value pair style query string into POJO.
+	 * 
+	 * @param format info about encoding
+	 * @return an instance of IReader implementation.
+	 */
+	public static IReader getNVReader(Format format) {
+		return new NVReader(format);
 	}
 }
