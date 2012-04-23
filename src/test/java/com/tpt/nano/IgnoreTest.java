@@ -52,10 +52,15 @@ public class IgnoreTest extends TestCase {
 	}
 	
 	
-	public void testEmployeeXML() throws Exception {
+	private Employee getEmployeeFromXMLSource() throws Exception {
 		IReader xmlReader = NanoFactory.getXMLReader();
-		
 		Employee employee = xmlReader.read(Employee.class, SOURCE);
+		
+		return employee;
+	}
+	
+	public void testEmployeeXML() throws Exception {		
+		Employee employee = this.getEmployeeFromXMLSource();
 		
 		assertEquals(10, employee.id);
 		assertEquals("Smith", employee.lastName);
@@ -64,9 +69,14 @@ public class IgnoreTest extends TestCase {
 		assertTrue(employee.age == 0);
 		
 		IWriter xmlWriter = NanoFactory.getXMLWriter();
-		String text = xmlWriter.write(employee);
+		IReader xmlReader = NanoFactory.getXMLReader();
+		validateEmployee(xmlWriter, xmlReader, employee);
+	}
+	
+	private void validateEmployee(IWriter writer, IReader reader, Employee employee) throws Exception {
+		String text = writer.write(employee);
 		
-		Employee copy = xmlReader.read(Employee.class, text);
+		Employee copy = reader.read(Employee.class, text);
 		assertEquals(10, copy.id);
 		assertEquals("Smith", copy.lastName);
 		assertEquals("Bob", copy.firstName);
@@ -76,28 +86,18 @@ public class IgnoreTest extends TestCase {
 	}
 	
 	public void testEmployeeJSON() throws Exception {
-		IReader xmlReader = NanoFactory.getXMLReader();
-		
-		Employee employee = xmlReader.read(Employee.class, SOURCE);
-		
-		assertEquals(10, employee.id);
-		assertEquals("Smith", employee.lastName);
-		assertEquals("Bob", employee.firstName);
-		assertTrue(employee.responsibilities.responsibilityList.size() == 3);
-		assertTrue(employee.age == 0);
+		Employee employee = this.getEmployeeFromXMLSource();
 		
 		IWriter jsonWriter = NanoFactory.getJSONWriter();
-		String text = jsonWriter.write(employee);
-		
 		IReader jsonReader = NanoFactory.getJSONReader();
-		Employee copy = jsonReader.read(Employee.class, text);
-		assertEquals(10, copy.id);
-		assertEquals("Smith", copy.lastName);
-		assertEquals("Bob", copy.firstName);
-		assertTrue(copy.responsibilities.responsibilityList.size() == 3);
-		assertTrue(copy.age == 0);
-		assertEquals(employee.birthday, copy.birthday);
+		validateEmployee(jsonWriter, jsonReader, employee);
 	}
-
-
+	
+	public void testEmployeeNV() throws Exception {
+		Employee employee = this.getEmployeeFromXMLSource();
+		
+		IWriter nvWriter = NanoFactory.getNVWriter();
+		IReader nvReader = NanoFactory.getNVReader();
+		validateEmployee(nvWriter, nvReader, employee);
+	}
 }

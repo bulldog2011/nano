@@ -35,39 +35,47 @@ public class EmptyTest extends TestCase {
     	}
     }
     
-	public void testDefaultsXML() throws Exception {
+    private DefaultExample getDefaultExampleFromXML() throws Exception {
 		IReader xmlReader = NanoFactory.getXMLReader();
 		DefaultExample example = xmlReader.read(DefaultExample.class, SOURCE);
+		return example;
+    }
+    
+	public void testDefaultsXML() throws Exception {
+		DefaultExample example = this.getDefaultExampleFromXML();
 		
 		assertEquals("test", example.name);
 		assertEquals("some text", example.text);
 		assertNull(example.stringList);
 		
 		IWriter xmlWriter = NanoFactory.getXMLWriter();
-		String str = xmlWriter.write(example);
+		IReader xmlReader = NanoFactory.getXMLReader();
+		validate(xmlWriter, xmlReader, example);
+	}
+	
+	private void validate(IWriter writer, IReader reader, DefaultExample example) throws Exception {
+		String str = writer.write(example);
 		
-		example = xmlReader.read(DefaultExample.class, str);
+		example = reader.read(DefaultExample.class, str);
 		assertEquals("test", example.name);
 		assertEquals("some text", example.text);
 		assertNull(example.stringList);
 	}
 	
 	public void testDefaultsJSON() throws Exception {
-		IReader xmlReader = NanoFactory.getXMLReader();
-		DefaultExample example = xmlReader.read(DefaultExample.class, SOURCE);
-		
-		assertEquals("test", example.name);
-		assertEquals("some text", example.text);
-		assertNull(example.stringList);
-		
+		DefaultExample example = this.getDefaultExampleFromXML();
+
 		IWriter jsonWriter = NanoFactory.getJSONWriter();
-		String str = jsonWriter.write(example);
-		
 		IReader jsonReader = NanoFactory.getJSONReader();
-		example = jsonReader.read(DefaultExample.class, str);
-		assertEquals("test", example.name);
-		assertEquals("some text", example.text);
-		assertNull(example.stringList);
+		validate(jsonWriter, jsonReader, example);
+	}
+	
+	public void testDefaultsNV() throws Exception {
+		DefaultExample example = this.getDefaultExampleFromXML();
+
+		IWriter nvWriter = NanoFactory.getNVWriter();
+		IReader nvReader = NanoFactory.getNVReader();
+		validate(nvWriter, nvReader, example);
 	}
 
 }

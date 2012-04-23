@@ -45,10 +45,15 @@ public class DefaultTest extends TestCase {
 		   THREE
 	   }
 	   
-	   public void testListXML() throws Exception {
+	   private DefaultTextList getDefaultTextListFromXML() throws Exception {
 		   IReader xmlReader = NanoFactory.getXMLReader();
 		   // deserialize
 		   DefaultTextList list = xmlReader.read(DefaultTextList.class, SOURCE);
+		   return list;
+	   }
+	   
+	   public void testListXML() throws Exception {
+		   DefaultTextList list = getDefaultTextListFromXML();
 		   
 		   assertEquals(Version.ONE, list.version);
 	       assertEquals(Version.ONE, list.get(0).version);
@@ -61,15 +66,19 @@ public class DefaultTest extends TestCase {
 	       assertEquals("c", list.get(2).name);
 	       assertEquals("Example 3", list.get(2).text);
 	       
+		   IWriter xmlWriter = NanoFactory.getXMLWriter();
+		   IReader xmlReader = NanoFactory.getXMLReader();
+	       validate(xmlWriter, xmlReader, list);
+	   }
+	   
+	   private void validate(IWriter writer, IReader reader, DefaultTextList list) throws Exception {
 	       // serialize
 	       StringWriter buffer = new StringWriter();
-	       IWriter xmlWriter = NanoFactory.getXMLWriter();
-	       xmlWriter.write(list, buffer);
+	       writer.write(list, buffer);
 	       String text = buffer.toString();
-//	       System.out.println(text);
 	       
 	       // deserialize again
-	       list = xmlReader.read(DefaultTextList.class, text);
+	       list = reader.read(DefaultTextList.class, text);
 		   assertEquals(Version.ONE, list.version);
 		   assertEquals(Version.ONE, list.get(0).version);
 		   assertEquals("a", list.get(0).name);
@@ -83,39 +92,18 @@ public class DefaultTest extends TestCase {
 	   }
 	   
 	   public void testListJSON() throws Exception {
-		   IReader xmlReader = NanoFactory.getXMLReader();
-		   // deserialize
-		   DefaultTextList list = xmlReader.read(DefaultTextList.class, SOURCE);
+		   DefaultTextList list = getDefaultTextListFromXML();
 		   
-		   assertEquals(Version.ONE, list.version);
-	       assertEquals(Version.ONE, list.get(0).version);
-	       assertEquals("a", list.get(0).name);
-	       assertEquals("Example 1", list.get(0).text);
-	       assertEquals(Version.TWO, list.get(1).version);
-	       assertEquals("b", list.get(1).name);
-	       assertEquals("Example 2", list.get(1).text);
-	       assertEquals(Version.THREE, list.get(2).version);
-	       assertEquals("c", list.get(2).name);
-	       assertEquals("Example 3", list.get(2).text);
-	       
-	       // serialize
-	       StringWriter buffer = new StringWriter();
 	       IWriter jsonWriter = NanoFactory.getJSONWriter();
-	       jsonWriter.write(list, buffer);
-	       String text = buffer.toString();
-	       
-	       // deserialize again
 	       IReader jsonReader = NanoFactory.getJSONReader();
-	       list = jsonReader.read(DefaultTextList.class, text);
-		   assertEquals(Version.ONE, list.version);
-		   assertEquals(Version.ONE, list.get(0).version);
-		   assertEquals("a", list.get(0).name);
-		   assertEquals("Example 1", list.get(0).text);
-		   assertEquals(Version.TWO, list.get(1).version);
-		   assertEquals("b", list.get(1).name);
-		   assertEquals("Example 2", list.get(1).text);
-		   assertEquals(Version.THREE, list.get(2).version);
-		   assertEquals("c", list.get(2).name);
-		   assertEquals("Example 3", list.get(2).text);
+	       validate(jsonWriter, jsonReader, list);
+	   }
+	   
+	   public void testListNV() throws Exception {
+		   DefaultTextList list = getDefaultTextListFromXML();
+		   
+	       IWriter nvWriter = NanoFactory.getNVWriter();
+	       IReader nvReader = NanoFactory.getNVReader();
+	       validate(nvWriter, nvReader, list);
 	   }
 }

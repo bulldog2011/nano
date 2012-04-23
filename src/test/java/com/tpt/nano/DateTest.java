@@ -72,6 +72,13 @@ public class DateTest extends TestCase {
 		assertTrue(jsonStr.indexOf("{\"time\":\"2012-03-03T11:20:59.000Z\"}") > 0);
 	}
 	
+	public void testWriteNV() throws Exception {
+		DateTime dateTime = new DateTime();
+		dateTime.setTime(new Date(Date.UTC(112, 2, 3, 11, 20, 59)));
+		String nvStr = NanoFactory.getNVWriter().write(dateTime);
+		assertTrue(nvStr.indexOf("time=2012-03-03T11%3A20%3A59.000Z") > 0);
+	}
+	
 	public void testReadWriteXML() throws Exception {
 		DateTime dateTime = new DateTime();
 		dateTime.setTime(new Date(Date.UTC(111, 10, 10, 2, 3, 25)));
@@ -86,5 +93,13 @@ public class DateTest extends TestCase {
 		String jsonStr = NanoFactory.getJSONWriter().write(dateTime);
 		DateTime dateTimeNew = NanoFactory.getJSONReader().read(DateTime.class, jsonStr);
 		assertEquals(dateTimeNew, dateTime);
+	}
+	
+	public void testReadWriteNV() throws Exception {
+		DateTime dateTime = new DateTime();
+		dateTime.setTime(new Date(Date.UTC(111, 10, 10, 2, 3, 25)));
+		String nvStr = NanoFactory.getNVWriter().write(dateTime);
+		DateTime dateTimeCopy = NanoFactory.getNVReader().read(DateTime.class, nvStr);
+		assertEquals(dateTimeCopy, dateTime);
 	}
 }

@@ -61,20 +61,34 @@ public class EnumTest extends TestCase {
     	assertEquals(PartType.A, bug.getType());
     }
     
-    public void testEnumJSON() throws Exception {
+    private EnumBug getEnumBugFromXMLSource() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	EnumBug bug = xmlReader.read(EnumBug.class, SOURCE);
+    	return bug;
+    }
     
-    	assertEquals(PartType.A, bug.getType());
+    public void testEnumJSON() throws Exception {
+    	EnumBug bug = getEnumBugFromXMLSource();
     	
     	IWriter jsonWriter = NanoFactory.getJSONWriter();
-    	String text = jsonWriter.write(bug);
-    	
     	IReader jsonReader = NanoFactory.getJSONReader();
-    	EnumBug copy = jsonReader.read(EnumBug.class, text);
+    	validateEnumBug(jsonWriter, jsonReader, bug);
+    }
+    
+    public void testEnumNV() throws Exception {
+    	EnumBug bug = getEnumBugFromXMLSource();
+    	
+    	IWriter nvWriter = NanoFactory.getNVWriter();
+    	IReader nvReader = NanoFactory.getNVReader();
+    	validateEnumBug(nvWriter, nvReader, bug);
+    }
+    
+    private void validateEnumBug(IWriter writer, IReader reader, EnumBug bug) throws Exception {
+    	String text = writer.write(bug);
+    	
+    	EnumBug copy = reader.read(EnumBug.class, text);
     
     	assertEquals(PartType.A, copy.getType());
-    	
     }
     
     public void testInvalidEnum() throws Exception {
@@ -84,35 +98,50 @@ public class EnumTest extends TestCase {
     	assertNull(bug.getType());
     }
     
-    public void testVargsEnumXML() throws Exception {
+    private EnumVariableArgumentsBug getEnumVargsEnumFromXMLSource() throws Exception {
     	IReader xmlReader = NanoFactory.getXMLReader();
     	EnumVariableArgumentsBug bug = xmlReader.read(EnumVariableArgumentsBug.class, LIST);
-    	
-        assertEquals(PartType.A, bug.getTypes().get(0));
-        assertEquals(PartType.B, bug.getTypes().get(1));
-        assertEquals(PartType.A, bug.getTypes().get(2));
-        assertEquals(PartType.A, bug.getTypes().get(3));
+    	return bug;
     }
     
-    public void testVargsEnumJSON() throws Exception {
-    	IReader xmlReader = NanoFactory.getXMLReader();
-    	EnumVariableArgumentsBug bug = xmlReader.read(EnumVariableArgumentsBug.class, LIST);
+    public void testVargsEnumXML() throws Exception {
+    	EnumVariableArgumentsBug bug = this.getEnumVargsEnumFromXMLSource();
     	
         assertEquals(PartType.A, bug.getTypes().get(0));
         assertEquals(PartType.B, bug.getTypes().get(1));
         assertEquals(PartType.A, bug.getTypes().get(2));
         assertEquals(PartType.A, bug.getTypes().get(3));
         
-    	IWriter jsonWriter = NanoFactory.getJSONWriter();
-    	String text = jsonWriter.write(bug);
+    	IWriter xmlWriter = NanoFactory.getXMLWriter();
+    	IReader xmlReader = NanoFactory.getXMLReader();
+    	validateVargsEnum(xmlWriter, xmlReader, bug);
+    }
+    
+    private void validateVargsEnum(IWriter writer, IReader reader, EnumVariableArgumentsBug bug) throws Exception {
+    	String text = writer.write(bug);
     	
-    	IReader jsonReader = NanoFactory.getJSONReader();
-    	EnumVariableArgumentsBug copy = jsonReader.read(EnumVariableArgumentsBug.class, text);
+    	EnumVariableArgumentsBug copy = reader.read(EnumVariableArgumentsBug.class, text);
     	
         assertEquals(PartType.A, copy.getTypes().get(0));
         assertEquals(PartType.B, copy.getTypes().get(1));
         assertEquals(PartType.A, copy.getTypes().get(2));
         assertEquals(PartType.A, copy.getTypes().get(3));
+    }
+    
+    public void testVargsEnumJSON() throws Exception {
+    	EnumVariableArgumentsBug bug = this.getEnumVargsEnumFromXMLSource();
+    	
+    	IWriter jsonWriter = NanoFactory.getJSONWriter();
+    	IReader jsonReader = NanoFactory.getJSONReader();
+    	validateVargsEnum(jsonWriter, jsonReader, bug);
+    }
+    
+    public void testVargsEnumNV() throws Exception {
+    	EnumVariableArgumentsBug bug = this.getEnumVargsEnumFromXMLSource();
+    	
+    	IWriter nvWriter = NanoFactory.getNVWriter();
+    	IReader nvReader = NanoFactory.getNVReader();
+    	validateVargsEnum(nvWriter, nvReader, bug);
     }
 
 }
