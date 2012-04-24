@@ -73,10 +73,8 @@ public class MultiThreadTest extends TestCase {
 			}
 		}
 	}
-
-	public void testCurrencyXML() throws Exception {
-		IReader xmlReader = NanoFactory.getXMLReader();
-		IWriter xmlWriter = NanoFactory.getXMLWriter();
+	
+	public void runTest(IReader reader, IWriter writer) throws Exception {
 		CountDownLatch latch = new CountDownLatch(20);
 		BlockingQueue<Status> status = new LinkedBlockingQueue<Status>();
 		Example example = new Example();
@@ -88,7 +86,7 @@ public class MultiThreadTest extends TestCase {
 		example.locale = Locale.CHINA;
 		
 		for(int i = 0; i < OUTER_LOOP; i++) {
-			Worker worker = new Worker(latch, xmlReader, xmlWriter, status, example);
+			Worker worker = new Worker(latch, reader, writer, status, example);
 			worker.start();
 		}
 		for(int i = 0; i < OUTER_LOOP; i++) {
@@ -96,26 +94,22 @@ public class MultiThreadTest extends TestCase {
 		}
 	}
 	
+	public void testCurrencyXML() throws Exception {
+		IReader xmlReader = NanoFactory.getXMLReader();
+		IWriter xmlWriter = NanoFactory.getXMLWriter();
+		runTest(xmlReader, xmlWriter);
+	}
+	
 	public void testCurrencyJSON() throws Exception {
 		IReader jsonReader = NanoFactory.getJSONReader();
 		IWriter jsonWriter = NanoFactory.getJSONWriter();
-		CountDownLatch latch = new CountDownLatch(20);
-		BlockingQueue<Status> status = new LinkedBlockingQueue<Status>();
-		Example example = new Example();
-		
-		example.name = "Example Name";
-		example.value = "Some Value";
-		example.number = 10;
-		example.date = new Date();
-		example.locale = Locale.CHINA;
-		
-		for(int i = 0; i < OUTER_LOOP; i++) {
-			Worker worker = new Worker(latch, jsonReader, jsonWriter, status, example);
-			worker.start();
-		}
-		for(int i = 0; i < OUTER_LOOP; i++) {
-			assertEquals("Serialization fails when used concurrently", status.take(), Status.SUCCESS);
-		}
+		runTest(jsonReader, jsonWriter);
+	}
+	
+	public void testCurrencyNV() throws Exception {
+		IReader nvReader = NanoFactory.getNVReader();
+		IWriter nvWriter = NanoFactory.getNVWriter();
+		runTest(nvReader, nvWriter);
 	}
 	
 }
