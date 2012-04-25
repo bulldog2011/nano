@@ -12,8 +12,8 @@ import com.tpt.nano.annotation.Element;
 
 public class MultiThreadTest extends TestCase {
 	
-	private static final int INNER_LOOP = 100;
-	private static final int OUTER_LOOP = 20;
+	private static final int INNER_LOOP = 10;
+	private static final int OUTER_LOOP = 5;
 	
 	private static class Example {
 		
@@ -75,7 +75,7 @@ public class MultiThreadTest extends TestCase {
 	}
 	
 	public void runTest(IReader reader, IWriter writer) throws Exception {
-		CountDownLatch latch = new CountDownLatch(20);
+		CountDownLatch latch = new CountDownLatch(OUTER_LOOP);
 		BlockingQueue<Status> status = new LinkedBlockingQueue<Status>();
 		Example example = new Example();
 		
