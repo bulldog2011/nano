@@ -23,6 +23,15 @@ import com.tpt.nano.util.FastStack;
 import com.tpt.nano.util.StringUtil;
 import com.tpt.nano.util.TypeReflector;
 
+/**
+ * IReader implementation,
+ * 
+ * NVReader de-serialize name value style query string into POJO, the de-serialization 
+ * is guided by mapping schema defined in the POJO using Nano annotations.
+ * 
+ * @author bulldog
+ *
+ */
 public class NVReader implements IReader {
 	
 	private Format format;
@@ -47,6 +56,9 @@ public class NVReader implements IReader {
 
 	public <T> T read(Class<? extends T> type, Reader source)
 			throws ReaderException, MappingException {
+		if (source == null) {
+			throw new ReaderException("Cannot read, reader is null!");
+		}
 		try {
 			return this.read(type, StringUtil.reader2String(source));
 		} catch (IOException e) {
@@ -93,7 +105,9 @@ public class NVReader implements IReader {
 		
 		Object leafObject = buildParentObjectChain(rootObject, namePartStack);
 		
-		buildLeafFields(leafObject, namePartStack, strValue);
+		if (leafObject != null) {
+			buildLeafFields(leafObject, namePartStack, strValue);
+		}
 		
 	}
 	

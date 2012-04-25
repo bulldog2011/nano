@@ -6,6 +6,7 @@ import java.io.Writer;
 
 import com.tpt.nano.Format;
 import com.tpt.nano.IWriter;
+import com.tpt.nano.NanoFactory;
 import com.tpt.nano.annotation.Attribute;
 import com.tpt.nano.exception.MappingException;
 import com.tpt.nano.exception.WriterException;
@@ -13,7 +14,7 @@ import com.tpt.nano.impl.XmlPullWriter;
 
 import junit.framework.TestCase;
 
-public class XmlPullWriterExceptionTest extends TestCase {
+public class WriterExceptionTest extends TestCase {
 	
 	private static class Zero {
 		private int i = 0;
@@ -25,13 +26,21 @@ public class XmlPullWriterExceptionTest extends TestCase {
 		private Zero z;
 	}
 	
+	IWriter xmlWriter = NanoFactory.getXMLWriter();
+	IWriter jsonWriter = NanoFactory.getJSONWriter();
+	IWriter nvWriter = NanoFactory.getNVWriter();
+	
 	public void testMappingException() throws Exception {
+		validateMappingException(xmlWriter);
+		validateMappingException(jsonWriter);
+		validateMappingException(nvWriter);
+	}
+	
+	private void validateMappingException(IWriter writer) throws Exception {
 		boolean thrown = false;
 		
-		IWriter xmlWriter = new XmlPullWriter();
-		
 		try {
-			xmlWriter.write(new One());
+			writer.write(new One());
 		} catch (MappingException e) {
 			thrown = true;
 		}
@@ -40,14 +49,17 @@ public class XmlPullWriterExceptionTest extends TestCase {
 	}
 	
 	public void testEntryValidation() throws Exception {
-		
+		validateEntry(xmlWriter);
+		validateEntry(jsonWriter);
+		validateEntry(nvWriter);
+	}
+	
+	private void validateEntry(IWriter writer) throws Exception {
 		// source object is null
 		boolean thrown = false;
 		
-		IWriter xmlWriter = new XmlPullWriter();
-		
 		try {
-			xmlWriter.write(null, new StringWriter());
+			writer.write(null, new StringWriter());
 		} catch (WriterException e) {
 			thrown = true;
 		}
@@ -58,7 +70,7 @@ public class XmlPullWriterExceptionTest extends TestCase {
 		thrown = false;
 		
 		try {
-			xmlWriter.write(new One(), (Writer)null);
+			writer.write(new One(), (Writer)null);
 		} catch (WriterException e) {
 			thrown = true;
 		}
@@ -69,7 +81,7 @@ public class XmlPullWriterExceptionTest extends TestCase {
 		thrown = false;
 		
 		try {
-			xmlWriter.write("123");
+			writer.write("123");
 		} catch (WriterException e) {
 			thrown = true;
 		}
@@ -79,12 +91,17 @@ public class XmlPullWriterExceptionTest extends TestCase {
 	
 	public void testUnsupportedEncoding() throws Exception {
 		Format format = new Format(true, "bad_encoding");
-		IWriter xmlWriter = new XmlPullWriter(format);
+		validateUnsupportedEncoding(NanoFactory.getXMLWriter(format));
+		validateUnsupportedEncoding(NanoFactory.getJSONWriter(format));
+		validateUnsupportedEncoding(NanoFactory.getNVWriter(format));
+	}
+	
+	private void validateUnsupportedEncoding(IWriter writer) throws Exception {
 		
 		boolean thrown = false;
 		
 		try {
-			xmlWriter.write(new One(), new ByteArrayOutputStream());
+			writer.write(new One(), new ByteArrayOutputStream());
 		} catch (WriterException e) {
 			thrown = true;
 		}

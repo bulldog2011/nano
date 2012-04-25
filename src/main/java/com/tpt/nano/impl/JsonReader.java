@@ -95,6 +95,9 @@ public class JsonReader implements IReader {
 
 	public <T> T read(Class<? extends T> type, Reader source)
 			throws ReaderException, MappingException {
+		if (source == null) {
+			throw new ReaderException("Cannot read, reader is null!");
+		}
 
 		try {
 			return this.read(type, StringUtil.reader2String(source));
