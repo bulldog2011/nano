@@ -2,13 +2,38 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.tpt</groupId>
+  <groupId>com.leansoft.nano</groupId>
   <artifactId>nano</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>nano</name>
-  <url>http://maven.apache.org</url>
+  <url>https://github.com/bulldog2011/nano</url>
+  
+  <description>A super light xml/json binding framework targeting Android platform.</description>
+  <scm>
+        <connection>scm:git:git@github.com:bulldog2011/bigqueue.git</connection>
+        <developerConnection>scm:git:git@github.com:bulldog/bigqueue.git</developerConnection>
+        <url>https://github.com/bulldog2011/bigqueue</url>
+  </scm>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>51startup</id>
+            <name>bulldog</name>
+            <email>51startup@sina.com</email>
+            <url>https://github.com/bulldog2011</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,4 +57,18 @@
     	<version>20090211</version>
     </dependency>
   </dependencies>
+  
+  <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins> 
+  </build>
 </project>
