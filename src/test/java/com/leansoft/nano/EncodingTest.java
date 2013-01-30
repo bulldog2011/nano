@@ -31,7 +31,7 @@ public class EncodingTest extends TestCase {
 	
 	private void validate(IWriter writer, IReader reader) throws Exception {
 		Animal animal = new Animal();
-		animal.name = "哈巴狗";
+		animal.name = "bulldog";
 		animal.age = 10;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		writer.write(animal, baos);
@@ -39,7 +39,7 @@ public class EncodingTest extends TestCase {
 		ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
 		Animal copy = reader.read(Animal.class, bais);
 		
-		assertEquals("哈巴狗", copy.name);
+		assertEquals("bulldog", copy.name);
 		assertEquals(10, copy.age);
 	}
 	

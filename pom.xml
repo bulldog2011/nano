@@ -10,7 +10,7 @@
   <name>nano</name>
   <url>https://github.com/bulldog2011/nano</url>
   
-  <description>A super light xml/json binding framework targeting Android platform.</description>
+  <description>A super light xml and json binding framework targeting Android platform.</description>
   <scm>
         <connection>scm:git:git@github.com:bulldog2011/bigqueue.git</connection>
         <developerConnection>scm:git:git@github.com:bulldog/bigqueue.git</developerConnection>
