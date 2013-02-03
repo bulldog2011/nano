@@ -3,7 +3,7 @@
 
   <groupId>com.leansoft.nano</groupId>
   <artifactId>nano</artifactId>
-  <version>0.6.0</version>
+  <version>0.6.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>nano</name>
