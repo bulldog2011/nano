@@ -29,9 +29,3 @@ Download latest [0.6.0 release](https://github.com/bulldog2011/bulldog-repo/tree
 		  <id>github.release.repo</id>
 		  <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
 		</repository>
-
-
-
-
-
-
