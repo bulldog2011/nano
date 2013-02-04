@@ -9,7 +9,7 @@ A super light xml and json binding framework supporting both Java and Android pl
 3. ***Memory-efficient*** : memory usage is minimized by leverging streaming parsing technology.
 4. ***Annotation Driven*** : No custom serialization code is needed, just add a few light annotations to make the class bindable.
 5. ***Support both XML and JSON*** : object instance can be serialized to or deserialized from either XML or JSON.
-
+6. ***Schema Compiler Provided*** : [compiler tool](https://github.com/bulldog2011/mxjc) to auto generate bindable class from Xml schema or WSDL. 
 
 
 ###How to Use
@@ -33,11 +33,3 @@ Download latest [0.6.1 release](https://github.com/bulldog2011/bulldog-repo/tree
 1. For Java collection types, only java.util.List is supported, and at most one type parameter is allowed, java.util.Set and java.util.Map are not supported.
 2. Java array is not supported, except byte[] which will be serialized to base64 string.
 2. Not all Java primitives or frequently used types are supported, for support list, see [here](https://github.com/bulldog2011/nano/tree/master/src/main/java/com/leansoft/nano/transform)
-
-
-
-
-
-
-
-
