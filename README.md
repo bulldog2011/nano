@@ -30,6 +30,13 @@ Download latest [0.6.1 release](https://github.com/bulldog2011/bulldog-repo/tree
 		  <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
 		</repository>
 
+###Current Limitation
+1. For Java collection types, only java.util.List is supported, and at most one type parameter is allowed, java.util.Set and java.util.Map are not supported.
+2. Java array is not supported, except byte[] which will be serialized to base64 string.
+2. Not all Java primitives or frequently used types are supported, for support list, see [here](https://github.com/bulldog2011/nano/tree/master/src/main/java/com/leansoft/nano/transform)
+
+
+
 
 
 
