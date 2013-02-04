@@ -9,7 +9,6 @@ A super light xml and json binding framework supporting both Java and Android pl
 3. ***Memory-efficient*** : memory usage is minimized by leverging streaming parsing technology.
 4. ***Annotation Driven*** : No custom serialization code is needed, just add a few light annotations to make the class bindable.
 5. ***Support both XML and JSON*** : object instance can be serialized to or deserialized from either XML or JSON.
-6. ***Schema Compiler Provided*** : [compiler tool](http://github.com/bulldog2011/mxjc) is provided to auto generate bindable class from Xml schema or WSDL.
 
 
 
