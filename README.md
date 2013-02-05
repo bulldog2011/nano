@@ -29,6 +29,10 @@ Download latest [0.6.1 release](https://github.com/bulldog2011/bulldog-repo/tree
 		  <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
 		</repository>
 
+###Docs
+1. [Nano Hello World](bulldog2011.github.com/blog/2013/02/05/nano-hello-world/)
+
+
 ###Current Limitation
 1. For Java collection types, only java.util.List is supported, and at most one type parameter is allowed, java.util.Set and java.util.Map are not supported.
 2. Java array is not supported, except byte[] which will be serialized to base64 string.
