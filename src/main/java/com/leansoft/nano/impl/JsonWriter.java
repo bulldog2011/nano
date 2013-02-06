@@ -9,7 +9,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONStringer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.leansoft.nano.Format;
 import com.leansoft.nano.IWriter;
@@ -86,19 +87,17 @@ public class JsonWriter implements IWriter {
 						"only Nano bindable complex type object can be accepted!");
 			}
 			
-			JSONStringer stringer = new JSONStringer();
-			
-			stringer.object();
+			JSONObject jsonObject = new JSONObject();
 			
 			MappingSchema ms = MappingSchema.fromObject(source);
 			RootElementSchema res = ms.getRootElementSchema();
 			
-			stringer.key(res.getXmlName());
-			this.writeObject(stringer, source);
+			JSONObject childJsonObject = new JSONObject();
+			jsonObject.put(res.getXmlName(), childJsonObject);
 			
-			stringer.endObject();
+			this.writeObject(childJsonObject, source);
 			// output
-			return stringer.toString();
+			return jsonObject.toString();
 		
 		} catch (MappingException me) {
 			throw me;
@@ -118,50 +117,47 @@ public class JsonWriter implements IWriter {
 //		out.flush();
 //	}
 	
-	private void writeObject(JSONStringer stringer, Object source) throws Exception {
+	private void writeObject(JSONObject jsonObject, Object source) throws Exception {
 		MappingSchema ms = MappingSchema.fromObject(source);
 		
-		stringer.object();
-		
 		// write attributes first
-		writeAttributes(stringer, source, ms);
+		writeAttributes(jsonObject, source, ms);
 		
 		// write value if any
-		writeValue(stringer, source, ms);
+		writeValue(jsonObject, source, ms);
 		
 		// write elements last
-		writeElements(stringer, source, ms);
-		
-		stringer.endObject();
+		writeElements(jsonObject, source, ms);
 
 	}
 	
-	private void writeAttributes(JSONStringer stringer, Object source, MappingSchema ms) throws Exception {
+	private void writeAttributes(JSONObject jsonObject, Object source, MappingSchema ms) throws Exception {
 		Map<String, AttributeSchema> field2AttributeSchemaMapping = ms.getField2AttributeSchemaMapping();
 		for(String fieldName : field2AttributeSchemaMapping.keySet()) {
 			AttributeSchema as = field2AttributeSchemaMapping.get(fieldName);
 			Field field = as.getField();
 			Object value = field.get(source);
 			if (value != null) {
-				stringer.key("@" + as.getXmlName());
-				stringer.value(getJSONValue(value, field.getType()));
+				String key = "@" + as.getXmlName();
+				Object jsonValue = this.getJSONValue(value, field.getType());
+				jsonObject.put(key, jsonValue);
 			}
 		}
 	}
 	
-	private void writeValue(JSONStringer stringer, Object source, MappingSchema ms) throws Exception {
+	private void writeValue(JSONObject jsonObject, Object source, MappingSchema ms) throws Exception {
 		ValueSchema vs = ms.getValueSchema();
 		if (vs == null) return; // no ValueSchema, do nothing
 		
 		Field field = vs.getField();
 		Object value = field.get(source);
 		if (value != null) {
-			stringer.key(VALUE_KEY);
-			stringer.value(getJSONValue(value, field.getType()));
+			Object jsonValue = getJSONValue(value, field.getType());
+			jsonObject.put(VALUE_KEY, jsonValue);
 		}
 	}
 	
-	private void writeElements(JSONStringer stringer, Object source, MappingSchema ms) throws Exception {
+	private void writeElements(JSONObject jsonObject, Object source, MappingSchema ms) throws Exception {
 		Map<String, Object> field2SchemaMapping = ms.getField2SchemaMapping();
 		for (String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
@@ -171,47 +167,64 @@ public class JsonWriter implements IWriter {
 				Object value = field.get(source);
 				if (value != null) {
 					if (es.isList()) {
-						this.writeElementList(stringer, value, es);
+						this.writeElementList(jsonObject, value, es);
 					} else {
-						stringer.key(es.getXmlName());
-						this.writeElement(stringer, value, es);
+						this.writeElement(jsonObject, value, es);
 					}
 				}
 			}
 		}
 	}
 	
-	private void writeElementList(JSONStringer stringer, Object source, ElementSchema es) throws Exception {
+	private void writeElementList(JSONObject jsonObject, Object source, ElementSchema es) throws Exception {
 		List<?> list = (List<?>)source;
 		if (list.size() > 0) {
-			stringer.key(es.getXmlName());
-			stringer.array();
+			String key = es.getXmlName();
+			JSONArray jsonArray = new JSONArray();
+			jsonObject.put(key, jsonArray);
 			for(Object value : list) {
 				if (value == null) continue;
-				this.writeElement(stringer, value, es);
+				
+				Class<?> type = es.getParameterizedType();;
+				
+				// primitives
+				if(Transformer.isPrimitive(type)) {
+					Object jsonValue = getJSONValue(value, type);
+					
+					jsonArray.put(jsonValue);
+					
+					continue;
+				}
+				
+				// object
+				JSONObject childJsonObject = new JSONObject();
+				this.writeObject(childJsonObject, value);
+				
+				jsonArray.put(childJsonObject);
 			}
-			stringer.endArray();
 		}
 	}
 	
 	
-	private void writeElement(JSONStringer stringer, Object source, ElementSchema es) throws Exception {
-		Class<?> type = null;
-		if (es.isList()) {
-			type = es.getParameterizedType();
-		} else {
-			type = es.getField().getType();
-		}
+	private void writeElement(JSONObject jsonObject, Object source, ElementSchema es) throws Exception {
+		Class<?> type = es.getField().getType();
 		
 		// primitives
 		if(Transformer.isPrimitive(type)) {
-			stringer.value(getJSONValue(source, type));
+			String key = es.getXmlName();
+			Object jsonValue = getJSONValue(source, type);
+			
+			jsonObject.put(key, jsonValue);
 			
 			return;
 		}
 		
+		String key = es.getXmlName();
+		JSONObject childJsonObject = new JSONObject();
+		jsonObject.put(key, childJsonObject);
+		
 		// object
-		this.writeObject(stringer, source);
+		this.writeObject(childJsonObject, source);
 	}
 	
 	private Object getJSONValue(Object value, Class<?> type) throws Exception {
