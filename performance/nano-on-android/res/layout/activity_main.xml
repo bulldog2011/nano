@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick thread number, payload size and test type, then GO!" />
+    <RadioGroup
+    	android:id="@+id/threads"
+        android:layout_width="fill_parent" 
+        android:layout_margin="2dp" 
+        android:background="#333333" 
+        android:layout_height="wrap_content">
+    	<RadioButton
+            android:id="@+id/one"
+            android:text="1 thread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/three"
+            android:text="3 threads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/five"
+            android:text="5 threads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+    <RadioGroup
+        android:id="@+id/size"
+        android:layout_width="fill_parent" 
+        android:layout_margin="2dp" 
+        android:background="#333333" 
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/small"
+            android:text="10 recoreds (xml 2K, json 4K)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/medium"
+            android:text="50 recoreds (xml 17K, json 9K)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/large"
+            android:text="300 recoreds (xml 100K, json 50K)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+    </RadioGroup>
+    <RadioGroup
+        android:id="@+id/type"
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent" 
+        android:layout_margin="2dp" 
+        android:background="#333333">
+        <RadioButton
+            android:id="@+id/nano_xml_read"
+            android:text="nano_xml_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"></RadioButton>
+        <RadioButton
+            android:id="@+id/nano_json_read"
+            android:text="nano_json_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></RadioButton>
+        <RadioButton
+            android:id="@+id/nano_xml_write"
+            android:text="nano_xml_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></RadioButton>
+        <RadioButton
+            android:id="@+id/nano_json_write"
+            android:text="nano_json_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></RadioButton>
+    </RadioGroup>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="GO!"
+        android:id="@+id/do_test" />
+</LinearLayout>
+</ScrollView>
