@@ -30,7 +30,8 @@ Download latest [0.6.1 release](https://github.com/bulldog2011/bulldog-repo/tree
 		</repository>
 
 ###Docs
-1. [Nano Hello World](bulldog2011.github.com/blog/2013/02/05/nano-hello-world/)
+1. [Nano Hello World](http://bulldog2011.github.com/blog/2013/02/05/nano-hello-world/)
+2. [Nano List Handling](http://bulldog2011.github.com/blog/2013/02/05/nano-list-tutorial/)
 
 
 ###Current Limitation
