@@ -1,0 +1,41 @@
+<?xml version="1.0" standalone="yes"?>
+ 
+<project basedir="." default="run">
+  <property name="sample.home" value="." />
+  <path id="classpath">
+    <pathelement path="classes" />
+    <fileset dir="${sample.home}" includes="lib/mxjc/*.jar" />
+    <fileset dir="${sample.home}" includes="lib/nano/*.jar" />
+  </path>
+  <taskdef name="mxjc" classname="com.leansoft.mxjc.MXJCTask">
+    <classpath refid="classpath" />
+  </taskdef>
+ 
+  <!--compile Java source files-->
+  <target name="compile" description="Compile all Java source files">
+    <echo message="Compiling the schema..." />
+    <mkdir dir="gen-src" />
+    <mxjc schema="schema/zoo.xsd" package="com.leansoft.nano.zoo" destdir="gen-src" removeOldOutput="yes">
+      <produces dir="gen-src/com/leansoft/nano/zoo" includes="**/*.java" />
+    </mxjc>
+    <echo message="Compiling the java source files..." />
+    <mkdir dir="classes" />
+    <javac destdir="classes" debug="on">
+      <src path="src" />
+      <src path="gen-src" />
+      <classpath refid="classpath" />
+    </javac>
+  </target>
+ 
+  <target name="run" depends="compile" description="Run the sample app">
+    <echo message="Running the sample application..." />
+    <java classname="com.leansoft.nano.sample.ZooExample" fork="true">
+      <classpath refid="classpath" />
+    </java>
+  </target>
+ 
+  <target name="clean" description="Deletes all the generated artifacts.">
+    <delete dir="gen-src" />
+    <delete dir="classes" />
+  </target>
+</project>

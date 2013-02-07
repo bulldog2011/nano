@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<zoo>
+  <zooName>Vandalur Zoo</zooName>
+  <zooId>12321</zooId>
+  <animals>
+    <animal>
+      <animalName>Lion</animalName>
+      <animalType>Wild</animalType>
+    </animal>
+    <animal>
+      <animalName>Dog</animalName>
+      <animalType>Domestic</animalType>
+    </animal>
+    <animal>
+      <animalName>White Tiger</animalName>
+      <animalType>Wild</animalType>
+    </animal>
+  </animals>
+</zoo>

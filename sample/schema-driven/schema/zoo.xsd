@@ -1,0 +1,24 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="zoo" type="zooInfo"/>
+  <xsd:element name="comment" type="xsd:string"/>
+  <xsd:complexType name="zooInfo">
+    <xsd:sequence>
+      <xsd:element name="zooName" type="xsd:string"/>
+      <xsd:element name="zooId" type="xsd:int"/>
+      <xsd:element name="animals" type="Animals"/>
+    </xsd:sequence>
+  </xsd:complexType>
+ 
+  <xsd:complexType name="Animals">
+    <xsd:sequence>
+      <xsd:element name="animal" minOccurs="1" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="animalName" type="xsd:string"/>
+            <xsd:element name="animalType" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
