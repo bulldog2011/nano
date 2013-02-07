@@ -12,7 +12,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 import com.leansoft.nano.IReader;
 import com.leansoft.nano.IWriter;
 import com.leansoft.nano.NanoFactory;
+import com.leansoft.nano.dom.DOMParser;
 import com.leansoft.nano.person.PersonListType;
+import com.leansoft.nano.pull.PullParser;
+import com.leansoft.nano.sax.SAXParser;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -100,6 +103,12 @@ public class MainActivity extends Activity {
 								runner = new NanoXmlWriteRunner(latch, results, recordNumber + ".xml", LOOP);
 							} else if (typeId == R.id.nano_json_read) {
 								runner = new NanoJsonReadRunner(latch, results, recordNumber + ".json", LOOP);
+							} else if (typeId == R.id.raw_sax_read) {
+								runner = new SAXReadRunner(latch, results, recordNumber + ".xml", LOOP);
+							} else if (typeId == R.id.raw_dom_read) {
+								runner = new DOMReadRunner(latch, results, recordNumber + ".xml", LOOP);
+							} else if (typeId == R.id.raw_pull_read) {
+								runner = new PullReadRunner(latch, results, recordNumber + ".xml", LOOP);
 							} else {
 								runner = new NanoJsonWriteRunner(latch, results, recordNumber + ".json", LOOP);
 							}
@@ -219,8 +228,93 @@ public class MainActivity extends Activity {
 			PersonListType persons = null;
 			for(int i = 0; i < super.loop; i++) {
 				InputStream is = getAssets().open(super.fileName);
-				BufferedInputStream bis = new BufferedInputStream(is);
+				BufferedInputStream bis = new BufferedInputStream(is, 4 * 1024);
 				persons = reader.read(PersonListType.class, bis);
+			}
+			long endTime = System.currentTimeMillis();
+			long duration = endTime - startTime;
+			Result result = new Result();
+			result.duration = duration;
+			result.recordNumber = persons.getPerson().size();
+			return result;
+		}
+		
+	}
+	
+	private class SAXReadRunner extends Runner {
+
+		public SAXReadRunner(CountDownLatch latch, Queue<Result> queue,
+				String fileName, int loop) {
+			super(latch, queue, fileName, loop);
+		}
+
+		@Override
+		protected Result doRun() throws Exception {
+			super.latch.countDown();
+			super.latch.await();
+			long startTime = System.currentTimeMillis();
+			PersonListType persons = null;
+			for(int i = 0; i < super.loop; i++) {
+				InputStream is = getAssets().open(super.fileName);
+				BufferedInputStream bis = new BufferedInputStream(is, 4 * 1024);
+				persons = SAXParser.parse(bis);
+			}
+			long endTime = System.currentTimeMillis();
+			long duration = endTime - startTime;
+			Result result = new Result();
+			result.duration = duration;
+			result.recordNumber = persons.getPerson().size();
+			return result;
+		}
+		
+	}
+	
+	
+	private class DOMReadRunner extends Runner {
+
+		public DOMReadRunner(CountDownLatch latch, Queue<Result> queue,
+				String fileName, int loop) {
+			super(latch, queue, fileName, loop);
+		}
+
+		@Override
+		protected Result doRun() throws Exception {
+			super.latch.countDown();
+			super.latch.await();
+			long startTime = System.currentTimeMillis();
+			PersonListType persons = null;
+			for(int i = 0; i < super.loop; i++) {
+				InputStream is = getAssets().open(super.fileName);
+				BufferedInputStream bis = new BufferedInputStream(is, 4 * 1024);
+				persons = DOMParser.parse(bis);
+			}
+			long endTime = System.currentTimeMillis();
+			long duration = endTime - startTime;
+			Result result = new Result();
+			result.duration = duration;
+			result.recordNumber = persons.getPerson().size();
+			return result;
+		}
+		
+	}
+	
+	private class PullReadRunner extends Runner {
+
+		public PullReadRunner(CountDownLatch latch, Queue<Result> queue,
+				String fileName, int loop) {
+			super(latch, queue, fileName, loop);
+		}
+
+		@Override
+		protected Result doRun() throws Exception {
+			super.latch.countDown();
+			super.latch.await();
+			long startTime = System.currentTimeMillis();
+			PersonListType persons = null;
+			for(int i = 0; i < super.loop; i++) {
+				InputStream is = getAssets().open(super.fileName);
+				BufferedInputStream bis = new BufferedInputStream(is, 4 * 1024);
+				persons = PullParser.parse(bis);
 			}
 			long endTime = System.currentTimeMillis();
 			long duration = endTime - startTime;

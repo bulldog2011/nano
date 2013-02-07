@@ -20,11 +20,11 @@
 			<artifactId>jaxb-impl</artifactId>
 			<version>2.1.13</version>
 		</dependency>
-        <!-- dependency>
+        <dependency>
            <groupId>com.leansoft</groupId>
            <artifactId>nano</artifactId>
            <version>0.6.2</version>
-        </dependency-->
+        </dependency>
 	</dependencies>
 	
   <repositories>

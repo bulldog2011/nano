@@ -77,6 +77,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></RadioButton>
         <RadioButton
+            android:id="@+id/raw_sax_read"
+            android:text="raw_sax_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></RadioButton>
+        <RadioButton
+            android:id="@+id/raw_dom_read"
+            android:text="raw_dom_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></RadioButton>
+        <RadioButton
+            android:id="@+id/raw_pull_read"
+            android:text="raw_pull_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></RadioButton>
+        <RadioButton
             android:id="@+id/nano_xml_write"
             android:text="nano_xml_write"
             android:layout_width="wrap_content"
