@@ -37,6 +37,8 @@ public class JsonWriter implements IWriter {
 
 	static final String VALUE_KEY = "__value__";
 	
+	static final int DEFAULT_INDENTATION = 4;
+	
 	private Format format;
 	
 	public JsonWriter() {
@@ -96,8 +98,12 @@ public class JsonWriter implements IWriter {
 			jsonObject.put(res.getXmlName(), childJsonObject);
 			
 			this.writeObject(childJsonObject, source);
-			// output
-			return jsonObject.toString();
+
+			if (this.format.isIndent()) {
+				return jsonObject.toString(DEFAULT_INDENTATION);
+			} else {
+				return jsonObject.toString();
+			}
 		
 		} catch (MappingException me) {
 			throw me;

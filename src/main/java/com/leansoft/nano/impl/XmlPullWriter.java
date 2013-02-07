@@ -71,6 +71,10 @@ public class XmlPullWriter implements IWriter {
 			String namespace = res.getNamespace();
 			String xmlName = res.getXmlName();
 			
+			if (!StringUtil.isEmpty(namespace)) { // bind to default namespace
+				serializer.setPrefix("", namespace);
+			}
+			
 			serializer.startTag(namespace, xmlName);
 			this.writeObject(serializer, source, namespace);
 			serializer.endTag(namespace, xmlName);

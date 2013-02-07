@@ -3,36 +3,34 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.leansoft</groupId>
-  <artifactId>helloworld</artifactId>
+  <artifactId>nano-jaxb-compare</artifactId>
   <version>1.0</version>
   <packaging>jar</packaging>
 
-  <name>helloworld</name>
+  <name>nano-jaxb-compare</name>
   <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <dependencies>
-	<dependency>
-	  <groupId>com.leansoft</groupId>
-	  <artifactId>nano</artifactId>
-	  <version>0.6.2</version>
-	</dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  
+    <dependencies>  
+  		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.1.13</version>
+		</dependency>
+        <!-- dependency>
+           <groupId>com.leansoft</groupId>
+           <artifactId>nano</artifactId>
+           <version>0.6.2</version>
+        </dependency-->
+	</dependencies>
+	
   <repositories>
 	<repository>
 	  <id>github.release.repo</id>
 	  <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
 	</repository>      
-  </repositories>  
-  
+  </repositories>
 </project>

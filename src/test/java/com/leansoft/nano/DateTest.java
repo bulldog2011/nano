@@ -71,7 +71,7 @@ public class DateTest extends TestCase {
 		DateTime dateTime = new DateTime();
 		dateTime.setTime(new Date(Date.UTC(112, 2, 3, 11, 20, 59)));
 		String jsonStr = NanoFactory.getJSONWriter().write(dateTime);
-		assertTrue(jsonStr.indexOf("{\"time\":\"2012-03-03T11:20:59.000Z\"}") > 0);
+		assertTrue(jsonStr.indexOf("\"time\": \"2012-03-03T11:20:59.000Z\"") > 0);
 	}
 	
 	public void testReadWriteXML() throws Exception {

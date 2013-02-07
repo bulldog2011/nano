@@ -28,6 +28,10 @@
             <outputDirectory>/test</outputDirectory>
         </fileSet>
         <fileSet>
+            <directory>performance</directory>
+            <outputDirectory>/performance</outputDirectory>
+        </fileSet>
+        <fileSet>
 	      <directory>target/apidocs</directory>
 	      <outputDirectory>/javadoc</outputDirectory>
 	    </fileSet>
