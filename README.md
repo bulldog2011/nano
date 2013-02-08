@@ -5,7 +5,7 @@ A super light xml and json binding framework supporting both Java and Android pl
 
 ###Feature Highlight
 1. ***Light-Weight*** : the library jar is less than 70K, no external dependencies on Android platform.
-2. ***Fast*** : performance comparable to Android native xml parser like SAX parser and XmlPull parser.
+2. ***Fast*** : performance comparable to Android native xml parser like SAX parser and XmlPull parser, see benchmark [here](http://bulldog2011.github.com/blog/2013/02/08/nano-benchmark-on-android/).
 3. ***Memory-efficient*** : memory usage is minimized by leverging streaming parsing technology.
 4. ***Annotation Driven*** : No custom serialization code is needed, just add a few light annotations to make the class bindable.
 5. ***Support both XML and JSON*** : object instance can be serialized to or deserialized from either XML or JSON.
@@ -34,6 +34,7 @@ Download latest [0.6.2 release](https://github.com/bulldog2011/bulldog-repo/tree
 2. [Nano List Handling](http://bulldog2011.github.com/blog/2013/02/05/nano-list-tutorial/)
 3. [Nano Compare to JAXB](http://bulldog2011.github.com/blog/2013/02/06/nano-compare-to-jaxb/)
 4. [Scheam driven data binding with Nano and mxjc](http://bulldog2011.github.com/blog/2013/02/07/schema-driven-nano-binding/)
+5. [Xml Parser and Nano Benchmark on Android](http://bulldog2011.github.com/blog/2013/02/08/nano-benchmark-on-android/)
 
 
 ###Current Limitation
