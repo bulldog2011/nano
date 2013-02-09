@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.leansoft.nano.annotation.Attribute;
+import com.leansoft.nano.annotation.Default;
 import com.leansoft.nano.annotation.Element;
 import com.leansoft.nano.annotation.RootElement;
 import com.leansoft.nano.annotation.Value;
@@ -37,6 +38,7 @@ class MappingSchema {
 	private Map<String, AttributeSchema> xml2AttributeSchemaMapping;
 	
 	private Class<?> type;
+	private boolean isDefault;
 	
 	private static final int CACHE_SIZE = 100;
 	// use LRU cache to limit memory consumption.
@@ -44,6 +46,8 @@ class MappingSchema {
 	
 	private MappingSchema(Class<?> type) throws MappingException {
 		this.type = type;
+		
+		isDefault = type.isAnnotationPresent(Default.class);
 		
 		// step 1
 		this.buildRootElementSchema();
@@ -128,26 +132,7 @@ class MappingSchema {
 				field.setAccessible(true);
 			}
 			
-			if (field.isAnnotationPresent(Attribute.class)) {
-				// validation
-				if (!Transformer.isTransformable(field.getType())) {
-					throw new MappingException("Attribute annotation can't annotate complex type field, " +
-							"only primivte type or frequently used java type or enum type field is allowed, " +
-							"field = " + field.getName() + ", type = " + type.getName());
-				}
-				
-				Attribute xmlAttribute = field.getAnnotation(Attribute.class);
-				AttributeSchema attributeSchema = new AttributeSchema();
-				// if attribute name was not provided, use field name instead
-				if (StringUtil.isEmpty(xmlAttribute.name())) {
-					attributeSchema.setXmlName(field.getName());
-				} else {
-					attributeSchema.setXmlName(xmlAttribute.name());
-				}
-				attributeSchema.setField(field);
-				
-				fieldsMap.put(field.getName(), attributeSchema);
-			} else if (field.isAnnotationPresent(Element.class)) {
+			if (field.isAnnotationPresent(Element.class)) {
 				
 				elementSchemaCount++;
 				
@@ -168,7 +153,26 @@ class MappingSchema {
 				
 				fieldsMap.put(field.getName(), elementSchema);
 				
-			} else if (field.isAnnotationPresent(Value.class)) {
+			} else if (field.isAnnotationPresent(Attribute.class)) {
+				// validation
+				if (!Transformer.isTransformable(field.getType())) {
+					throw new MappingException("Attribute annotation can't annotate complex type field, " +
+							"only primivte type or frequently used java type or enum type field is allowed, " +
+							"field = " + field.getName() + ", type = " + type.getName());
+				}
+				
+				Attribute xmlAttribute = field.getAnnotation(Attribute.class);
+				AttributeSchema attributeSchema = new AttributeSchema();
+				// if attribute name was not provided, use field name instead
+				if (StringUtil.isEmpty(xmlAttribute.name())) {
+					attributeSchema.setXmlName(field.getName());
+				} else {
+					attributeSchema.setXmlName(xmlAttribute.name());
+				}
+				attributeSchema.setField(field);
+				
+				fieldsMap.put(field.getName(), attributeSchema);
+			}  else if (field.isAnnotationPresent(Value.class)) {
 				valueSchemaCount++;
 				
 				// validation
@@ -184,6 +188,19 @@ class MappingSchema {
 				valueSchema.setData(xmlValue.data());
 				valueSchema.setField(field);
 				
+			} else if (isDefault) { // default to Element
+				elementSchemaCount++;
+				
+				ElementSchema elementSchema = new ElementSchema();
+				
+				elementSchema.setXmlName(field.getName());
+				
+				// List validation
+				handleList(field, elementSchema);
+				
+				elementSchema.setField(field);
+				
+				fieldsMap.put(field.getName(), elementSchema);
 			}
 		}
 		

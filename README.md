@@ -37,6 +37,11 @@ Download latest [0.6.2 release](https://github.com/bulldog2011/bulldog-repo/tree
 5. [Xml Parser and Nano Benchmark on Android](http://bulldog2011.github.com/blog/2013/02/08/nano-benchmark-on-android/)
 
 
+###Compatibility
+>1. On Android, Nano has been verified with Android 1.5(API 3), 1.6(API 4), 2.1(API 7) and 2.2(API 8), Nano should work without problem on Android 2.3 and above although this hasn't been verified formally.
+2. On Normal Java, Nano has been verified with Oracle/Sun JDK 1.6.
+
+
 ###Current Limitation
 1. For Java collection types, only java.util.List is supported, and at most one type parameter is allowed, java.util.Set and java.util.Map are not supported.
 2. Java array is not supported, except byte[] which will be serialized to base64 string.
