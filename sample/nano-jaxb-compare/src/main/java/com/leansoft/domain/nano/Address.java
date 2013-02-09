@@ -1,13 +1,12 @@
 package com.leansoft.domain.nano;
 
-import com.leansoft.nano.annotation.Element;
+import com.leansoft.nano.annotation.Default;
 
+@Default
 public class Address {
 	
-	@Element
 	private String city;
 
-	@Element
 	private String street;
 
 	public String getCity() {

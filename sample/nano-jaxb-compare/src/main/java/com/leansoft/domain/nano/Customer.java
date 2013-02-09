@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.leansoft.nano.annotation.Attribute;
+import com.leansoft.nano.annotation.Default;
 import com.leansoft.nano.annotation.Element;
 import com.leansoft.nano.annotation.RootElement;
 
+@Default
 @RootElement(namespace="http://www.example.com")
 public class Customer {
 
 	@Attribute
 	private long id;
 	
-	@Element
 	private String name;
 	
-	@Element
 	private Address address;
 	
 	@Element(name="phone-number")

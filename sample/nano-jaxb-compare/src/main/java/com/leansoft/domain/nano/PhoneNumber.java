@@ -1,14 +1,12 @@
 package com.leansoft.domain.nano;
 
-import com.leansoft.nano.annotation.Attribute;
-import com.leansoft.nano.annotation.Value;
+import com.leansoft.nano.annotation.Default;
 
+@Default
 public class PhoneNumber {
 	
-	@Attribute
 	private String type;
 
-	@Value
 	private String number;
 	
 	public String getType() {
