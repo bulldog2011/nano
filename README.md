@@ -14,14 +14,14 @@ A super light xml and json binding framework supporting both Java and Android pl
 
 ###How to Use
 1. Direct jar reference  
-Download latest [0.6.2 release](https://github.com/bulldog2011/bulldog-repo/tree/master/repo/releases/com/leansoft/nano/0.6.2)
+Download latest [0.6.3 release](https://github.com/bulldog2011/bulldog-repo/tree/master/repo/releases/com/leansoft/nano/0.6.3)
 
 2. Maven refereence
 
 		<dependency>
 		  <groupId>com.leansoft</groupId>
 		  <artifactId>nano</artifactId>
-		  <version>0.6.2</version>
+		  <version>0.6.3</version>
 		</dependency>
 		
 		<repository>
