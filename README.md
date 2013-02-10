@@ -18,7 +18,7 @@ Download latest [0.6.3 release](https://github.com/bulldog2011/bulldog-repo/tree
 
 ***Note***: 
 >1. On normal Java platform, Nano depends on KXml and org.json libraries, you can extract these libraries in the nano release zip package.
-2. On Android plaform, Nano does ***not*** depends on external Kxml and org.json libraries, since these libraries have already been included in Android.   
+2. On Android plaform, Nano does ***not*** depend on external Kxml and org.json libraries, since these libraries have already been included in Android.   
 
 2. Maven refereence
 
