@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+	<string name="hello">Hello World, MovieSearchAppActivity!</string>
+	<string name="app_name">MovieSearchApp</string>
+    
+	<string name="search">Search</string>
+    <string name="movies">Movies</string>
+    <string name="people">People</string>
+    
+    <string name="no_imdb_id_found">Sorry, no IMDB page exists for this movie</string>
+    <string name="no_image_found">Sorry, no image found for this movie</string>
+    <string name="no_movies_found">No movies found</string>
+    
+    <string name="close">Close</string>
+    
+    <string name="visit_imdb">Visit IMDB</string>
+    <string name="view_full_image">View full image</string>
+     
+    <string name="no_movie_selected">No movie selected</string>
+    
+</resources>
