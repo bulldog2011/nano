@@ -64,13 +64,19 @@ class XmlReaderHandler extends DefaultHandler {
 			if(helper.isRoot()) { // first time root element mapping
 				RootElementSchema res = ms.getRootElementSchema();
 				String xmlName = res.getXmlName();
-				String namespace = res.getNamespace();
+//				String namespace = res.getNamespace();
 				// validation only for root element
-				String srcXmlFullname = StringUtil.isEmpty(uri)?localName:"{" + uri + "}#" + localName;
-				String targetXmlFullname = StringUtil.isEmpty(namespace)?xmlName:"{" + namespace + "}#" + xmlName;
-				if (!srcXmlFullname.equals(targetXmlFullname)) {
-					throw new ReaderException("Root element name mismatch, " + targetXmlFullname + " != " + srcXmlFullname);
+//				String srcXmlFullname = StringUtil.isEmpty(uri)?localName:"{" + uri + "}#" + localName;
+//				String targetXmlFullname = StringUtil.isEmpty(namespace)?xmlName:"{" + namespace + "}#" + xmlName;
+//				if (!srcXmlFullname.equals(targetXmlFullname)) {
+//					throw new ReaderException("Root element name mismatch, " + targetXmlFullname + " != " + srcXmlFullname);
+//				}
+				
+				// simple validation only for root element
+				if (!xmlName.equalsIgnoreCase(localName)) {
+					throw new ReaderException("Root element name mismatch, " + localName + " != " + xmlName);
 				}
+				
 				if (attrs != null && attrs.getLength() > 0) {
 					this.populateAttributes(obj, attrs, ms);
 				}
