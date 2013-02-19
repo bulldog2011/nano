@@ -17,8 +17,8 @@ A super light xml and json binding framework supporting both Java and Android pl
 Download latest [0.6.3 release](https://github.com/bulldog2011/bulldog-repo/tree/master/repo/releases/com/leansoft/nano/0.6.3)  
 
 ***Note***: 
->1. On normal Java platform, Nano depends on KXml and org.json libraries, you can extract these libraries in the nano release zip package.
-2. On Android plaform, Nano does ***not*** depend on external Kxml and org.json libraries, since these libraries have already been included in Android.   
+    1. On normal Java platform, Nano depends on KXml and org.json libraries, you can extract these libraries in the nano release zip package.
+    2. On Android plaform, Nano does ***not*** depend on external Kxml and org.json libraries, since these libraries have already been included in Android.   
 
 2. Maven refereence
 
@@ -42,6 +42,7 @@ Download latest [0.6.3 release](https://github.com/bulldog2011/bulldog-repo/tree
 6. [Nano on Android Tutorial 1](http://bulldog2011.github.com/blog/2013/02/10/nano-on-android-tutorial-1/)
 7. [A full movie search Android application using Nano binding](http://bulldog2011.github.com/blog/2013/02/12/movie-search-android-app-using-nano/)
 8. [Schema Driven Web Serivce Client Development on Android, Part 1 : Hello eBay Finding](http://bulldog2011.github.com/blog/2013/02/17/schema-driven-on-android-part-1-hello-ebay-finding/)
+9. [Schema Driven Web Serivce Client Development on Android, Part 2 : eBay Search App](http://bulldog2011.github.com/blog/2013/02/19/schema-driven-on-android-part-2-ebay-search/)
 
 
 ###Compatibility
