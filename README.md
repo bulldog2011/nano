@@ -15,10 +15,9 @@ A super light xml and json binding framework supporting both Java and Android pl
 ###How to Use
 1. Direct jar reference  
 Download latest [0.6.3 release](https://github.com/bulldog2011/bulldog-repo/tree/master/repo/releases/com/leansoft/nano/0.6.3)  
-
-***Note***: 
-    1. On normal Java platform, Nano depends on KXml and org.json libraries, you can extract these libraries in the nano release zip package.
-    2. On Android plaform, Nano does ***not*** depend on external Kxml and org.json libraries, since these libraries have already been included in Android.   
+Note:  
+    * On normal Java platform, Nano depends on KXml and org.json libraries, you can extract these libraries in the nano release zip package.  
+    * On Android plaform, Nano does ***not*** depend on external Kxml and org.json libraries, since these libraries have already been included in Android.   
 
 2. Maven refereence
 
