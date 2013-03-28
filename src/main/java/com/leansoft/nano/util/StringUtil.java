@@ -33,7 +33,7 @@ public class StringUtil {
 	
 	public static String reader2String(Reader source) throws IOException {
 		char[] cbuf = new char[65535];
-		StringBuffer stringbuf = new StringBuffer();
+		StringBuilder stringbuf = new StringBuilder();
 		
 		int count = 0;
 		while ((count = source.read(cbuf, 0, 65535)) != -1) {

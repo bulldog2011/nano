@@ -23,8 +23,8 @@ public class ThreadLocalDateFormatter {
 		    	    return new HashMap<String, DateFormat>();
 		        }
 	};
-	
-	static private final DateFormat getFormatter(final String pattern) {
+
+	static private DateFormat getFormatter(final String pattern) {
 		Map<String, DateFormat> formatterMap = FORMATTERS.get();
 		DateFormat df = formatterMap.get(pattern);
 		if ( null == df) {
