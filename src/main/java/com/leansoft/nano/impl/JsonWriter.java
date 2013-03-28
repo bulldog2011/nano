@@ -1,17 +1,5 @@
 package com.leansoft.nano.impl;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.leansoft.nano.Format;
 import com.leansoft.nano.IWriter;
 import com.leansoft.nano.annotation.schema.AttributeSchema;
@@ -22,6 +10,13 @@ import com.leansoft.nano.exception.MappingException;
 import com.leansoft.nano.exception.WriterException;
 import com.leansoft.nano.transform.Transformer;
 import com.leansoft.nano.util.StringUtil;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.*;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -191,7 +186,7 @@ public class JsonWriter implements IWriter {
 			for(Object value : list) {
 				if (value == null) continue;
 				
-				Class<?> type = es.getParameterizedType();;
+				Class<?> type = es.getParameterizedType();
 				
 				// primitives
 				if(Transformer.isPrimitive(type)) {
@@ -237,8 +232,7 @@ public class JsonWriter implements IWriter {
 		if (value instanceof Number || value instanceof Boolean) {
 			return value;
 		}
-		String stringValue = Transformer.write(value, type);
-		return stringValue;
+        return Transformer.write(value, type);
 	}
 
 }

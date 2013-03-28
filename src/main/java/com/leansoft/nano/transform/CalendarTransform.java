@@ -22,8 +22,7 @@ public class CalendarTransform implements Transformable<Calendar> {
 
 	public String write(Calendar value) throws Exception {
 		Date date = value.getTime();
-		String text = dateTransform.write(date);
-		return text;
+        return dateTransform.write(date);
 	}
 
 }
