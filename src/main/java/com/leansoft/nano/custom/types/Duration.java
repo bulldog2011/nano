@@ -53,7 +53,7 @@ public class Duration {
         int timePosition = duration.indexOf("T");
 
         // P is required but P by itself is invalid
-        if (duration.indexOf("P") == -1 || duration.equals("P")) {
+        if (!duration.contains("P") || duration.equals("P")) {
             throw new IllegalArgumentException();
             // Messages.getMessage("badDuration"));
         }
@@ -114,7 +114,7 @@ public class Duration {
      * @throws IllegalArgumentException if time does not match pattern
      */
     public void parseTime(String time) throws IllegalArgumentException {
-        if (time.length() == 0 || time.indexOf("-") != -1) {
+        if (time.length() == 0 || time.contains("-")) {
             throw new IllegalArgumentException();
             //Messages.getMessage("badTimeDuration"));
         }
@@ -181,7 +181,7 @@ public class Duration {
      * @throws IllegalArgumentException if date does not match pattern
      */
     public void parseDate(String date) throws IllegalArgumentException {
-        if (date.length() == 0 || date.indexOf("-") != -1) {
+        if (date.length() == 0 || date.contains("-")) {
             throw new IllegalArgumentException();
             //Messages.getMessage("badDateDuration"));
         }
@@ -336,7 +336,7 @@ public class Duration {
 
     /** This returns the xml representation of an xsd:duration object. */
     public String toString() {
-        StringBuffer duration = new StringBuffer();
+        StringBuilder duration = new StringBuilder();
 
         duration.append("P");
 
