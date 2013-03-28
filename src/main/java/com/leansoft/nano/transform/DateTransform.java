@@ -1,8 +1,8 @@
 package com.leansoft.nano.transform;
 
-import java.util.Date;
-
 import com.leansoft.nano.util.ThreadLocalDateFormatter;
+
+import java.util.Date;
 
 /**
  * Transformer between a string and a java.util.Date object
@@ -22,13 +22,11 @@ class DateTransform implements Transformable<Date> {
 
 	public Date read(String value) throws Exception {
 		String pattern = getPattern(value);
-		Date date = ThreadLocalDateFormatter.parse(value, pattern);
-		return date;
+        return ThreadLocalDateFormatter.parse(value, pattern);
 	}
 
 	public String write(Date value) throws Exception {
-		String text = ThreadLocalDateFormatter.format(value, FULL);
-		return text;
+        return ThreadLocalDateFormatter.format(value, FULL);
 	}
 	
 	public static String getPattern(String text) {
