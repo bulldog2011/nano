@@ -12,13 +12,13 @@ import com.leansoft.nano.util.ThreadLocalDateFormatter;
  */
 class DateTransform implements Transformable<Date> {
 	
-	private static final String FULL = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+	public static String FULL = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 	   
-	private static final String LONG = "yyyy-MM-dd HH:mm:ss z";
+	public static String LONG = "yyyy-MM-dd HH:mm:ss z";
 	
-	private static final String NORMAL = "yyyy-MM-dd z";
+	public static String NORMAL = "yyyy-MM-dd z";
 	
-	private static final String SHORT = "yyyy-MM-dd";
+	public static String SHORT = "yyyy-MM-dd";
 
 	public Date read(String value) throws Exception {
 		String pattern = getPattern(value);

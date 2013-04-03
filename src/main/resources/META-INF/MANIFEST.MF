@@ -1,6 +1,6 @@
 Specification-Title: nano
-Specification-Version: 0.6
+Specification-Version: 0.7
 Specification-Vendor: leansoft
-Implementation-Version: 0.6
+Implementation-Version: 0.7
 Implementation-Vendor: leansoft
-Implementation-Title: light xml/json binding framework for android
+Implementation-Title: light web service client framework targeting android platform
