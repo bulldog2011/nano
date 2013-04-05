@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.TimeZone;
 
+import javax.xml.namespace.QName;
+
 import com.leansoft.nano.custom.types.Duration;
 import com.leansoft.nano.transform.Transformer;
 
@@ -90,6 +92,16 @@ public class TransformerTest extends TestCase {
         assertEquals(value, new Short((short)12));
         assertEquals(text, "12");
     }
+    
+    public void testQName() throws Exception {
+    	QName qname = (QName) Transformer.read("pre:test", QName.class);
+    	assertEquals("pre", qname.getPrefix());
+    	assertEquals("test", qname.getLocalPart());
+    	
+    	String text = Transformer.write(qname, QName.class);
+    	
+    	assertEquals(text, "pre:test");
+    }
 
     public void testTransformable() throws Exception {
     	assertTrue(Transformer.isTransformable(byte[].class));
@@ -101,6 +113,7 @@ public class TransformerTest extends TestCase {
     	assertTrue(Transformer.isTransformable(Duration.class));
     	assertTrue(Transformer.isTransformable(URL.class));
     	assertTrue(Transformer.isTransformable(Time.class));
+    	assertTrue(Transformer.isTransformable(QName.class));
     	assertFalse(Transformer.isTransformable(ArrayList.class));
     }
     
