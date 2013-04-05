@@ -44,7 +44,7 @@ public class XmlDOMReader implements IReader {
 	
 	private Format format;
 	
-	private static final ThreadLocal<DocumentBuilder> builderLocal =
+	protected static final ThreadLocal<DocumentBuilder> builderLocal =
 		    new ThreadLocal<DocumentBuilder>() {
 		        @Override 
 		        protected DocumentBuilder initialValue() {
@@ -79,7 +79,6 @@ public class XmlDOMReader implements IReader {
 		
 		try {
 			DocumentBuilder db = builderLocal.get();
-			//db.reset();
 			Document doc = db.parse(source);
 			
 			Element rootElement = doc.getDocumentElement();
@@ -129,7 +128,7 @@ public class XmlDOMReader implements IReader {
 		}
 	}
 	
-	private <T> void validate(Class<? extends T> type, InputStream source) throws ReaderException {
+	protected <T> void validate(Class<? extends T> type, InputStream source) throws ReaderException {
 		if (type == null) {
 			throw new ReaderException("Can not read, type is null!");
 		}
@@ -144,7 +143,7 @@ public class XmlDOMReader implements IReader {
 		}
 	}
 	
-	private void read(Object obj, Element element) throws Exception {
+	protected void read(Object obj, Element element) throws Exception {
 		this.readAttribute(obj, element);
 		
 		boolean hasText = this.readText(obj, element);
@@ -272,7 +271,7 @@ public class XmlDOMReader implements IReader {
 		}
 	}
 
-	private void readAnyElement(Object obj, List<Element> anyElements) throws Exception {
+	protected void readAnyElement(Object obj, List<Element> anyElements) throws Exception {
 		MappingSchema ms = MappingSchema.fromObject(obj);
 		
 		AnyElementSchema aes = ms.getAnyElementSchema();
@@ -283,7 +282,7 @@ public class XmlDOMReader implements IReader {
 	}
 
 	
-	private Object buildObjectFromType(Class<?> type) throws Exception {
+	protected Object buildObjectFromType(Class<?> type) throws Exception {
 		try {
 			Constructor<?> con = TypeReflector.getConstructor(type);
 			Object obj = con.newInstance();

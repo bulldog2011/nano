@@ -2,7 +2,7 @@ package com.leansoft.nano.impl;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.leansoft.nano.annotation.AnyElement;
@@ -94,8 +94,8 @@ class MappingSchema {
 	}
 	
 	private void buildXml2SchemaMapping() {
-		xml2SchemaMapping = new HashMap<String, Object>();
-		xml2AttributeSchemaMapping = new HashMap<String, AttributeSchema>();
+		xml2SchemaMapping = new LinkedHashMap<String, Object>();
+		xml2AttributeSchemaMapping = new LinkedHashMap<String, AttributeSchema>();
 		
 		for(String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
@@ -112,7 +112,7 @@ class MappingSchema {
 	}
 	
 	private void buildField2AttributeSchemaMapping() {
-		field2AttributeSchemaMapping = new HashMap<String, AttributeSchema>();
+		field2AttributeSchemaMapping = new LinkedHashMap<String, AttributeSchema>();
 		
 		for(String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
@@ -123,7 +123,7 @@ class MappingSchema {
 	}
 	
 	private Map<String, Object> scanFieldSchema(Class<?> type) throws MappingException {
-		Map<String, Object> fieldsMap = new HashMap<String, Object>();
+		Map<String, Object> fieldsMap = new LinkedHashMap<String, Object>();
 		Field[] fields = type.getDeclaredFields();
 		
 		// used for validation

@@ -37,11 +37,11 @@ import com.leansoft.nano.util.StringUtil;
  */
 public class XmlPullWriter implements IWriter {
 	
-	private static final String IDENT_PROPERTY = "http://xmlpull.org/v1/doc/features.html#indent-output";
+	protected static final String IDENT_PROPERTY = "http://xmlpull.org/v1/doc/features.html#indent-output";
 
-	private Format format;
+	protected Format format;
 
-	private XmlPullParserFactory factory;
+	protected XmlPullParserFactory factory;
 
 	public XmlPullWriter() {
 		this(new Format());
@@ -94,7 +94,7 @@ public class XmlPullWriter implements IWriter {
 		}
 	}
 	
-	private void validate(Object source, Writer out) {
+	protected void validate(Object source, Writer out) {
 		if (source == null) {
 			throw new IllegalArgumentException("Can not write null instance!");
 		}
@@ -123,7 +123,7 @@ public class XmlPullWriter implements IWriter {
 		return out.toString();
 	}
 	
-	private void writeObject(XmlSerializer serializer, Object source, String namespace) throws Exception {
+	protected void writeObject(XmlSerializer serializer, Object source, String namespace) throws Exception {
 		MappingSchema ms = MappingSchema.fromObject(source);
 		
 		// write xml attributes first
