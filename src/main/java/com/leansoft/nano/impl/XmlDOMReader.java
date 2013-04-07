@@ -42,7 +42,7 @@ import com.leansoft.nano.util.TypeReflector;
  */
 public class XmlDOMReader implements IReader {
 	
-	private Format format;
+	protected Format format;
 	
 	protected static final ThreadLocal<DocumentBuilder> builderLocal =
 		    new ThreadLocal<DocumentBuilder>() {

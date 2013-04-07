@@ -39,7 +39,11 @@ public class SOAPWriter extends XmlPullWriter {
 	
 			XmlSerializer serializer = factory.newSerializer();
 			if (format.isIndent()) {
-				serializer.setFeature(IDENT_PROPERTY, true);
+				try {
+					serializer.setFeature(IDENT_PROPERTY, true);
+				} catch (IllegalStateException ise) {
+					serializer.setProperty(PROPERTY_SERIALIZER_INDENTATION, "true");
+				}
 			}
 			serializer.setOutput(out);
 			serializer.startDocument(format.getEncoding(), null);

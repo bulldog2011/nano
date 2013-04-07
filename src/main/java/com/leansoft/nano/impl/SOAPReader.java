@@ -1,6 +1,8 @@
 package com.leansoft.nano.impl;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +81,15 @@ public class SOAPReader extends XmlDOMReader {
 		}
 	}
 	
+	
+	public <T> T read(Class<? extends T> soapClazz, Class<?> innerClazz, String source)
+			throws ReaderException, MappingException {
+		try {
+			return this.read(soapClazz, innerClazz, new ByteArrayInputStream(source.getBytes(super.format.getEncoding())));
+		} catch (UnsupportedEncodingException e) {
+			throw new ReaderException("Encoding is not supported", e);
+		}
+	}
 	
 	static class ReadContext {
 		public Class<?> innerClass;

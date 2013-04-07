@@ -38,6 +38,7 @@ import com.leansoft.nano.util.StringUtil;
 public class XmlPullWriter implements IWriter {
 	
 	protected static final String IDENT_PROPERTY = "http://xmlpull.org/v1/doc/features.html#indent-output";
+	protected static final String PROPERTY_SERIALIZER_INDENTATION = "http://xmlpull.org/v1/doc/properties.html#serializer-indentation";
 
 	protected Format format;
 
@@ -66,7 +67,11 @@ public class XmlPullWriter implements IWriter {
 	
 			XmlSerializer serializer = factory.newSerializer();
 			if (format.isIndent()) {
-				serializer.setFeature(IDENT_PROPERTY, true);
+				try {
+					serializer.setFeature(IDENT_PROPERTY, true);
+				} catch (IllegalStateException ise) {
+					serializer.setProperty(PROPERTY_SERIALIZER_INDENTATION, "true");
+				}
 			}
 			serializer.setOutput(out);
 			serializer.startDocument(format.getEncoding(), null);
