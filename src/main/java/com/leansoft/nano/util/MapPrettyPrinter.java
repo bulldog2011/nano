@@ -10,6 +10,7 @@ public class MapPrettyPrinter {
         StringBuilder sb = new StringBuilder();
         Iterator<Entry<String, String>> iter = map.entrySet().iterator();
         sb.append('{');
+        sb.append(System.getProperty("line.separator"));
         while (iter.hasNext()) {
             Entry<String, String> entry = iter.next();
             sb.append("    ");

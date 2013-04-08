@@ -4,16 +4,14 @@ import org.apache.http.entity.StringEntity;
 
 import com.leansoft.nano.Format;
 import com.leansoft.nano.exception.MarshallException;
-import com.leansoft.nano.impl.SOAPWriter;
+import com.leansoft.nano.impl.XmlPullWriter;
 import com.leansoft.nano.log.ALog;
 import com.leansoft.nano.util.MapPrettyPrinter;
 import com.loopj.android.http.AsyncHttpClient;
 
-import java.util.ArrayList;
-
-public abstract class NanoSOAPClient {
+public abstract class NanoXMLClient {
 	
-	private static final String TAG = NanoSOAPClient.class.getSimpleName();
+	private static final String TAG = NanoXMLClient.class.getSimpleName();
 	
 	private String contentType = "text/xml";
 	private String endpointUrl = null;
@@ -22,16 +20,14 @@ public abstract class NanoSOAPClient {
 	
 	private boolean debug = false;
 	
-	private SOAPVersion soapVersion = SOAPVersion.SOAP11;
-	
 	private AsyncHttpClient asyncHttpClient = null;
 	
-	public NanoSOAPClient() {
+	public NanoXMLClient() {
 		asyncHttpClient = new AsyncHttpClient();
 		asyncHttpClient.addHeader("Accept", "text/xml");
 	}
 	
-	protected void invoke(Object requestObject, SOAPServiceCallback<?> callback, Class<?> bindClazz) {
+	protected void invoke(Object requestObject, ServiceCallback<?> callback, Class<?> bindClazz) {
 		
 		try {
 			if (endpointUrl == null) {
@@ -47,16 +43,16 @@ public abstract class NanoSOAPClient {
 			}
 			
 			// marshalling
-			String soapMessage = this.convertObjectToSOAP(requestObject);
-			if (soapMessage == null) {
-				throw new MarshallException("fail to convert object of type : " + requestObject.getClass().getName() + " to soap message");
+			String xmlMessage = this.convertObjectToXML(requestObject);
+			if (xmlMessage == null) {
+				throw new MarshallException("fail to convert object of type : " + requestObject.getClass().getName() + " to xml message");
 			}
 			
-			StringEntity soapEntiry = new StringEntity(soapMessage, charset);
+			StringEntity xmlEntiry = new StringEntity(xmlMessage, charset);
 			
-			SOAPHttpResponseHandler soapHttpResponseHandler = new SOAPHttpResponseHandler(callback, bindClazz, soapVersion);
-			soapHttpResponseHandler.setCharset(charset);
-			soapHttpResponseHandler.setDebug(debug);
+			XMLHttpResponseHandler xmlHttpResponseHandler = new XMLHttpResponseHandler(callback, bindClazz);
+			xmlHttpResponseHandler.setCharset(charset);
+			xmlHttpResponseHandler.setDebug(debug);
 			
 			if (debug) {
 				ALog.d(TAG, "Sending request to : " + endpointUrl);
@@ -64,10 +60,10 @@ public abstract class NanoSOAPClient {
 				String httpHeaders = MapPrettyPrinter.printMap(asyncHttpClient.getHeaders());
 				ALog.d(TAG, httpHeaders);
 				ALog.d(TAG, "Request message : ");
-				ALog.debugLongMessage(TAG, soapMessage);
+				ALog.debugLongMessage(TAG, xmlMessage);
 			}
 			
-			asyncHttpClient.post(null, endpointUrl, null, soapEntiry, contentType, soapHttpResponseHandler);
+			asyncHttpClient.post(null, endpointUrl, null, xmlEntiry, contentType, xmlHttpResponseHandler);
 			
 		} catch (Exception e) {
 			ALog.e(TAG, "Fail to send request", e);
@@ -85,28 +81,13 @@ public abstract class NanoSOAPClient {
 	}
 	
 	
-	private String convertObjectToSOAP(Object requestObject) throws MarshallException {
+	private String convertObjectToXML(Object requestObject) throws MarshallException {
 		Format format = new Format(true, charset);
-		SOAPWriter soapWriter = new SOAPWriter(format);
+		XmlPullWriter xmlWriter = new XmlPullWriter(format);
 		try {
-			if (soapVersion == SOAPVersion.SOAP11) {
-				com.leansoft.nano.soap11.Envelope envelope = new com.leansoft.nano.soap11.Envelope();
-				envelope.body = new com.leansoft.nano.soap11.Body();
-				envelope.body.any = new ArrayList<Object>();
-				envelope.body.any.add(requestObject);
-				String soapMessage = soapWriter.write(envelope);
-				return soapMessage;
-			} else {
-				com.leansoft.nano.soap12.Envelope envelope = new com.leansoft.nano.soap12.Envelope();
-				envelope.body = new com.leansoft.nano.soap12.Body();
-				envelope.body.any = new ArrayList<Object>();
-				envelope.body.any.add(requestObject);
-				String soapMessage = soapWriter.write(envelope);
-				return soapMessage;
-			}
-			
+			return xmlWriter.write(requestObject);
 		} catch (Exception e) {
-			throw new MarshallException("fail to convert object of type : " + requestObject.getClass().getName() + " to soap message");
+			throw new MarshallException("fail to convert object of type : " + requestObject.getClass().getName() + " to xml message");
 		}
 	}
 
@@ -151,15 +132,5 @@ public abstract class NanoSOAPClient {
 
 	public void setDebug(boolean debug) {
 		this.debug = debug;
-	}
-
-	public SOAPVersion getSoapVersion() {
-		return soapVersion;
-	}
-
-	public void setSoapVersion(SOAPVersion soapVersion) {
-		if (soapVersion != null) {
-			this.soapVersion = soapVersion;
-		}
 	}
 }
