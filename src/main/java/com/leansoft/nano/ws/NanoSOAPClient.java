@@ -10,6 +10,7 @@ import com.leansoft.nano.util.MapPrettyPrinter;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class NanoSOAPClient {
 	
@@ -23,6 +24,8 @@ public abstract class NanoSOAPClient {
 	private boolean debug = false;
 	
 	private SOAPVersion soapVersion = SOAPVersion.SOAP11;
+	
+	private List<Object> customSOAPHeaders = null;
 	
 	private AsyncHttpClient asyncHttpClient = null;
 	
@@ -91,6 +94,11 @@ public abstract class NanoSOAPClient {
 		try {
 			if (soapVersion == SOAPVersion.SOAP11) {
 				com.leansoft.nano.soap11.Envelope envelope = new com.leansoft.nano.soap11.Envelope();
+				if (this.customSOAPHeaders != null && this.customSOAPHeaders.size() > 0) {
+					com.leansoft.nano.soap11.Header header = new com.leansoft.nano.soap11.Header();
+					header.any = this.customSOAPHeaders;
+					envelope.header = header;
+				}
 				envelope.body = new com.leansoft.nano.soap11.Body();
 				envelope.body.any = new ArrayList<Object>();
 				envelope.body.any.add(requestObject);
@@ -98,6 +106,11 @@ public abstract class NanoSOAPClient {
 				return soapMessage;
 			} else {
 				com.leansoft.nano.soap12.Envelope envelope = new com.leansoft.nano.soap12.Envelope();
+				if (this.customSOAPHeaders != null && this.customSOAPHeaders.size() > 0) {
+					com.leansoft.nano.soap12.Header header = new com.leansoft.nano.soap12.Header();
+					header.any = this.customSOAPHeaders;
+					envelope.header = header;
+				}
 				envelope.body = new com.leansoft.nano.soap12.Body();
 				envelope.body.any = new ArrayList<Object>();
 				envelope.body.any.add(requestObject);
@@ -161,5 +174,13 @@ public abstract class NanoSOAPClient {
 		if (soapVersion != null) {
 			this.soapVersion = soapVersion;
 		}
+	}
+
+	public List<Object> getCustomSOAPHeaders() {
+		return customSOAPHeaders;
+	}
+
+	public void setCustomSOAPHeaders(List<Object> customSOAPHeaders) {
+		this.customSOAPHeaders = customSOAPHeaders;
 	}
 }

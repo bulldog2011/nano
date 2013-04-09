@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -247,8 +248,8 @@ public class XmlPullWriter implements IWriter {
 	
 	private void writeElements(XmlSerializer serializer, Object source, MappingSchema ms, String namespace) throws Exception {
 		Map<String, Object> field2SchemaMapping = ms.getField2SchemaMapping();
-		for (String fieldName : field2SchemaMapping.keySet()) {
-			Object schemaObj = field2SchemaMapping.get(fieldName);
+		for (Entry<String, Object> entry : field2SchemaMapping.entrySet()) {
+			Object schemaObj = entry.getValue();
 			if (schemaObj instanceof ElementSchema) {
 				ElementSchema es = (ElementSchema)schemaObj;
 				Field field = es.getField();
