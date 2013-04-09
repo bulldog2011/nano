@@ -13,30 +13,39 @@ public class OfferListing implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "OfferListingId")
+	@Order(value=0)
 	public String offerListingId;	
 	
 	@Element(name = "Price")
+	@Order(value=1)
 	public Price price;	
 	
 	@Element(name = "SalePrice")
+	@Order(value=2)
 	public Price salePrice;	
 	
 	@Element(name = "AmountSaved")
+	@Order(value=3)
 	public Price amountSaved;	
 	
 	@Element(name = "PercentageSaved")
+	@Order(value=4)
 	public BigInteger percentageSaved;	
 	
 	@Element(name = "Availability")
+	@Order(value=5)
 	public String availability;	
 	
 	@Element(name = "AvailabilityAttributes")
+	@Order(value=6)
 	public AvailabilityAttributes availabilityAttributes;	
 	
 	@Element(name = "IsEligibleForSuperSaverShipping")
+	@Order(value=7)
 	public Boolean isEligibleForSuperSaverShipping;	
 	
 	@Element(name = "IsEligibleForPrime")
+	@Order(value=8)
 	public Boolean isEligibleForPrime;	
 	
     

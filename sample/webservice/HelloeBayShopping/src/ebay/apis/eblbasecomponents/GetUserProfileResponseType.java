@@ -17,12 +17,15 @@ public class GetUserProfileResponseType extends AbstractResponseType implements 
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "User")
+	@Order(value=0)
 	public SimpleUserType user;	
 	
 	@Element(name = "FeedbackHistory")
+	@Order(value=1)
 	public FeedbackHistoryType feedbackHistory;	
 	
 	@Element(name = "FeedbackDetails")
+	@Order(value=2)
 	public List<FeedbackDetailType> feedbackDetails;	
 	
     

@@ -11,9 +11,11 @@ public class CorrectedQuery implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Keywords")
+	@Order(value=0)
 	public String keywords;	
 	
 	@Element(name = "Message")
+	@Order(value=1)
 	public String message;	
 	
     

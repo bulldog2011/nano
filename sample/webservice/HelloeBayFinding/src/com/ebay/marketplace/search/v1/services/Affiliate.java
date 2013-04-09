@@ -20,21 +20,27 @@ public class Affiliate implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String trackingId;	
 	
 	@Element
+	@Order(value=1)
 	public String networkId;	
 	
 	@Element
+	@Order(value=2)
 	public String customId;	
 	
 	@Element
+	@Order(value=3)
 	public Boolean geoTargeting;	
 	
 	@Element
+	@Order(value=4)
 	public String delimiter;	
 	
 	@AnyElement
+	@Order(value=5)
 	public List<Object> any;	
 	
     

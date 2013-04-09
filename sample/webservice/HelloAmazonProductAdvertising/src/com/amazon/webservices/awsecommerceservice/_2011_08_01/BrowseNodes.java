@@ -12,9 +12,11 @@ public class BrowseNodes implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Request")
+	@Order(value=0)
 	public Request request;	
 	
 	@Element(name = "BrowseNode")
+	@Order(value=1)
 	public List<BrowseNode> browseNode;	
 	
     

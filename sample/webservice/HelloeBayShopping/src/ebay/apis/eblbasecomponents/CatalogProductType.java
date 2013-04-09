@@ -16,36 +16,47 @@ public class CatalogProductType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "DomainName")
+	@Order(value=0)
 	public String domainName;	
 	
 	@Element(name = "DetailsURL")
+	@Order(value=1)
 	public String detailsURL;	
 	
 	@Element(name = "DisplayStockPhotos")
+	@Order(value=2)
 	public Boolean displayStockPhotos;	
 	
 	@Element(name = "ProductID")
+	@Order(value=3)
 	public List<ProductIDType> productID;	
 	
 	@Element(name = "ItemCount")
+	@Order(value=4)
 	public Integer itemCount;	
 	
 	@Element(name = "ItemSpecifics")
+	@Order(value=5)
 	public NameValueListArrayType itemSpecifics;	
 	
 	@Element(name = "ReviewCount")
+	@Order(value=6)
 	public Integer reviewCount;	
 	
 	@Element(name = "StockPhotoURL")
+	@Order(value=7)
 	public String stockPhotoURL;	
 	
 	@Element(name = "Title")
+	@Order(value=8)
 	public String title;	
 	
 	@Element(name = "ProductState")
+	@Order(value=9)
 	public ProductStateCodeType productState;	
 	
 	@AnyElement
+	@Order(value=10)
 	public List<Object> any;	
 	
     

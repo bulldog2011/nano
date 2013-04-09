@@ -11,9 +11,11 @@ public class Envelope implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Header")
+	@Order(value=0)
 	public Header header;	
 	
 	@Element(name = "Body")
+	@Order(value=1)
 	public Body body;	
 	
     

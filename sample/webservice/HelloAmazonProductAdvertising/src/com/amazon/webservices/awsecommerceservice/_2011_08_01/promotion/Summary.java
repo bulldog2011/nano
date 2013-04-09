@@ -10,24 +10,31 @@ public class Summary implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "PromotionId")
+	@Order(value=0)
 	public String promotionId;	
 	
 	@Element(name = "Category")
+	@Order(value=1)
 	public String category;	
 	
 	@Element(name = "StartDate")
+	@Order(value=2)
 	public String startDate;	
 	
 	@Element(name = "EndDate")
+	@Order(value=3)
 	public String endDate;	
 	
 	@Element(name = "EligibilityRequirementDescription")
+	@Order(value=4)
 	public String eligibilityRequirementDescription;	
 	
 	@Element(name = "BenefitDescription")
+	@Order(value=5)
 	public String benefitDescription;	
 	
 	@Element(name = "TermsAndConditions")
+	@Order(value=6)
 	public String termsAndConditions;	
 	
     

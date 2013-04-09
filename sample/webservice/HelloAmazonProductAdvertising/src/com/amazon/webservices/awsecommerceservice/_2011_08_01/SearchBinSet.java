@@ -12,9 +12,11 @@ public class SearchBinSet implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Bin")
+	@Order(value=0)
 	public List<Bin> bin;	
 	
 	@Attribute(name = "NarrowBy")
+	@Order(value=1)
 	public String narrowBy;	
 	
     

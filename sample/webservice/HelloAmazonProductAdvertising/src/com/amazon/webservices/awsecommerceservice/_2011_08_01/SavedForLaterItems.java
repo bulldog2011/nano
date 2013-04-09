@@ -12,9 +12,11 @@ public class SavedForLaterItems implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "SubTotal")
+	@Order(value=0)
 	public Price subTotal;	
 	
 	@Element(name = "SavedForLaterItem")
+	@Order(value=1)
 	public List<CartItem> savedForLaterItem;	
 	
     

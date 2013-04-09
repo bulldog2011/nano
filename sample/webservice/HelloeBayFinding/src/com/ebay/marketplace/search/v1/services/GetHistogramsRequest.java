@@ -16,6 +16,7 @@ public class GetHistogramsRequest extends BaseServiceRequest implements Serializ
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String categoryId;	
 	
     

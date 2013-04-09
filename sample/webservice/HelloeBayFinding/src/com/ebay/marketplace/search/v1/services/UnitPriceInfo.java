@@ -19,9 +19,11 @@ public class UnitPriceInfo implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String type;	
 	
 	@Element
+	@Order(value=1)
 	public double quantity;	
 	
     

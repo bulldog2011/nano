@@ -15,9 +15,11 @@ public class ItemAttribute implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String name;	
 	
 	@Element
+	@Order(value=1)
 	public String value;	
 	
     

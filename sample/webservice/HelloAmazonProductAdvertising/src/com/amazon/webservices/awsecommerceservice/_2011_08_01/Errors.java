@@ -13,6 +13,7 @@ public class Errors implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Error")
+	@Order(value=0)
 	public List<Error> error;	
 	
     

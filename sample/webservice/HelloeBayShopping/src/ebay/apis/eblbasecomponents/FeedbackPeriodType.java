@@ -18,12 +18,15 @@ public class FeedbackPeriodType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "PeriodInDays")
+	@Order(value=0)
 	public Integer periodInDays;	
 	
 	@Element(name = "Count")
+	@Order(value=1)
 	public Long count;	
 	
 	@AnyElement
+	@Order(value=2)
 	public List<Object> any;	
 	
     

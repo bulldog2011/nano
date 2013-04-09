@@ -17,24 +17,31 @@ public class FindItemsAdvancedRequest extends BaseFindingServiceRequest implemen
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String keywords;	
 	
 	@Element
+	@Order(value=1)
 	public List<String> categoryId;	
 	
 	@Element
+	@Order(value=2)
 	public List<ItemFilter> itemFilter;	
 	
 	@Element
+	@Order(value=3)
 	public List<AspectFilter> aspectFilter;	
 	
 	@Element
+	@Order(value=4)
 	public List<OutputSelectorType> outputSelector;	
 	
 	@Element
+	@Order(value=5)
 	public Boolean descriptionSearch;	
 	
 	@Element
+	@Order(value=6)
 	public List<DomainFilter> domainFilter;	
 	
     

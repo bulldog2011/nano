@@ -20,18 +20,23 @@ public class FindItemsByKeywordsRequest extends BaseFindingServiceRequest implem
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String keywords;	
 	
 	@Element
+	@Order(value=1)
 	public List<ItemFilter> itemFilter;	
 	
 	@Element
+	@Order(value=2)
 	public List<AspectFilter> aspectFilter;	
 	
 	@Element
+	@Order(value=3)
 	public List<OutputSelectorType> outputSelector;	
 	
 	@Element
+	@Order(value=4)
 	public List<DomainFilter> domainFilter;	
 	
     

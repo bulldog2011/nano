@@ -10,15 +10,19 @@ public class Image implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "URL")
+	@Order(value=0)
 	public String url;	
 	
 	@Element(name = "Height")
+	@Order(value=1)
 	public DecimalWithUnits height;	
 	
 	@Element(name = "Width")
+	@Order(value=2)
 	public DecimalWithUnits width;	
 	
 	@Element(name = "IsVerified")
+	@Order(value=3)
 	public String isVerified;	
 	
     

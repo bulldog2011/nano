@@ -64,7 +64,11 @@ public class MainActivity extends Activity {
 
 					@Override
 					public void onFailure(Throwable error, String errorMessage) { // http or parsing error
-						Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+						if (errorMessage != null) {
+							Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+						} else {
+							Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+						}
 					}
 					
 				});

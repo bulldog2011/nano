@@ -19,12 +19,15 @@ public class FindPopularSearchesResponseType extends AbstractResponseType implem
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "PopularSearchResult")
+	@Order(value=0)
 	public List<PopularSearchesType> popularSearchResult;	
 	
 	@Element(name = "PageNumber")
+	@Order(value=1)
 	public Integer pageNumber;	
 	
 	@Element(name = "TotalPages")
+	@Order(value=2)
 	public Integer totalPages;	
 	
     

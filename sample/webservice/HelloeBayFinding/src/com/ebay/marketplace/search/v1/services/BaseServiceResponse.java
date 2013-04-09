@@ -17,15 +17,19 @@ public abstract class BaseServiceResponse implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public AckValue ack;	
 	
 	@Element
+	@Order(value=1)
 	public ErrorMessage errorMessage;	
 	
 	@Element
+	@Order(value=2)
 	public String version;	
 	
 	@Element
+	@Order(value=3)
 	public Date timestamp;	
 	
     

@@ -17,12 +17,15 @@ public class AspectValueHistogram implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public long count;	
 	
 	@AnyElement
+	@Order(value=1)
 	public List<Object> any;	
 	
 	@Attribute  
+	@Order(value=2)
 	public String valueName;	
 	
     

@@ -4,13 +4,15 @@ package com.leansoft.nano.soap12;
 
 import java.io.Serializable;
 import com.leansoft.nano.annotation.*;
+
 import javax.xml.namespace.QName;
 
 public class SupportedEnvType implements Serializable {
 
     private static final long serialVersionUID = -1L;
 
-	@Attribute  
+	@Attribute
+	@Order(value=0)
 	public QName qname;	
 	
     

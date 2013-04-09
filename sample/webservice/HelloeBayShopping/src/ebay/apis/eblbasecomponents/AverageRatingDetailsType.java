@@ -17,15 +17,19 @@ public class AverageRatingDetailsType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "RatingDetail")
+	@Order(value=0)
 	public FeedbackRatingDetailCodeType ratingDetail;	
 	
 	@Element(name = "Rating")
+	@Order(value=1)
 	public Double rating;	
 	
 	@Element(name = "RatingCount")
+	@Order(value=2)
 	public Long ratingCount;	
 	
 	@AnyElement
+	@Order(value=3)
 	public List<Object> any;	
 	
     

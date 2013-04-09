@@ -16,9 +16,11 @@ public class GetShippingCostsResponseType extends AbstractResponseType implement
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ShippingDetails")
+	@Order(value=0)
 	public ShippingDetailsType shippingDetails;	
 	
 	@Element(name = "ShippingCostSummary")
+	@Order(value=1)
 	public ShippingCostSummaryType shippingCostSummary;	
 	
     

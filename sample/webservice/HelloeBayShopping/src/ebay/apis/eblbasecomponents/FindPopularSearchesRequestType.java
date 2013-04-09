@@ -19,21 +19,27 @@ public class FindPopularSearchesRequestType extends AbstractRequestType implemen
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "CategoryID")
+	@Order(value=0)
 	public List<String> categoryID;	
 	
 	@Element(name = "QueryKeywords")
+	@Order(value=1)
 	public List<String> queryKeywords;	
 	
 	@Element(name = "MaxKeywords")
+	@Order(value=2)
 	public Integer maxKeywords;	
 	
 	@Element(name = "MaxResultsPerPage")
+	@Order(value=3)
 	public Integer maxResultsPerPage;	
 	
 	@Element(name = "PageNumber")
+	@Order(value=4)
 	public Integer pageNumber;	
 	
 	@Element(name = "IncludeChildCategories")
+	@Order(value=5)
 	public Boolean includeChildCategories;	
 	
     

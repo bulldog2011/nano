@@ -11,6 +11,7 @@ public class Merchant implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Name")
+	@Order(value=0)
 	public String name;	
 	
     

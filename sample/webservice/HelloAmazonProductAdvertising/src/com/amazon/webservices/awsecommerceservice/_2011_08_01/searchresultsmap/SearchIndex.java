@@ -13,21 +13,27 @@ public class SearchIndex implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "IndexName")
+	@Order(value=0)
 	public String indexName;	
 	
 	@Element(name = "Results")
+	@Order(value=1)
 	public BigInteger results;	
 	
 	@Element(name = "Pages")
+	@Order(value=2)
 	public BigInteger pages;	
 	
 	@Element(name = "CorrectedQuery")
+	@Order(value=3)
 	public CorrectedQuery correctedQuery;	
 	
 	@Element(name = "RelevanceRank")
+	@Order(value=4)
 	public BigInteger relevanceRank;	
 	
 	@Element(name = "ASIN")
+	@Order(value=5)
 	public List<String> asin;	
 	
     

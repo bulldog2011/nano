@@ -12,18 +12,23 @@ public class CartAddRequest implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "CartId")
+	@Order(value=0)
 	public String cartId;	
 	
 	@Element(name = "HMAC")
+	@Order(value=1)
 	public String hmac;	
 	
 	@Element(name = "MergeCart")
+	@Order(value=2)
 	public String mergeCart;	
 	
 	@Element(name = "Items")
+	@Order(value=3)
 	public Items items;	
 	
 	@Element(name = "ResponseGroup")
+	@Order(value=4)
 	public List<String> responseGroup;	
 	
     

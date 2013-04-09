@@ -17,9 +17,11 @@ public class GetSearchKeywordsRecommendationResponse extends BaseServiceResponse
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String keywords;	
 	
 	@Element
+	@Order(value=1)
 	public List<ExtensionType> extension;	
 	
     

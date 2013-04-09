@@ -19,12 +19,15 @@ public class BuyingGuideDetailsType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "BuyingGuide")
+	@Order(value=0)
 	public List<BuyingGuideType> buyingGuide;	
 	
 	@Element(name = "BuyingGuideHub")
+	@Order(value=1)
 	public String buyingGuideHub;	
 	
 	@AnyElement
+	@Order(value=2)
 	public List<Object> any;	
 	
     

@@ -17,9 +17,11 @@ public class GetMultipleItemsRequestType extends AbstractRequestType implements 
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ItemID")
+	@Order(value=0)
 	public List<String> itemID;	
 	
 	@Element(name = "IncludeSelector")
+	@Order(value=1)
 	public String includeSelector;	
 	
     

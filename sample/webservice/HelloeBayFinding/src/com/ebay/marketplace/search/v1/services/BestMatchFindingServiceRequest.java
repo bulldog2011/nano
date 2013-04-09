@@ -15,12 +15,15 @@ public abstract class BestMatchFindingServiceRequest extends BaseServiceRequest 
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public PaginationInput paginationInput;	
 	
 	@Element
+	@Order(value=1)
 	public String buyerPostalCode;	
 	
 	@Element
+	@Order(value=2)
 	public Affiliate affiliate;	
 	
     

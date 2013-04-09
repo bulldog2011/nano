@@ -16,24 +16,31 @@ public class SellerInfo implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String sellerUserName;	
 	
 	@Element
+	@Order(value=1)
 	public Long feedbackScore;	
 	
 	@Element
+	@Order(value=2)
 	public Double positiveFeedbackPercent;	
 	
 	@Element
+	@Order(value=3)
 	public String feedbackRatingStar;	
 	
 	@Element
+	@Order(value=4)
 	public Boolean topRatedSeller;	
 	
 	@Element
+	@Order(value=5)
 	public String delimiter;	
 	
 	@AnyElement
+	@Order(value=6)
 	public List<Object> any;	
 	
     

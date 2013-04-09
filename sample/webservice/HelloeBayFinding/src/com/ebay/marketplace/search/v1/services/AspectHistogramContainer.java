@@ -16,18 +16,23 @@ public class AspectHistogramContainer implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String domainName;	
 	
 	@Element
+	@Order(value=1)
 	public String domainDisplayName;	
 	
 	@Element
+	@Order(value=2)
 	public List<Aspect> aspect;	
 	
 	@Element
+	@Order(value=3)
 	public String delimiter;	
 	
 	@AnyElement
+	@Order(value=4)
 	public List<Object> any;	
 	
     

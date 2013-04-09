@@ -16,24 +16,31 @@ public class FindReviewsAndGuidesRequestType extends AbstractRequestType impleme
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ProductID")
+	@Order(value=0)
 	public ProductIDType productID;	
 	
 	@Element(name = "UserID")
+	@Order(value=1)
 	public String userID;	
 	
 	@Element(name = "CategoryID")
+	@Order(value=2)
 	public String categoryID;	
 	
 	@Element(name = "MaxResultsPerPage")
+	@Order(value=3)
 	public Integer maxResultsPerPage;	
 	
 	@Element(name = "PageNumber")
+	@Order(value=4)
 	public Integer pageNumber;	
 	
 	@Element(name = "ReviewSort")
+	@Order(value=5)
 	public ReviewSortCodeType reviewSort;	
 	
 	@Element(name = "SortOrder")
+	@Order(value=6)
 	public SortOrderCodeType sortOrder;	
 	
     

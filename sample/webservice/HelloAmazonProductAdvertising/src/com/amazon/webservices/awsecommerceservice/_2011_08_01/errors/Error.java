@@ -10,9 +10,11 @@ public class Error implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Code")
+	@Order(value=0)
 	public String code;	
 	
 	@Element(name = "Message")
+	@Order(value=1)
 	public String message;	
 	
     

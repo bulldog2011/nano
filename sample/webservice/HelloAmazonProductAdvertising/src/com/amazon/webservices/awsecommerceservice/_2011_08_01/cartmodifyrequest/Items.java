@@ -12,6 +12,7 @@ public class Items implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Item")
+	@Order(value=0)
 	public List<Item> item;	
 	
     

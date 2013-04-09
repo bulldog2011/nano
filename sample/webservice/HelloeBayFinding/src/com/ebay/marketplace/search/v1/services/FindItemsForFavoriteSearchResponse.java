@@ -16,12 +16,15 @@ public class FindItemsForFavoriteSearchResponse extends BaseFindingServiceRespon
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public CategoryHistogramContainer categoryHistogramContainer;	
 	
 	@Element
+	@Order(value=1)
 	public AspectHistogramContainer aspectHistogramContainer;	
 	
 	@Element
+	@Order(value=2)
 	public ConditionHistogramContainer conditionHistogramContainer;	
 	
     

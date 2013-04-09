@@ -16,27 +16,35 @@ public class VariationType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "SKU")
+	@Order(value=0)
 	public String sku;	
 	
 	@Element(name = "StartPrice")
+	@Order(value=1)
 	public AmountType startPrice;	
 	
 	@Element(name = "Quantity")
+	@Order(value=2)
 	public Integer quantity;	
 	
 	@Element(name = "VariationSpecifics")
+	@Order(value=3)
 	public NameValueListArrayType variationSpecifics;	
 	
 	@Element(name = "QuantitySold")
+	@Order(value=4)
 	public Integer quantitySold;	
 	
 	@Element(name = "SellingStatus")
+	@Order(value=5)
 	public SellingStatusType sellingStatus;	
 	
 	@Element(name = "DiscountPriceInfo")
+	@Order(value=6)
 	public DiscountPriceInfoType discountPriceInfo;	
 	
 	@AnyElement
+	@Order(value=7)
 	public List<Object> any;	
 	
     

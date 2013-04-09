@@ -11,12 +11,15 @@ public class EditorialReview implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Source")
+	@Order(value=0)
 	public String source;	
 	
 	@Element(name = "Content")
+	@Order(value=1)
 	public String content;	
 	
 	@Element(name = "IsLinkSuppressed")
+	@Order(value=2)
 	public Boolean isLinkSuppressed;	
 	
     

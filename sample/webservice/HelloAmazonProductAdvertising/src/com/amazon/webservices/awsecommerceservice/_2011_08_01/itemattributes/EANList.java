@@ -11,6 +11,7 @@ public class EANList implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "EANListElement")
+	@Order(value=0)
 	public List<String> eanListElement;	
 	
     

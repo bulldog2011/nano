@@ -11,6 +11,7 @@ public class UPCList implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "UPCListElement")
+	@Order(value=0)
 	public List<String> upcListElement;	
 	
     

@@ -18,12 +18,15 @@ public class FindItemsByProductRequest extends BaseFindingServiceRequest impleme
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public ProductId productId;	
 	
 	@Element
+	@Order(value=1)
 	public List<ItemFilter> itemFilter;	
 	
 	@Element
+	@Order(value=2)
 	public List<OutputSelectorType> outputSelector;	
 	
     

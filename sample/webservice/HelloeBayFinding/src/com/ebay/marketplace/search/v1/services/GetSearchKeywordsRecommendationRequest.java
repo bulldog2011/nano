@@ -34,6 +34,7 @@ public class GetSearchKeywordsRecommendationRequest extends BaseServiceRequest i
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String keywords;	
 	
     

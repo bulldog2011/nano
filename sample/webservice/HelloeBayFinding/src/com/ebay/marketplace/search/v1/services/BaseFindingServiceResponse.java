@@ -16,15 +16,19 @@ public abstract class BaseFindingServiceResponse extends BaseServiceResponse imp
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public SearchResult searchResult;	
 	
 	@Element
+	@Order(value=1)
 	public PaginationOutput paginationOutput;	
 	
 	@Element
+	@Order(value=2)
 	public String itemSearchURL;	
 	
 	@Element
+	@Order(value=3)
 	public List<ExtensionType> extension;	
 	
     

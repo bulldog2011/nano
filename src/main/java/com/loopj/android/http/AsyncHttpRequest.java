@@ -30,7 +30,12 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.protocol.HttpContext;
 
+import com.leansoft.nano.log.ALog;
+
 class AsyncHttpRequest implements Runnable {
+	
+    private static final String TAG = AsyncHttpRequest.class.getSimpleName();
+	
     private final AbstractHttpClient client;
     private final HttpContext context;
     private final HttpUriRequest request;
@@ -56,10 +61,10 @@ class AsyncHttpRequest implements Runnable {
             if(responseHandler != null) {
                 responseHandler.sendFinishMessage();
             }
-        } catch (IOException e) {
+        } catch (ConnectException e) {
             if(responseHandler != null) {
                 responseHandler.sendFinishMessage();
-                responseHandler.sendFailureMessage(e, (String) null);
+                responseHandler.sendFailureMessage(e, e.getCause().getMessage());
             }
         }
     }
@@ -119,10 +124,15 @@ class AsyncHttpRequest implements Runnable {
                 cause = new IOException("NPE in HttpClient" + e.getMessage());
                 retry = retryHandler.retryRequest(cause, ++executionCount, context);
             }
+            if (retry) {
+            	ALog.e(TAG, "Got exception, request will be retried", cause);
+            } else {
+            	ALog.e(TAG, "Got exception, no retry", cause);
+            }
         }
 
         // no retries left, crap out with exception
-        ConnectException ex = new ConnectException();
+        ConnectException ex = new ConnectException("connect exception, see inner exception for details");
         ex.initCause(cause);
         throw ex;
     }

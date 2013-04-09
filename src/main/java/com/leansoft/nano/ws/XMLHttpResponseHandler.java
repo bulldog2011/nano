@@ -78,7 +78,9 @@ public class XMLHttpResponseHandler extends AsyncHttpResponseHandler {
 				}
     		}
     	}
-		ALog.e(TAG, responseBody, e);
+    	if (responseBody != null) {
+    		ALog.e(TAG, responseBody, e);
+    	}
         sendMessage(obtainMessage(FAILURE_MESSAGE, new Object[]{e, responseBody}));
     }
 	

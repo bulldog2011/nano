@@ -16,12 +16,15 @@ public class UnitInfoType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "UnitType")
+	@Order(value=0)
 	public String unitType;	
 	
 	@Element(name = "UnitQuantity")
+	@Order(value=1)
 	public Double unitQuantity;	
 	
 	@AnyElement
+	@Order(value=2)
 	public List<Object> any;	
 	
     

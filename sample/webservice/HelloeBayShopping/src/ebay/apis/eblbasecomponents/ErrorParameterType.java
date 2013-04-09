@@ -21,12 +21,15 @@ public class ErrorParameterType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Value")
+	@Order(value=0)
 	public String value;	
 	
 	@AnyElement
+	@Order(value=1)
 	public List<Object> any;	
 	
 	@Attribute(name = "ParamID")
+	@Order(value=2)
 	public String paramID;	
 	
     

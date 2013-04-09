@@ -21,15 +21,19 @@ public class Aspect implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public List<AspectValueHistogram> valueHistogram;	
 	
 	@Element
+	@Order(value=1)
 	public String delimiter;	
 	
 	@AnyElement
+	@Order(value=2)
 	public List<Object> any;	
 	
 	@Attribute  
+	@Order(value=3)
 	public String name;	
 	
     

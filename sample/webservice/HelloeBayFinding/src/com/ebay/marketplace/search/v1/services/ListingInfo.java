@@ -17,33 +17,43 @@ public class ListingInfo implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public Boolean bestOfferEnabled;	
 	
 	@Element
+	@Order(value=1)
 	public Boolean buyItNowAvailable;	
 	
 	@Element
+	@Order(value=2)
 	public Amount buyItNowPrice;	
 	
 	@Element
+	@Order(value=3)
 	public Amount convertedBuyItNowPrice;	
 	
 	@Element
+	@Order(value=4)
 	public Date startTime;	
 	
 	@Element
+	@Order(value=5)
 	public Date endTime;	
 	
 	@Element
+	@Order(value=6)
 	public String listingType;	
 	
 	@Element
+	@Order(value=7)
 	public Boolean gift;	
 	
 	@Element
+	@Order(value=8)
 	public String delimiter;	
 	
 	@AnyElement
+	@Order(value=9)
 	public List<Object> any;	
 	
     

@@ -11,6 +11,7 @@ public class OfferAttributes implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Condition")
+	@Order(value=0)
 	public String condition;	
 	
     

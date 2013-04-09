@@ -15,6 +15,7 @@ public abstract class BaseFindingServiceRequest extends BestMatchFindingServiceR
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public SortOrderType sortOrder;	
 	
     

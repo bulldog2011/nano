@@ -22,27 +22,35 @@ public class BuyingGuideType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Name")
+	@Order(value=0)
 	public String name;	
 	
 	@Element(name = "URL")
+	@Order(value=1)
 	public String url;	
 	
 	@Element(name = "CategoryID")
+	@Order(value=2)
 	public String categoryID;	
 	
 	@Element(name = "Title")
+	@Order(value=3)
 	public String title;	
 	
 	@Element(name = "Text")
+	@Order(value=4)
 	public String text;	
 	
 	@Element(name = "CreationTime")
+	@Order(value=5)
 	public Date creationTime;	
 	
 	@Element(name = "UserID")
+	@Order(value=6)
 	public String userID;	
 	
 	@AnyElement
+	@Order(value=7)
 	public List<Object> any;	
 	
     

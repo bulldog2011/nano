@@ -42,7 +42,7 @@ public class SOAPWriter extends XmlPullWriter {
 				try {
 					serializer.setFeature(IDENT_PROPERTY, true);
 				} catch (IllegalStateException ise) {
-					serializer.setProperty(PROPERTY_SERIALIZER_INDENTATION, "true");
+					serializer.setProperty(PROPERTY_SERIALIZER_INDENTATION, "    ");
 				}
 			}
 			serializer.setOutput(out);

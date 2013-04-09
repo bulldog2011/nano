@@ -11,9 +11,11 @@ public class ItemLink implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Description")
+	@Order(value=0)
 	public String description;	
 	
 	@Element(name = "URL")
+	@Order(value=1)
 	public String url;	
 	
     

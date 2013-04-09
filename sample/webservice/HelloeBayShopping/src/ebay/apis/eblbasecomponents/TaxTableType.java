@@ -17,6 +17,7 @@ public class TaxTableType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "TaxJurisdiction")
+	@Order(value=0)
 	public List<TaxJurisdictionType> taxJurisdiction;	
 	
     

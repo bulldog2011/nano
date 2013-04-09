@@ -13,9 +13,11 @@ public class Disc implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Track")
+	@Order(value=0)
 	public List<Track> track;	
 	
 	@Attribute(name = "Number")
+	@Order(value=1)
 	public BigInteger number;	
 	
     

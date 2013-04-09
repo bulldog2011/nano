@@ -11,24 +11,31 @@ public class ImageSet implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "SwatchImage")
+	@Order(value=0)
 	public Image swatchImage;	
 	
 	@Element(name = "SmallImage")
+	@Order(value=1)
 	public Image smallImage;	
 	
 	@Element(name = "ThumbnailImage")
+	@Order(value=2)
 	public Image thumbnailImage;	
 	
 	@Element(name = "TinyImage")
+	@Order(value=3)
 	public Image tinyImage;	
 	
 	@Element(name = "MediumImage")
+	@Order(value=4)
 	public Image mediumImage;	
 	
 	@Element(name = "LargeImage")
+	@Order(value=5)
 	public Image largeImage;	
 	
 	@Attribute(name = "Category")
+	@Order(value=6)
 	public String category;	
 	
     

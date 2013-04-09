@@ -12,6 +12,7 @@ public class EditorialReviews implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "EditorialReview")
+	@Order(value=0)
 	public List<EditorialReview> editorialReview;	
 	
     

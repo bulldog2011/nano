@@ -18,225 +18,299 @@ public class SimpleItemType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "BestOfferEnabled")
+	@Order(value=0)
 	public Boolean bestOfferEnabled;	
 	
 	@Element(name = "BuyItNowPrice")
+	@Order(value=1)
 	public AmountType buyItNowPrice;	
 	
 	@Element(name = "Description")
+	@Order(value=2)
 	public String description;	
 	
 	@Element(name = "ItemID")
+	@Order(value=3)
 	public String itemID;	
 	
 	@Element(name = "BuyItNowAvailable")
+	@Order(value=4)
 	public Boolean buyItNowAvailable;	
 	
 	@Element(name = "ConvertedBuyItNowPrice")
+	@Order(value=5)
 	public AmountType convertedBuyItNowPrice;	
 	
 	@Element(name = "EndTime")
+	@Order(value=6)
 	public Date endTime;	
 	
 	@Element(name = "StartTime")
+	@Order(value=7)
 	public Date startTime;	
 	
 	@Element(name = "ViewItemURLForNaturalSearch")
+	@Order(value=8)
 	public String viewItemURLForNaturalSearch;	
 	
 	@Element(name = "ListingType")
+	@Order(value=9)
 	public ListingTypeCodeType listingType;	
 	
 	@Element(name = "Location")
+	@Order(value=10)
 	public String location;	
 	
 	@Element(name = "PaymentMethods")
+	@Order(value=11)
 	public List<BuyerPaymentMethodCodeType> paymentMethods;	
 	
 	@Element(name = "GalleryURL")
+	@Order(value=12)
 	public String galleryURL;	
 	
 	@Element(name = "PictureURL")
+	@Order(value=13)
 	public List<String> pictureURL;	
 	
 	@Element(name = "PostalCode")
+	@Order(value=14)
 	public String postalCode;	
 	
 	@Element(name = "PrimaryCategoryID")
+	@Order(value=15)
 	public String primaryCategoryID;	
 	
 	@Element(name = "PrimaryCategoryName")
+	@Order(value=16)
 	public String primaryCategoryName;	
 	
 	@Element(name = "Quantity")
+	@Order(value=17)
 	public Integer quantity;	
 	
 	@Element(name = "Seller")
+	@Order(value=18)
 	public SimpleUserType seller;	
 	
 	@Element(name = "BidCount")
+	@Order(value=19)
 	public Integer bidCount;	
 	
 	@Element(name = "ConvertedCurrentPrice")
+	@Order(value=20)
 	public AmountType convertedCurrentPrice;	
 	
 	@Element(name = "CurrentPrice")
+	@Order(value=21)
 	public AmountType currentPrice;	
 	
 	@Element(name = "HighBidder")
+	@Order(value=22)
 	public SimpleUserType highBidder;	
 	
 	@Element(name = "ListingStatus")
+	@Order(value=23)
 	public ListingStatusCodeType listingStatus;	
 	
 	@Element(name = "QuantitySold")
+	@Order(value=24)
 	public Integer quantitySold;	
 	
 	@Element(name = "ReserveMet")
+	@Order(value=25)
 	public Boolean reserveMet;	
 	
 	@Element(name = "ShipToLocations")
+	@Order(value=26)
 	public List<String> shipToLocations;	
 	
 	@Element(name = "Site")
+	@Order(value=27)
 	public SiteCodeType site;	
 	
 	@Element(name = "TimeLeft")
+	@Order(value=28)
 	public Duration timeLeft;	
 	
 	@Element(name = "Title")
+	@Order(value=29)
 	public String title;	
 	
 	@Element(name = "ShippingCostSummary")
+	@Order(value=30)
 	public ShippingCostSummaryType shippingCostSummary;	
 	
 	@Element(name = "ItemSpecifics")
+	@Order(value=31)
 	public NameValueListArrayType itemSpecifics;	
 	
 	@Element(name = "HitCount")
+	@Order(value=32)
 	public Long hitCount;	
 	
 	@Element(name = "Subtitle")
+	@Order(value=33)
 	public String subtitle;	
 	
 	@Element(name = "PrimaryCategoryIDPath")
+	@Order(value=34)
 	public String primaryCategoryIDPath;	
 	
 	@Element(name = "SecondaryCategoryID")
+	@Order(value=35)
 	public String secondaryCategoryID;	
 	
 	@Element(name = "SecondaryCategoryName")
+	@Order(value=36)
 	public String secondaryCategoryName;	
 	
 	@Element(name = "SecondaryCategoryIDPath")
+	@Order(value=37)
 	public String secondaryCategoryIDPath;	
 	
 	@Element(name = "Charity")
+	@Order(value=38)
 	public CharityType charity;	
 	
 	@Element(name = "GermanMotorsSearchable")
+	@Order(value=39)
 	public Boolean germanMotorsSearchable;	
 	
 	@Element(name = "GetItFast")
+	@Order(value=40)
 	public Boolean getItFast;	
 	
 	@Element(name = "Gift")
+	@Order(value=41)
 	public Boolean gift;	
 	
 	@Element(name = "PictureExists")
+	@Order(value=42)
 	public Boolean pictureExists;	
 	
 	@Element(name = "RecentListing")
+	@Order(value=43)
 	public Boolean recentListing;	
 	
 	@Element(name = "Storefront")
+	@Order(value=44)
 	public StorefrontType storefront;	
 	
 	@Element(name = "DistanceFromBuyer")
+	@Order(value=45)
 	public DistanceType distanceFromBuyer;	
 	
 	@Element(name = "Country")
+	@Order(value=46)
 	public CountryCodeType country;	
 	
 	@Element(name = "WatchCount")
+	@Order(value=47)
 	public Integer watchCount;	
 	
 	@Element(name = "HalfItemCondition")
+	@Order(value=48)
 	public HalfItemConditionCodeType halfItemCondition;	
 	
 	@Element(name = "SellerComments")
+	@Order(value=49)
 	public String sellerComments;	
 	
 	@Element(name = "ReturnPolicy")
+	@Order(value=50)
 	public ReturnPolicyType returnPolicy;	
 	
 	@Element(name = "MinimumToBid")
+	@Order(value=51)
 	public AmountType minimumToBid;	
 	
 	@Element(name = "ProductID")
+	@Order(value=52)
 	public ProductIDType productID;	
 	
 	@Element(name = "AutoPay")
+	@Order(value=53)
 	public Boolean autoPay;	
 	
 	@Element(name = "BusinessSellerDetails")
+	@Order(value=54)
 	public BusinessSellerDetailsType businessSellerDetails;	
 	
 	@Element(name = "PaymentAllowedSite")
+	@Order(value=55)
 	public List<SiteCodeType> paymentAllowedSite;	
 	
 	@Element(name = "IntegratedMerchantCreditCardEnabled")
+	@Order(value=56)
 	public Boolean integratedMerchantCreditCardEnabled;	
 	
 	@Element(name = "Variations")
+	@Order(value=57)
 	public VariationsType variations;	
 	
 	@Element(name = "HandlingTime")
+	@Order(value=58)
 	public Integer handlingTime;	
 	
 	@Element(name = "LotSize")
+	@Order(value=59)
 	public Integer lotSize;	
 	
 	@Element(name = "ConditionID")
+	@Order(value=60)
 	public Integer conditionID;	
 	
 	@Element(name = "ConditionDisplayName")
+	@Order(value=61)
 	public String conditionDisplayName;	
 	
 	@Element(name = "QuantityAvailableHint")
+	@Order(value=62)
 	public QuantityAvailableHintCodeType quantityAvailableHint;	
 	
 	@Element(name = "QuantityThreshold")
+	@Order(value=63)
 	public Integer quantityThreshold;	
 	
 	@Element(name = "DiscountPriceInfo")
+	@Order(value=64)
 	public DiscountPriceInfoType discountPriceInfo;	
 	
 	@Element(name = "ExcludeShipToLocation")
+	@Order(value=65)
 	public List<String> excludeShipToLocation;	
 	
 	@Element(name = "TopRatedListing")
+	@Order(value=66)
 	public Boolean topRatedListing;	
 	
 	@Element(name = "VhrUrl")
+	@Order(value=67)
 	public String vhrUrl;	
 	
 	@Element(name = "VhrAvailable")
+	@Order(value=68)
 	public Boolean vhrAvailable;	
 	
 	@Element(name = "QuantityInfo")
+	@Order(value=69)
 	public QuantityInfo quantityInfo;	
 	
 	@Element(name = "UnitInfo")
+	@Order(value=70)
 	public UnitInfoType unitInfo;	
 	
 	@Element(name = "GlobalShipping")
+	@Order(value=71)
 	public Boolean globalShipping;	
 	
 	@AnyElement
+	@Order(value=72)
 	public List<Object> any;	
 	
 	@Element(name = "ConditionDescription")
+	@Order(value=73)
 	public String conditionDescription;	
 	
     

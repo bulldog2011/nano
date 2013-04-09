@@ -11,9 +11,11 @@ public class NonNegativeIntegerWithUnits implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Value
+	@Order(value=0)
 	public BigInteger value;	
 	
 	@Attribute(name = "Units")
+	@Order(value=1)
 	public String units;	
 	
     

@@ -20,9 +20,11 @@ public abstract class AbstractRequestType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "MessageID")
+	@Order(value=0)
 	public String messageID;	
 	
 	@AnyElement
+	@Order(value=1)
 	public List<Object> any;	
 	
     

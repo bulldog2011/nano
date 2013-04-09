@@ -18,27 +18,35 @@ public class ErrorType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ShortMessage")
+	@Order(value=0)
 	public String shortMessage;	
 	
 	@Element(name = "LongMessage")
+	@Order(value=1)
 	public String longMessage;	
 	
 	@Element(name = "ErrorCode")
+	@Order(value=2)
 	public String errorCode;	
 	
 	@Element(name = "UserDisplayHint")
+	@Order(value=3)
 	public Boolean userDisplayHint;	
 	
 	@Element(name = "SeverityCode")
+	@Order(value=4)
 	public SeverityCodeType severityCode;	
 	
 	@Element(name = "ErrorParameters")
+	@Order(value=5)
 	public List<ErrorParameterType> errorParameters;	
 	
 	@Element(name = "ErrorClassification")
+	@Order(value=6)
 	public ErrorClassificationCodeType errorClassification;	
 	
 	@AnyElement
+	@Order(value=7)
 	public List<Object> any;	
 	
     

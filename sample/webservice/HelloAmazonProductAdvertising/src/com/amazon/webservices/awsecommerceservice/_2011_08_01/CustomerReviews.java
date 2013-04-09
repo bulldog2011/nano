@@ -11,9 +11,11 @@ public class CustomerReviews implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "IFrameURL")
+	@Order(value=0)
 	public String iFrameURL;	
 	
 	@Element(name = "HasReviews")
+	@Order(value=1)
 	public Boolean hasReviews;	
 	
     

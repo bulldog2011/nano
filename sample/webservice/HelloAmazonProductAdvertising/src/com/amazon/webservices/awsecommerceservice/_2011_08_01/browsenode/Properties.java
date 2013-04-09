@@ -12,6 +12,7 @@ public class Properties implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Property")
+	@Order(value=0)
 	public List<Property> property;	
 	
     

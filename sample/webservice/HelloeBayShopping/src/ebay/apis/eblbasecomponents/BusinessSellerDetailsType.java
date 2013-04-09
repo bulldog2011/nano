@@ -20,30 +20,39 @@ public class BusinessSellerDetailsType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Address")
+	@Order(value=0)
 	public AddressType address;	
 	
 	@Element(name = "Fax")
+	@Order(value=1)
 	public String fax;	
 	
 	@Element(name = "Email")
+	@Order(value=2)
 	public String email;	
 	
 	@Element(name = "AdditionalContactInformation")
+	@Order(value=3)
 	public String additionalContactInformation;	
 	
 	@Element(name = "TradeRegistrationNumber")
+	@Order(value=4)
 	public String tradeRegistrationNumber;	
 	
 	@Element(name = "LegalInvoice")
+	@Order(value=5)
 	public Boolean legalInvoice;	
 	
 	@Element(name = "TermsAndConditions")
+	@Order(value=6)
 	public String termsAndConditions;	
 	
 	@Element(name = "VATDetails")
+	@Order(value=7)
 	public VATDetailsType vatDetails;	
 	
 	@AnyElement
+	@Order(value=8)
 	public List<Object> any;	
 	
     

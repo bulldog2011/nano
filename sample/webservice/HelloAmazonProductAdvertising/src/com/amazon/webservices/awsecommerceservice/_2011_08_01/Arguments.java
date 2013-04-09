@@ -13,6 +13,7 @@ public class Arguments implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Argument")
+	@Order(value=0)
 	public List<Argument> argument;	
 	
     

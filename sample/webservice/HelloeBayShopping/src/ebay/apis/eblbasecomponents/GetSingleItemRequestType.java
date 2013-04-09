@@ -21,15 +21,19 @@ public class GetSingleItemRequestType extends AbstractRequestType implements Ser
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ItemID")
+	@Order(value=0)
 	public String itemID;	
 	
 	@Element(name = "VariationSKU")
+	@Order(value=1)
 	public String variationSKU;	
 	
 	@Element(name = "VariationSpecifics")
+	@Order(value=2)
 	public NameValueListArrayType variationSpecifics;	
 	
 	@Element(name = "IncludeSelector")
+	@Order(value=3)
 	public String includeSelector;	
 	
     

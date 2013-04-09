@@ -10,9 +10,11 @@ public class Reasontext implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Value
+	@Order(value=0)
 	public String value;	
 	
-	@Attribute  
+	@Attribute
+	@Order(value=1)
 	public String lang;	
 	
     

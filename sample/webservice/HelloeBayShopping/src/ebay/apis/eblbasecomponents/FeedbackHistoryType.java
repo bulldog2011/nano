@@ -20,36 +20,47 @@ public class FeedbackHistoryType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "BidRetractionFeedbackPeriods")
+	@Order(value=0)
 	public List<FeedbackPeriodType> bidRetractionFeedbackPeriods;	
 	
 	@Element(name = "NegativeFeedbackPeriods")
+	@Order(value=1)
 	public List<FeedbackPeriodType> negativeFeedbackPeriods;	
 	
 	@Element(name = "NeutralFeedbackPeriods")
+	@Order(value=2)
 	public List<FeedbackPeriodType> neutralFeedbackPeriods;	
 	
 	@Element(name = "PositiveFeedbackPeriods")
+	@Order(value=3)
 	public List<FeedbackPeriodType> positiveFeedbackPeriods;	
 	
 	@Element(name = "TotalFeedbackPeriods")
+	@Order(value=4)
 	public List<FeedbackPeriodType> totalFeedbackPeriods;	
 	
 	@Element(name = "UniqueNegativeFeedbackCount")
+	@Order(value=5)
 	public Long uniqueNegativeFeedbackCount;	
 	
 	@Element(name = "UniquePositiveFeedbackCount")
+	@Order(value=6)
 	public Long uniquePositiveFeedbackCount;	
 	
 	@Element(name = "AverageRatingDetails")
+	@Order(value=7)
 	public List<AverageRatingDetailsType> averageRatingDetails;	
 	
 	@Element(name = "NeutralCommentCountFromSuspendedUsers")
+	@Order(value=8)
 	public Long neutralCommentCountFromSuspendedUsers;	
 	
 	@Element(name = "UniqueNeutralFeedbackCount")
+	@Order(value=9)
 	public Long uniqueNeutralFeedbackCount;	
 	
 	@AnyElement
+	@Order(value=10)
 	public List<Object> any;	
 	
     

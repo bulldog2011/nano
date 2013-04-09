@@ -17,9 +17,11 @@ public class GetCategoryInfoRequestType extends AbstractRequestType implements S
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "CategoryID")
+	@Order(value=0)
 	public String categoryID;	
 	
 	@Element(name = "IncludeSelector")
+	@Order(value=1)
 	public String includeSelector;	
 	
     

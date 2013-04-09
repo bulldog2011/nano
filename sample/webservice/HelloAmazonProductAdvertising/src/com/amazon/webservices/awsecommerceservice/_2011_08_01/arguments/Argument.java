@@ -10,9 +10,11 @@ public class Argument implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Attribute(name = "Name")
+	@Order(value=0)
 	public String name;	
 	
 	@Attribute(name = "Value")
+	@Order(value=1)
 	public String value;	
 	
     

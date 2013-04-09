@@ -14,12 +14,15 @@ public class Bin implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "BinName")
+	@Order(value=0)
 	public String binName;	
 	
 	@Element(name = "BinItemCount")
+	@Order(value=1)
 	public BigInteger binItemCount;	
 	
 	@Element(name = "BinParameter")
+	@Order(value=2)
 	public List<BinParameter> binParameter;	
 	
     

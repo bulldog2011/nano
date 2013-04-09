@@ -20,21 +20,27 @@ public class VATDetailsType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "BusinessSeller")
+	@Order(value=0)
 	public Boolean businessSeller;	
 	
 	@Element(name = "RestrictedToBusiness")
+	@Order(value=1)
 	public Boolean restrictedToBusiness;	
 	
 	@Element(name = "VATPercent")
+	@Order(value=2)
 	public Float vatPercent;	
 	
 	@Element(name = "VATSite")
+	@Order(value=3)
 	public String vatSite;	
 	
 	@Element(name = "VATID")
+	@Order(value=4)
 	public String vatid;	
 	
 	@AnyElement
+	@Order(value=5)
 	public List<Object> any;	
 	
     

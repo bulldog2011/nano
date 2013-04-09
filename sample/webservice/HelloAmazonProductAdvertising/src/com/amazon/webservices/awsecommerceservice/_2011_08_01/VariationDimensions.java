@@ -12,6 +12,7 @@ public class VariationDimensions implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "VariationDimension")
+	@Order(value=0)
 	public List<String> variationDimension;	
 	
     

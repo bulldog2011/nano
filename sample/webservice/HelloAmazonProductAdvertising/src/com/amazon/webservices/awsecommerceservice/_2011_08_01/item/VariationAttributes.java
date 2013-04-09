@@ -12,6 +12,7 @@ public class VariationAttributes implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "VariationAttribute")
+	@Order(value=0)
 	public List<VariationAttribute> variationAttribute;	
 	
     

@@ -17,15 +17,19 @@ public class FindPopularItemsRequestType extends AbstractRequestType implements 
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "CategoryID")
+	@Order(value=0)
 	public List<String> categoryID;	
 	
 	@Element(name = "QueryKeywords")
+	@Order(value=1)
 	public String queryKeywords;	
 	
 	@Element(name = "CategoryIDExclude")
+	@Order(value=2)
 	public List<String> categoryIDExclude;	
 	
 	@Element(name = "MaxEntries")
+	@Order(value=3)
 	public Integer maxEntries;	
 	
     

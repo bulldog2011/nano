@@ -11,15 +11,19 @@ public class AvailabilityAttributes implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "AvailabilityType")
+	@Order(value=0)
 	public String availabilityType;	
 	
 	@Element(name = "IsPreorder")
+	@Order(value=1)
 	public Boolean isPreorder;	
 	
 	@Element(name = "MinimumHours")
+	@Order(value=2)
 	public BigInteger minimumHours;	
 	
 	@Element(name = "MaximumHours")
+	@Order(value=3)
 	public BigInteger maximumHours;	
 	
     

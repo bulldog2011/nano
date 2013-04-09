@@ -12,6 +12,7 @@ public class AlternateVersions implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "AlternateVersion")
+	@Order(value=0)
 	public List<AlternateVersion> alternateVersion;	
 	
     

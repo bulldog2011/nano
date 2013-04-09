@@ -28,18 +28,23 @@ public class GetShippingCostsRequestType extends AbstractRequestType implements 
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ItemID")
+	@Order(value=0)
 	public String itemID;	
 	
 	@Element(name = "QuantitySold")
+	@Order(value=1)
 	public Integer quantitySold;	
 	
 	@Element(name = "DestinationPostalCode")
+	@Order(value=2)
 	public String destinationPostalCode;	
 	
 	@Element(name = "DestinationCountryCode")
+	@Order(value=3)
 	public CountryCodeType destinationCountryCode;	
 	
 	@Element(name = "IncludeDetails")
+	@Order(value=4)
 	public Boolean includeDetails;	
 	
     

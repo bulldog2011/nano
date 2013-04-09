@@ -19,9 +19,11 @@ public class QuantityInfo implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "MinimumRemnantSet")
+	@Order(value=0)
 	public Integer minimumRemnantSet;	
 	
 	@AnyElement
+	@Order(value=1)
 	public List<Object> any;	
 	
     

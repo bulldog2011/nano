@@ -12,6 +12,7 @@ public class Promotions implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Promotion")
+	@Order(value=0)
 	public List<Promotion> promotion;	
 	
     

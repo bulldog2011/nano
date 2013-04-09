@@ -17,36 +17,47 @@ public class FindProductsRequestType extends AbstractRequestType implements Seri
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "IncludeSelector")
+	@Order(value=0)
 	public String includeSelector;	
 	
 	@Element(name = "AvailableItemsOnly")
+	@Order(value=1)
 	public Boolean availableItemsOnly;	
 	
 	@Element(name = "DomainName")
+	@Order(value=2)
 	public List<String> domainName;	
 	
 	@Element(name = "ProductID")
+	@Order(value=3)
 	public ProductIDType productID;	
 	
 	@Element(name = "QueryKeywords")
+	@Order(value=4)
 	public String queryKeywords;	
 	
 	@Element(name = "ProductSort")
+	@Order(value=5)
 	public ProductSortCodeType productSort;	
 	
 	@Element(name = "SortOrder")
+	@Order(value=6)
 	public SortOrderCodeType sortOrder;	
 	
 	@Element(name = "MaxEntries")
+	@Order(value=7)
 	public Integer maxEntries;	
 	
 	@Element(name = "PageNumber")
+	@Order(value=8)
 	public Integer pageNumber;	
 	
 	@Element(name = "CategoryID")
+	@Order(value=9)
 	public String categoryID;	
 	
 	@Element(name = "HideDuplicateItems")
+	@Order(value=10)
 	public Boolean hideDuplicateItems;	
 	
     

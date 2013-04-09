@@ -1,7 +1,9 @@
 package com.leansoft.nano.impl;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import com.leansoft.nano.annotation.AnyElement;
 import com.leansoft.nano.annotation.Attribute;
 import com.leansoft.nano.annotation.Default;
 import com.leansoft.nano.annotation.Element;
+import com.leansoft.nano.annotation.Order;
 import com.leansoft.nano.annotation.RootElement;
 import com.leansoft.nano.annotation.Value;
 import com.leansoft.nano.annotation.schema.AnyElementSchema;
@@ -125,6 +128,27 @@ class MappingSchema {
 	private Map<String, Object> scanFieldSchema(Class<?> type) throws MappingException {
 		Map<String, Object> fieldsMap = new LinkedHashMap<String, Object>();
 		Field[] fields = type.getDeclaredFields();
+		
+		// sort fields according to order annotaions
+		Arrays.sort(fields, new Comparator<Field>() {
+
+			@Override
+			public int compare(Field field1, Field field2) {
+				Order order1 = field1.getAnnotation(Order.class);
+				Order order2 = field2.getAnnotation(Order.class);
+				if (order1 != null && order2 != null) {
+					return order1.value() - order2.value();
+				}
+				if (order1 != null && order2 == null) {
+					return -1;
+				}
+				if (order1 == null && order2 != null) {
+					return 1;
+				}
+				return field1.getName().compareTo(field2.getName());
+			}
+			
+		});
 		
 		// used for validation
 		int valueSchemaCount = 0;

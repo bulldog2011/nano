@@ -20,240 +20,319 @@ public class ItemAttributes implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Actor")
+	@Order(value=0)
 	public List<String> actor;	
 	
 	@Element(name = "Artist")
+	@Order(value=1)
 	public List<String> artist;	
 	
 	@Element(name = "AspectRatio")
+	@Order(value=2)
 	public String aspectRatio;	
 	
 	@Element(name = "AudienceRating")
+	@Order(value=3)
 	public String audienceRating;	
 	
 	@Element(name = "AudioFormat")
+	@Order(value=4)
 	public List<String> audioFormat;	
 	
 	@Element(name = "Author")
+	@Order(value=5)
 	public List<String> author;	
 	
 	@Element(name = "Binding")
+	@Order(value=6)
 	public String binding;	
 	
 	@Element(name = "Brand")
+	@Order(value=7)
 	public String brand;	
 	
 	@Element(name = "CatalogNumberList")
+	@Order(value=8)
 	public CatalogNumberList catalogNumberList;	
 	
 	@Element(name = "Category")
+	@Order(value=9)
 	public List<String> category;	
 	
 	@Element(name = "CEROAgeRating")
+	@Order(value=10)
 	public String ceroAgeRating;	
 	
 	@Element(name = "ClothingSize")
+	@Order(value=11)
 	public String clothingSize;	
 	
 	@Element(name = "Color")
+	@Order(value=12)
 	public String color;	
 	
 	@Element(name = "Creator")
+	@Order(value=13)
 	public List<Creator> creator;	
 	
 	@Element(name = "Department")
+	@Order(value=14)
 	public String department;	
 	
 	@Element(name = "Director")
+	@Order(value=15)
 	public List<String> director;	
 	
 	@Element(name = "EAN")
+	@Order(value=16)
 	public String ean;	
 	
 	@Element(name = "EANList")
+	@Order(value=17)
 	public EANList eanList;	
 	
 	@Element(name = "Edition")
+	@Order(value=18)
 	public String edition;	
 	
 	@Element(name = "EISBN")
+	@Order(value=19)
 	public List<String> eisbn;	
 	
 	@Element(name = "EpisodeSequence")
+	@Order(value=20)
 	public String episodeSequence;	
 	
 	@Element(name = "ESRBAgeRating")
+	@Order(value=21)
 	public String esrbAgeRating;	
 	
 	@Element(name = "Feature")
+	@Order(value=22)
 	public List<String> feature;	
 	
 	@Element(name = "Format")
+	@Order(value=23)
 	public List<String> format;	
 	
 	@Element(name = "Genre")
+	@Order(value=24)
 	public String genre;	
 	
 	@Element(name = "HardwarePlatform")
+	@Order(value=25)
 	public String hardwarePlatform;	
 	
 	@Element(name = "HazardousMaterialType")
+	@Order(value=26)
 	public String hazardousMaterialType;	
 	
 	@Element(name = "IsAdultProduct")
+	@Order(value=27)
 	public Boolean isAdultProduct;	
 	
 	@Element(name = "IsAutographed")
+	@Order(value=28)
 	public Boolean isAutographed;	
 	
 	@Element(name = "ISBN")
+	@Order(value=29)
 	public String isbn;	
 	
 	@Element(name = "IsEligibleForTradeIn")
+	@Order(value=30)
 	public Boolean isEligibleForTradeIn;	
 	
 	@Element(name = "IsMemorabilia")
+	@Order(value=31)
 	public Boolean isMemorabilia;	
 	
 	@Element(name = "IssuesPerYear")
+	@Order(value=32)
 	public String issuesPerYear;	
 	
 	@Element(name = "ItemDimensions")
+	@Order(value=33)
 	public ItemDimensions itemDimensions;	
 	
 	@Element(name = "ItemPartNumber")
+	@Order(value=34)
 	public String itemPartNumber;	
 	
 	@Element(name = "Label")
+	@Order(value=35)
 	public String label;	
 	
 	@Element(name = "Languages")
+	@Order(value=36)
 	public Languages languages;	
 	
 	@Element(name = "LegalDisclaimer")
+	@Order(value=37)
 	public String legalDisclaimer;	
 	
 	@Element(name = "ListPrice")
+	@Order(value=38)
 	public Price listPrice;	
 	
 	@Element(name = "MagazineType")
+	@Order(value=39)
 	public String magazineType;	
 	
 	@Element(name = "Manufacturer")
+	@Order(value=40)
 	public String manufacturer;	
 	
 	@Element(name = "ManufacturerMaximumAge")
+	@Order(value=41)
 	public DecimalWithUnits manufacturerMaximumAge;	
 	
 	@Element(name = "ManufacturerMinimumAge")
+	@Order(value=42)
 	public DecimalWithUnits manufacturerMinimumAge;	
 	
 	@Element(name = "ManufacturerPartsWarrantyDescription")
+	@Order(value=43)
 	public String manufacturerPartsWarrantyDescription;	
 	
 	@Element(name = "MediaType")
+	@Order(value=44)
 	public String mediaType;	
 	
 	@Element(name = "Model")
+	@Order(value=45)
 	public String model;	
 	
 	@Element(name = "ModelYear")
+	@Order(value=46)
 	public BigInteger modelYear;	
 	
 	@Element(name = "MPN")
+	@Order(value=47)
 	public String mpn;	
 	
 	@Element(name = "NumberOfDiscs")
+	@Order(value=48)
 	public BigInteger numberOfDiscs;	
 	
 	@Element(name = "NumberOfIssues")
+	@Order(value=49)
 	public BigInteger numberOfIssues;	
 	
 	@Element(name = "NumberOfItems")
+	@Order(value=50)
 	public BigInteger numberOfItems;	
 	
 	@Element(name = "NumberOfPages")
+	@Order(value=51)
 	public BigInteger numberOfPages;	
 	
 	@Element(name = "NumberOfTracks")
+	@Order(value=52)
 	public BigInteger numberOfTracks;	
 	
 	@Element(name = "OperatingSystem")
+	@Order(value=53)
 	public String operatingSystem;	
 	
 	@Element(name = "PackageDimensions")
+	@Order(value=54)
 	public PackageDimensions packageDimensions;	
 	
 	@Element(name = "PackageQuantity")
+	@Order(value=55)
 	public BigInteger packageQuantity;	
 	
 	@Element(name = "PartNumber")
+	@Order(value=56)
 	public String partNumber;	
 	
 	@Element(name = "PictureFormat")
+	@Order(value=57)
 	public List<String> pictureFormat;	
 	
 	@Element(name = "Platform")
+	@Order(value=58)
 	public List<String> platform;	
 	
 	@Element(name = "ProductGroup")
+	@Order(value=59)
 	public String productGroup;	
 	
 	@Element(name = "ProductTypeName")
+	@Order(value=60)
 	public String productTypeName;	
 	
 	@Element(name = "ProductTypeSubcategory")
+	@Order(value=61)
 	public String productTypeSubcategory;	
 	
 	@Element(name = "PublicationDate")
+	@Order(value=62)
 	public String publicationDate;	
 	
 	@Element(name = "Publisher")
+	@Order(value=63)
 	public String publisher;	
 	
 	@Element(name = "RegionCode")
+	@Order(value=64)
 	public String regionCode;	
 	
 	@Element(name = "ReleaseDate")
+	@Order(value=65)
 	public String releaseDate;	
 	
 	@Element(name = "RunningTime")
+	@Order(value=66)
 	public DecimalWithUnits runningTime;	
 	
 	@Element(name = "SeikodoProductCode")
+	@Order(value=67)
 	public String seikodoProductCode;	
 	
 	@Element(name = "Size")
+	@Order(value=68)
 	public String size;	
 	
 	@Element(name = "SKU")
+	@Order(value=69)
 	public String sku;	
 	
 	@Element(name = "Studio")
+	@Order(value=70)
 	public String studio;	
 	
 	@Element(name = "SubscriptionLength")
+	@Order(value=71)
 	public NonNegativeIntegerWithUnits subscriptionLength;	
 	
 	@Element(name = "Title")
+	@Order(value=72)
 	public String title;	
 	
 	@Element(name = "TrackSequence")
+	@Order(value=73)
 	public String trackSequence;	
 	
 	@Element(name = "TradeInValue")
+	@Order(value=74)
 	public Price tradeInValue;	
 	
 	@Element(name = "UPC")
+	@Order(value=75)
 	public String upc;	
 	
 	@Element(name = "UPCList")
+	@Order(value=76)
 	public UPCList upcList;	
 	
 	@Element(name = "Warranty")
+	@Order(value=77)
 	public String warranty;	
 	
 	@Element(name = "WEEETaxValue")
+	@Order(value=78)
 	public Price weeeTaxValue;	
 	
     

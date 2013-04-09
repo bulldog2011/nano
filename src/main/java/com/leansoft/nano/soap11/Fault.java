@@ -4,6 +4,7 @@ package com.leansoft.nano.soap11;
 
 import java.io.Serializable;
 import com.leansoft.nano.annotation.*;
+
 import javax.xml.namespace.QName;
 
 /**
@@ -17,15 +18,19 @@ public class Fault implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public QName faultcode;	
 	
 	@Element
+	@Order(value=1)
 	public String faultstring;	
 	
 	@Element
+	@Order(value=2)
 	public String faultactor;	
 	
 	@Element
+	@Order(value=3)
 	public Detail detail;	
 	
     

@@ -13,6 +13,7 @@ public class SimilarViewedProducts implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "SimilarViewedProduct")
+	@Order(value=0)
 	public List<SimilarViewedProduct> similarViewedProduct;	
 	
     

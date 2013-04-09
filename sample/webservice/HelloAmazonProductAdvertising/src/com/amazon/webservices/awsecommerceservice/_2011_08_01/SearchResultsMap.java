@@ -13,6 +13,7 @@ public class SearchResultsMap implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "SearchIndex")
+	@Order(value=0)
 	public List<SearchIndex> searchIndex;	
 	
     

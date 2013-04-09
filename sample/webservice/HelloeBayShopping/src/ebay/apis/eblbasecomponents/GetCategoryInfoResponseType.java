@@ -20,15 +20,19 @@ public class GetCategoryInfoResponseType extends AbstractResponseType implements
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "CategoryArray")
+	@Order(value=0)
 	public CategoryArrayType categoryArray;	
 	
 	@Element(name = "CategoryCount")
+	@Order(value=1)
 	public Integer categoryCount;	
 	
 	@Element(name = "UpdateTime")
+	@Order(value=2)
 	public Date updateTime;	
 	
 	@Element(name = "CategoryVersion")
+	@Order(value=3)
 	public String categoryVersion;	
 	
     

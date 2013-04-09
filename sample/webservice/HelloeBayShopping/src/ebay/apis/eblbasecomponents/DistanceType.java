@@ -15,9 +15,11 @@ public class DistanceType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Value
+	@Order(value=0)
 	public double value;	
 	
 	@Attribute  
+	@Order(value=1)
 	public String unit;	
 	
     

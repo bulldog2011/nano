@@ -12,18 +12,23 @@ public class Offer implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Merchant")
+	@Order(value=0)
 	public Merchant merchant;	
 	
 	@Element(name = "OfferAttributes")
+	@Order(value=1)
 	public OfferAttributes offerAttributes;	
 	
 	@Element(name = "OfferListing")
+	@Order(value=2)
 	public List<OfferListing> offerListing;	
 	
 	@Element(name = "LoyaltyPoints")
+	@Order(value=3)
 	public LoyaltyPoints loyaltyPoints;	
 	
 	@Element(name = "Promotions")
+	@Order(value=4)
 	public Promotions promotions;	
 	
     

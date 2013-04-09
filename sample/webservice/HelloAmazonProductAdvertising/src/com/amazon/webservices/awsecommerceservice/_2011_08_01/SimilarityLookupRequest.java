@@ -11,18 +11,23 @@ public class SimilarityLookupRequest implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Condition")
+	@Order(value=0)
 	public String condition;	
 	
 	@Element(name = "ItemId")
+	@Order(value=1)
 	public List<String> itemId;	
 	
 	@Element(name = "MerchantId")
+	@Order(value=2)
 	public String merchantId;	
 	
 	@Element(name = "ResponseGroup")
+	@Order(value=3)
 	public List<String> responseGroup;	
 	
 	@Element(name = "SimilarityType")
+	@Order(value=4)
 	public String similarityType;	
 	
     

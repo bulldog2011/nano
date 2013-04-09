@@ -17,15 +17,19 @@ public class SellingStatusType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ConvertedCurrentPrice")
+	@Order(value=0)
 	public AmountType convertedCurrentPrice;	
 	
 	@Element(name = "CurrentPrice")
+	@Order(value=1)
 	public AmountType currentPrice;	
 	
 	@Element(name = "QuantitySold")
+	@Order(value=2)
 	public Integer quantitySold;	
 	
 	@AnyElement
+	@Order(value=3)
 	public List<Object> any;	
 	
     

@@ -16,9 +16,11 @@ public class FindItemsByProductResponse extends BaseFindingServiceResponse imple
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public AspectHistogramContainer aspectHistogramContainer;	
 	
 	@Element
+	@Order(value=1)
 	public ConditionHistogramContainer conditionHistogramContainer;	
 	
     

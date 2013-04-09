@@ -4,6 +4,7 @@ package com.leansoft.nano.soap12;
 
 import java.io.Serializable;
 import com.leansoft.nano.annotation.*;
+
 import java.util.List;
 
 @RootElement(name = "Body", namespace = "http://www.w3.org/2003/05/soap-envelope")
@@ -12,6 +13,7 @@ public class Body implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@AnyElement
+	@Order(value=0)
 	public List<Object> any;	
 	
     

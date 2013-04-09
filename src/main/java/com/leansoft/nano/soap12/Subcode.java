@@ -4,6 +4,7 @@ package com.leansoft.nano.soap12;
 
 import java.io.Serializable;
 import com.leansoft.nano.annotation.*;
+
 import javax.xml.namespace.QName;
 
 public class Subcode implements Serializable {
@@ -11,9 +12,11 @@ public class Subcode implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Value")
+	@Order(value=0)
 	public QName value;	
 	
 	@Element(name = "Subcode")
+	@Order(value=1)
 	public Subcode subcode;	
 	
     

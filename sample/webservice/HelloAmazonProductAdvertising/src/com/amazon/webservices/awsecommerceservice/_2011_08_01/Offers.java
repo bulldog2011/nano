@@ -13,15 +13,19 @@ public class Offers implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "TotalOffers")
+	@Order(value=0)
 	public BigInteger totalOffers;	
 	
 	@Element(name = "TotalOfferPages")
+	@Order(value=1)
 	public BigInteger totalOfferPages;	
 	
 	@Element(name = "MoreOffersUrl")
+	@Order(value=2)
 	public String moreOffersUrl;	
 	
 	@Element(name = "Offer")
+	@Order(value=3)
 	public List<Offer> offer;	
 	
     

@@ -16,108 +16,143 @@ public class SearchItem implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String itemId;	
 	
 	@Element
+	@Order(value=1)
 	public String title;	
 	
 	@Element
+	@Order(value=2)
 	public String globalId;	
 	
 	@Element
+	@Order(value=3)
 	public String subtitle;	
 	
 	@Element
+	@Order(value=4)
 	public Category primaryCategory;	
 	
 	@Element
+	@Order(value=5)
 	public Category secondaryCategory;	
 	
 	@Element
+	@Order(value=6)
 	public String galleryURL;	
 	
 	@Element
+	@Order(value=7)
 	public GalleryInfoContainer galleryInfoContainer;	
 	
 	@Element
+	@Order(value=8)
 	public String viewItemURL;	
 	
 	@Element
+	@Order(value=9)
 	public String charityId;	
 	
 	@Element
+	@Order(value=10)
 	public ProductId productId;	
 	
 	@Element
+	@Order(value=11)
 	public List<String> paymentMethod;	
 	
 	@Element
+	@Order(value=12)
 	public Boolean autoPay;	
 	
 	@Element
+	@Order(value=13)
 	public String postalCode;	
 	
 	@Element
+	@Order(value=14)
 	public String location;	
 	
 	@Element
+	@Order(value=15)
 	public String country;	
 	
 	@Element
+	@Order(value=16)
 	public Storefront storeInfo;	
 	
 	@Element
+	@Order(value=17)
 	public SellerInfo sellerInfo;	
 	
 	@Element
+	@Order(value=18)
 	public ShippingInfo shippingInfo;	
 	
 	@Element
+	@Order(value=19)
 	public SellingStatus sellingStatus;	
 	
 	@Element
+	@Order(value=20)
 	public ListingInfo listingInfo;	
 	
 	@Element
+	@Order(value=21)
 	public Boolean returnsAccepted;	
 	
 	@Element
+	@Order(value=22)
 	public List<String> galleryPlusPictureURL;	
 	
 	@Element
+	@Order(value=23)
 	public String compatibility;	
 	
 	@Element
+	@Order(value=24)
 	public Distance distance;	
 	
 	@Element
+	@Order(value=25)
 	public Condition condition;	
 	
 	@Element
+	@Order(value=26)
 	public Boolean isMultiVariationListing;	
 	
 	@Element
+	@Order(value=27)
 	public DiscountPriceInfo discountPriceInfo;	
 	
 	@Element
+	@Order(value=28)
 	public String pictureURLSuperSize;	
 	
 	@Element
+	@Order(value=29)
 	public String pictureURLLarge;	
 	
 	@Element
+	@Order(value=30)
 	public UnitPriceInfo unitPrice;	
 	
 	@Element
+	@Order(value=31)
 	public List<ItemAttribute> attribute;	
 	
 	@Element
+	@Order(value=32)
 	public Boolean topRatedListing;	
 	
 	@Element
+	@Order(value=33)
 	public String delimiter;	
 	
 	@AnyElement
+	@Order(value=34)
 	public List<Object> any;	
 	
     

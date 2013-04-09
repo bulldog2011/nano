@@ -19,27 +19,35 @@ public class FindProductsResponseType extends AbstractResponseType implements Se
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ApproximatePages")
+	@Order(value=0)
 	public Integer approximatePages;	
 	
 	@Element(name = "MoreResults")
+	@Order(value=1)
 	public Boolean moreResults;	
 	
 	@Element(name = "DomainHistogram")
+	@Order(value=2)
 	public DomainHistogramType domainHistogram;	
 	
 	@Element(name = "ItemArray")
+	@Order(value=3)
 	public SimpleItemArrayType itemArray;	
 	
 	@Element(name = "PageNumber")
+	@Order(value=4)
 	public Integer pageNumber;	
 	
 	@Element(name = "Product")
+	@Order(value=5)
 	public List<CatalogProductType> product;	
 	
 	@Element(name = "TotalProducts")
+	@Order(value=6)
 	public Integer totalProducts;	
 	
 	@Element(name = "DuplicateItems")
+	@Order(value=7)
 	public Boolean duplicateItems;	
 	
     

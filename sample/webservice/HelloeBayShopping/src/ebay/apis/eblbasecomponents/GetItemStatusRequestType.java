@@ -17,6 +17,7 @@ public class GetItemStatusRequestType extends AbstractRequestType implements Ser
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ItemID")
+	@Order(value=0)
 	public List<String> itemID;	
 	
     

@@ -13,6 +13,7 @@ public class Accessories implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Accessory")
+	@Order(value=0)
 	public List<Accessory> accessory;	
 	
     

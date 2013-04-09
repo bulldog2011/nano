@@ -4,6 +4,7 @@ package com.leansoft.nano.soap11;
 
 import java.io.Serializable;
 import com.leansoft.nano.annotation.*;
+
 import java.util.List;
 
 @RootElement(name = "Header", namespace = "http://schemas.xmlsoap.org/soap/envelope/")
@@ -12,6 +13,7 @@ public class Header implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@AnyElement
+	@Order(value=0)
 	public List<Object> any;	
 	
     

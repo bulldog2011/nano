@@ -16,18 +16,23 @@ public class SalesTaxType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "SalesTaxPercent")
+	@Order(value=0)
 	public Float salesTaxPercent;	
 	
 	@Element(name = "SalesTaxState")
+	@Order(value=1)
 	public String salesTaxState;	
 	
 	@Element(name = "ShippingIncludedInTax")
+	@Order(value=2)
 	public Boolean shippingIncludedInTax;	
 	
 	@Element(name = "SalesTaxAmount")
+	@Order(value=3)
 	public AmountType salesTaxAmount;	
 	
 	@AnyElement
+	@Order(value=4)
 	public List<Object> any;	
 	
     

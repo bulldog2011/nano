@@ -11,9 +11,11 @@ public class Track implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Value
+	@Order(value=0)
 	public String value;	
 	
 	@Attribute(name = "Number")
+	@Order(value=1)
 	public BigInteger number;	
 	
     

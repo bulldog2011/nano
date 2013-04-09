@@ -17,15 +17,19 @@ public class FindItemsForFavoriteSearchRequest extends BaseServiceRequest implem
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public Long searchId;	
 	
 	@Element
+	@Order(value=1)
 	public String searchName;	
 	
 	@Element
+	@Order(value=2)
 	public Date startTimeFrom;	
 	
 	@Element
+	@Order(value=3)
 	public PaginationInput paginationInput;	
 	
     

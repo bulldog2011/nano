@@ -12,6 +12,7 @@ public class ImageSets implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ImageSet")
+	@Order(value=0)
 	public List<ImageSet> imageSet;	
 	
     

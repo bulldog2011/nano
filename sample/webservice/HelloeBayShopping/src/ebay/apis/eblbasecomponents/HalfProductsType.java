@@ -16,9 +16,11 @@ public class HalfProductsType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Product")
+	@Order(value=0)
 	public List<HalfCatalogProductType> product;	
 	
 	@AnyElement
+	@Order(value=1)
 	public List<Object> any;	
 	
     

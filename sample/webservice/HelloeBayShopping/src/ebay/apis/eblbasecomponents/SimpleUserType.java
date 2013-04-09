@@ -20,72 +20,95 @@ public class SimpleUserType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "UserID")
+	@Order(value=0)
 	public String userID;	
 	
 	@Element(name = "FeedbackPrivate")
+	@Order(value=1)
 	public Boolean feedbackPrivate;	
 	
 	@Element(name = "FeedbackRatingStar")
+	@Order(value=2)
 	public FeedbackRatingStarCodeType feedbackRatingStar;	
 	
 	@Element(name = "FeedbackScore")
+	@Order(value=3)
 	public Integer feedbackScore;	
 	
 	@Element(name = "UserAnonymized")
+	@Order(value=4)
 	public Boolean userAnonymized;	
 	
 	@Element(name = "NewUser")
+	@Order(value=5)
 	public Boolean newUser;	
 	
 	@Element(name = "RegistrationDate")
+	@Order(value=6)
 	public Date registrationDate;	
 	
 	@Element(name = "RegistrationSite")
+	@Order(value=7)
 	public SiteCodeType registrationSite;	
 	
 	@Element(name = "Status")
+	@Order(value=8)
 	public UserStatusCodeType status;	
 	
 	@Element(name = "SellerBusinessType")
+	@Order(value=9)
 	public SellerBusinessCodeType sellerBusinessType;	
 	
 	@Element(name = "StoreURL")
+	@Order(value=10)
 	public String storeURL;	
 	
 	@Element(name = "StoreName")
+	@Order(value=11)
 	public String storeName;	
 	
 	@Element(name = "SellerItemsURL")
+	@Order(value=12)
 	public String sellerItemsURL;	
 	
 	@Element(name = "AboutMeURL")
+	@Order(value=13)
 	public String aboutMeURL;	
 	
 	@Element(name = "MyWorldURL")
+	@Order(value=14)
 	public String myWorldURL;	
 	
 	@Element(name = "MyWorldSmallImage")
+	@Order(value=15)
 	public String myWorldSmallImage;	
 	
 	@Element(name = "MyWorldLargeImage")
+	@Order(value=16)
 	public String myWorldLargeImage;	
 	
 	@Element(name = "ReviewsAndGuidesURL")
+	@Order(value=17)
 	public String reviewsAndGuidesURL;	
 	
 	@Element(name = "FeedbackDetailsURL")
+	@Order(value=18)
 	public String feedbackDetailsURL;	
 	
 	@Element(name = "PositiveFeedbackPercent")
+	@Order(value=19)
 	public Float positiveFeedbackPercent;	
 	
 	@Element(name = "SellerLevel")
+	@Order(value=20)
 	public SellerLevelCodeType sellerLevel;	
 	
 	@Element(name = "TopRatedSeller")
+	@Order(value=21)
 	public Boolean topRatedSeller;	
 	
 	@AnyElement
+	@Order(value=22)
 	public List<Object> any;	
 	
     

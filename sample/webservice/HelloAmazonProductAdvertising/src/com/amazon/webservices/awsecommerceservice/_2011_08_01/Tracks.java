@@ -13,6 +13,7 @@ public class Tracks implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Disc")
+	@Order(value=0)
 	public List<Disc> disc;	
 	
     

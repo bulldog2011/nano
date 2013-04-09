@@ -16,21 +16,27 @@ public class ItemFilter implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public String paramName;	
 	
 	@Element
+	@Order(value=1)
 	public String paramValue;	
 	
 	@Element
+	@Order(value=2)
 	public ItemFilterType name;	
 	
 	@Element
+	@Order(value=3)
 	public List<String> value;	
 	
 	@Element
+	@Order(value=4)
 	public String delimiter;	
 	
 	@AnyElement
+	@Order(value=5)
 	public List<Object> any;	
 	
     

@@ -4,6 +4,7 @@ package com.leansoft.nano.soap12;
 
 import java.io.Serializable;
 import com.leansoft.nano.annotation.*;
+
 import java.util.List;
 
 @RootElement(name = "Upgrade", namespace = "http://www.w3.org/2003/05/soap-envelope")
@@ -12,6 +13,7 @@ public class UpgradeType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "SupportedEnvelope")
+	@Order(value=0)
 	public List<SupportedEnvType> supportedEnvelope;	
 	
     

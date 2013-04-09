@@ -16,9 +16,11 @@ public class GetUserProfileRequestType extends AbstractRequestType implements Se
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "UserID")
+	@Order(value=0)
 	public String userID;	
 	
 	@Element(name = "IncludeSelector")
+	@Order(value=1)
 	public String includeSelector;	
 	
     

@@ -10,9 +10,11 @@ public class Creator implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Value
+	@Order(value=0)
 	public String value;	
 	
 	@Attribute(name = "Role")
+	@Order(value=1)
 	public String role;	
 	
     

@@ -20,18 +20,23 @@ public class ExternalProductIDType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Value")
+	@Order(value=0)
 	public String value;	
 	
 	@Element(name = "ReturnSearchResultOnDuplicates")
+	@Order(value=1)
 	public Boolean returnSearchResultOnDuplicates;	
 	
 	@Element(name = "Type")
+	@Order(value=2)
 	public ExternalProductCodeType type;	
 	
 	@Element(name = "AlternateValue")
+	@Order(value=3)
 	public List<String> alternateValue;	
 	
 	@AnyElement
+	@Order(value=4)
 	public List<Object> any;	
 	
     

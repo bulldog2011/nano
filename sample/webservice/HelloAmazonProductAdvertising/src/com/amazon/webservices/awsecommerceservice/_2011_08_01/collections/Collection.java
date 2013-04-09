@@ -14,12 +14,15 @@ public class Collection implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "CollectionSummary")
+	@Order(value=0)
 	public CollectionSummary collectionSummary;	
 	
 	@Element(name = "CollectionParent")
+	@Order(value=1)
 	public CollectionParent collectionParent;	
 	
 	@Element(name = "CollectionItem")
+	@Order(value=2)
 	public List<CollectionItem> collectionItem;	
 	
     

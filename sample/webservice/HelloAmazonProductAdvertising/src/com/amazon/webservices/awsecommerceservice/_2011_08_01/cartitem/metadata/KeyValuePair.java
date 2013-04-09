@@ -10,9 +10,11 @@ public class KeyValuePair implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Key")
+	@Order(value=0)
 	public String key;	
 	
 	@Element(name = "Value")
+	@Order(value=1)
 	public String value;	
 	
     

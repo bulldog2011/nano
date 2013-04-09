@@ -11,15 +11,19 @@ public class VariationSummary implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "LowestPrice")
+	@Order(value=0)
 	public Price lowestPrice;	
 	
 	@Element(name = "HighestPrice")
+	@Order(value=1)
 	public Price highestPrice;	
 	
 	@Element(name = "LowestSalePrice")
+	@Order(value=2)
 	public Price lowestSalePrice;	
 	
 	@Element(name = "HighestSalePrice")
+	@Order(value=3)
 	public Price highestSalePrice;	
 	
     

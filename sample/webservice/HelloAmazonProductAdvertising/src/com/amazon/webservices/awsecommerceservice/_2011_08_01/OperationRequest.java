@@ -11,18 +11,23 @@ public class OperationRequest implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "HTTPHeaders")
+	@Order(value=0)
 	public HTTPHeaders httpHeaders;	
 	
 	@Element(name = "RequestId")
+	@Order(value=1)
 	public String requestId;	
 	
 	@Element(name = "Arguments")
+	@Order(value=2)
 	public Arguments arguments;	
 	
 	@Element(name = "Errors")
+	@Order(value=3)
 	public Errors errors;	
 	
 	@Element(name = "RequestProcessingTime")
+	@Order(value=4)
 	public Float requestProcessingTime;	
 	
     

@@ -16,6 +16,7 @@ public class FindPopularItemsResponseType extends AbstractResponseType implement
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ItemArray")
+	@Order(value=0)
 	public SimpleItemArrayType itemArray;	
 	
     

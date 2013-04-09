@@ -12,6 +12,7 @@ public class Promotion implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Summary")
+	@Order(value=0)
 	public Summary summary;	
 	
     

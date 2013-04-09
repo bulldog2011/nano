@@ -16,18 +16,23 @@ public class Fault implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Code")
+	@Order(value=0)
 	public Faultcode code;	
 	
 	@Element(name = "Reason")
+	@Order(value=1)
 	public Faultreason reason;	
 	
 	@Element(name = "Node")
+	@Order(value=2)
 	public String node;	
 	
 	@Element(name = "Role")
+	@Order(value=3)
 	public String role;	
 	
 	@Element(name = "Detail")
+	@Order(value=4)
 	public Detail detail;	
 	
     

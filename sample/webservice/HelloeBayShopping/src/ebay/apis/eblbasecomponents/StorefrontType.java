@@ -18,12 +18,15 @@ public class StorefrontType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "StoreURL")
+	@Order(value=0)
 	public String storeURL;	
 	
 	@Element(name = "StoreName")
+	@Order(value=1)
 	public String storeName;	
 	
 	@AnyElement
+	@Order(value=2)
 	public List<Object> any;	
 	
     

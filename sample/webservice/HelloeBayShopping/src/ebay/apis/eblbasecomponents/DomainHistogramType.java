@@ -16,9 +16,11 @@ public class DomainHistogramType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Domain")
+	@Order(value=0)
 	public List<HistogramEntryType> domain;	
 	
 	@AnyElement
+	@Order(value=1)
 	public List<Object> any;	
 	
     

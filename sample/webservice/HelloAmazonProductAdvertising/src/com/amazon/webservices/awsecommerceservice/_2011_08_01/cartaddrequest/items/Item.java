@@ -11,18 +11,23 @@ public class Item implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ASIN")
+	@Order(value=0)
 	public String asin;	
 	
 	@Element(name = "OfferListingId")
+	@Order(value=1)
 	public String offerListingId;	
 	
 	@Element(name = "Quantity")
+	@Order(value=2)
 	public BigInteger quantity;	
 	
 	@Element(name = "AssociateTag")
+	@Order(value=3)
 	public String associateTag;	
 	
 	@Element(name = "ListItemId")
+	@Order(value=4)
 	public String listItemId;	
 	
     

@@ -11,15 +11,19 @@ public class PackageDimensions implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "Height")
+	@Order(value=0)
 	public DecimalWithUnits height;	
 	
 	@Element(name = "Length")
+	@Order(value=1)
 	public DecimalWithUnits length;	
 	
 	@Element(name = "Weight")
+	@Order(value=2)
 	public DecimalWithUnits weight;	
 	
 	@Element(name = "Width")
+	@Order(value=3)
 	public DecimalWithUnits width;	
 	
     

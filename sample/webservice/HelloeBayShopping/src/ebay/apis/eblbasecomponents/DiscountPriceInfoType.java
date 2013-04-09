@@ -22,24 +22,31 @@ public class DiscountPriceInfoType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "OriginalRetailPrice")
+	@Order(value=0)
 	public AmountType originalRetailPrice;	
 	
 	@Element(name = "MinimumAdvertisedPrice")
+	@Order(value=1)
 	public AmountType minimumAdvertisedPrice;	
 	
 	@Element(name = "MinimumAdvertisedPriceExposure")
+	@Order(value=2)
 	public MinimumAdvertisedPriceExposureCodeType minimumAdvertisedPriceExposure;	
 	
 	@Element(name = "PricingTreatment")
+	@Order(value=3)
 	public PricingTreatmentCodeType pricingTreatment;	
 	
 	@Element(name = "SoldOneBay")
+	@Order(value=4)
 	public Boolean soldOneBay;	
 	
 	@Element(name = "SoldOffeBay")
+	@Order(value=5)
 	public Boolean soldOffeBay;	
 	
 	@AnyElement
+	@Order(value=6)
 	public List<Object> any;	
 	
     

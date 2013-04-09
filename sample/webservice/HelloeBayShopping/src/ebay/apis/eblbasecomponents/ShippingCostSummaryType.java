@@ -16,30 +16,39 @@ public class ShippingCostSummaryType implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "ShippingServiceName")
+	@Order(value=0)
 	public String shippingServiceName;	
 	
 	@Element(name = "ShippingServiceCost")
+	@Order(value=1)
 	public AmountType shippingServiceCost;	
 	
 	@Element(name = "InsuranceCost")
+	@Order(value=2)
 	public AmountType insuranceCost;	
 	
 	@Element(name = "ShippingType")
+	@Order(value=3)
 	public ShippingTypeCodeType shippingType;	
 	
 	@Element(name = "LocalPickup")
+	@Order(value=4)
 	public Boolean localPickup;	
 	
 	@Element(name = "InsuranceOption")
+	@Order(value=5)
 	public InsuranceOptionCodeType insuranceOption;	
 	
 	@Element(name = "ListedShippingServiceCost")
+	@Order(value=6)
 	public AmountType listedShippingServiceCost;	
 	
 	@Element(name = "ImportCharge")
+	@Order(value=7)
 	public AmountType importCharge;	
 	
 	@AnyElement
+	@Order(value=8)
 	public List<Object> any;	
 	
     

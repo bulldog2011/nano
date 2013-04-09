@@ -12,6 +12,7 @@ public class Ancestors implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "BrowseNode")
+	@Order(value=0)
 	public List<BrowseNode> browseNode;	
 	
     

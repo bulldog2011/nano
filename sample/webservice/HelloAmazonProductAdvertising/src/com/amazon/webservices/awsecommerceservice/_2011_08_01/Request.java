@@ -11,36 +11,47 @@ public class Request implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element(name = "IsValid")
+	@Order(value=0)
 	public String isValid;	
 	
 	@Element(name = "BrowseNodeLookupRequest")
+	@Order(value=1)
 	public BrowseNodeLookupRequest browseNodeLookupRequest;	
 	
 	@Element(name = "ItemSearchRequest")
+	@Order(value=2)
 	public ItemSearchRequest itemSearchRequest;	
 	
 	@Element(name = "ItemLookupRequest")
+	@Order(value=3)
 	public ItemLookupRequest itemLookupRequest;	
 	
 	@Element(name = "SimilarityLookupRequest")
+	@Order(value=4)
 	public SimilarityLookupRequest similarityLookupRequest;	
 	
 	@Element(name = "CartGetRequest")
+	@Order(value=5)
 	public CartGetRequest cartGetRequest;	
 	
 	@Element(name = "CartAddRequest")
+	@Order(value=6)
 	public CartAddRequest cartAddRequest;	
 	
 	@Element(name = "CartCreateRequest")
+	@Order(value=7)
 	public CartCreateRequest cartCreateRequest;	
 	
 	@Element(name = "CartModifyRequest")
+	@Order(value=8)
 	public CartModifyRequest cartModifyRequest;	
 	
 	@Element(name = "CartClearRequest")
+	@Order(value=9)
 	public CartClearRequest cartClearRequest;	
 	
 	@Element(name = "Errors")
+	@Order(value=10)
 	public Errors errors;	
 	
     

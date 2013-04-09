@@ -23,18 +23,23 @@ public class DiscountPriceInfo implements Serializable {
     private static final long serialVersionUID = -1L;
 
 	@Element
+	@Order(value=0)
 	public Amount originalRetailPrice;	
 	
 	@Element
+	@Order(value=1)
 	public MapExposureEnum minimumAdvertisedPriceExposure;	
 	
 	@Element
+	@Order(value=2)
 	public PriceTreatmentEnum pricingTreatment;	
 	
 	@Element
+	@Order(value=3)
 	public Boolean soldOnEbay;	
 	
 	@Element
+	@Order(value=4)
 	public Boolean soldOffEbay;	
 	
     
