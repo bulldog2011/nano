@@ -19,13 +19,11 @@
 package com.loopj.android.http;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.protocol.HttpContext;
@@ -40,7 +38,6 @@ class AsyncHttpRequest implements Runnable {
     private final HttpContext context;
     private final HttpUriRequest request;
     private final AsyncHttpResponseHandler responseHandler;
-    private int executionCount;
 
     public AsyncHttpRequest(AbstractHttpClient client, HttpContext context, HttpUriRequest request, AsyncHttpResponseHandler responseHandler) {
         this.client = client;
@@ -51,22 +48,7 @@ class AsyncHttpRequest implements Runnable {
 
     @Override
     public void run() {
-        try {
-            if(responseHandler != null){
-                responseHandler.sendStartMessage();
-            }
-
-            makeRequestWithRetries();
-
-            if(responseHandler != null) {
-                responseHandler.sendFinishMessage();
-            }
-        } catch (ConnectException e) {
-            if(responseHandler != null) {
-                responseHandler.sendFinishMessage();
-                responseHandler.sendFailureMessage(e, e.getCause().getMessage());
-            }
-        }
+    	makeRequestWithExceptionHandling();
     }
 
     private void makeRequest() throws IOException {
@@ -88,52 +70,44 @@ class AsyncHttpRequest implements Runnable {
         }
     }
 
-    private void makeRequestWithRetries() throws ConnectException {
-        // This is an additional layer of retry logic lifted from droid-fu
-        // See: https://github.com/kaeppler/droid-fu/blob/master/src/main/java/com/github/droidfu/http/BetterHttpRequestBase.java
-        boolean retry = true;
-        IOException cause = null;
-        HttpRequestRetryHandler retryHandler = client.getHttpRequestRetryHandler();
-        while (retry) {
-            try {
-                makeRequest();
-                return;
-            } catch (UnknownHostException e) {
-		        if(responseHandler != null) {
-		            responseHandler.sendFailureMessage(e, "can't resolve host");
-		        }
-	        	return;
-            }catch (SocketException e){
-                // Added to detect host unreachable
-                if(responseHandler != null) {
-                    responseHandler.sendFailureMessage(e, "can't resolve host");
-                }
-                return;
-            }catch (SocketTimeoutException e){
-                if(responseHandler != null) {
-                    responseHandler.sendFailureMessage(e, "socket time out");
-                }
-                return;
-            } catch (IOException e) {
-                cause = e;
-                retry = retryHandler.retryRequest(cause, ++executionCount, context);
-            } catch (NullPointerException e) {
-                // there's a bug in HttpClient 4.0.x that on some occasions causes
-                // DefaultRequestExecutor to throw an NPE, see
-                // http://code.google.com/p/android/issues/detail?id=5255
-                cause = new IOException("NPE in HttpClient" + e.getMessage());
-                retry = retryHandler.retryRequest(cause, ++executionCount, context);
+    private void makeRequestWithExceptionHandling() {
+        try {
+        	makeRequest();
+        } catch (UnknownHostException e) {
+	        if(responseHandler != null) {
+	            responseHandler.sendFailureMessage(e, "can't resolve host", null);
+	        }
+	        ALog.e(TAG, "can't resolve host", e);
+        } catch (SocketException e){
+            // Added to detect host unreachable
+            if(responseHandler != null) {
+                responseHandler.sendFailureMessage(e, "can't resolve host", null);
             }
-            if (retry) {
-            	ALog.e(TAG, "Got exception, request will be retried", cause);
-            } else {
-            	ALog.e(TAG, "Got exception, no retry", cause);
+	        ALog.e(TAG, "can't resolve host", e);
+        }catch (SocketTimeoutException e){
+            if(responseHandler != null) {
+                responseHandler.sendFailureMessage(e, "socket time out", null);
             }
+	        ALog.e(TAG, "socket time out", e);
+        } catch (IOException e) {
+            if(responseHandler != null) {
+                responseHandler.sendFailureMessage(e, "IO exception - " + e.getMessage(), null);
+            }
+	        ALog.e(TAG, "IO exception - " + e.getMessage(), e);
+        } catch (NullPointerException e) {
+            // there's a bug in HttpClient 4.0.x that on some occasions causes
+            // DefaultRequestExecutor to throw an NPE, see
+            // http://code.google.com/p/android/issues/detail?id=5255
+            if(responseHandler != null) {
+            	IOException ioe = new IOException("NPE in HttpClient" + e.getMessage());
+                responseHandler.sendFailureMessage(ioe, "NPE in HttpClient" + e.getMessage(), null);
+            }
+	        ALog.e(TAG, "NPE in HttpClient" + e.getMessage(), e);
+        } catch (Throwable t) {
+            if(responseHandler != null) {
+                responseHandler.sendFailureMessage(t, "Connect exception - " + t.getMessage(), null);
+            }
+	        ALog.e(TAG, "Connect exception - " + t.getMessage(), t);
         }
-
-        // no retries left, crap out with exception
-        ConnectException ex = new ConnectException("connect exception, see inner exception for details");
-        ex.initCause(cause);
-        throw ex;
     }
 }

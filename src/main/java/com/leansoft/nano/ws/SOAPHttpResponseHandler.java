@@ -62,14 +62,14 @@ public class SOAPHttpResponseHandler extends AsyncHttpResponseHandler {
 			
 		} catch (UnmarshallException e) {
 			ALog.e(TAG, "Response unmarshalling exception", e);
-			super.sendFailureMessage(e, "Response unmarshalling exception");
+			sendFailureMessage(e, "Response unmarshalling exception", responseBody);
 		}
     }
 	
-    protected void sendFailureMessage(Throwable e, String responseBody) {
+    protected void sendFailureMessage(Throwable e, String errorMessage, String responseBody) {
     	if (e instanceof HttpResponseException) {
     		HttpResponseException httpResponseException = (HttpResponseException)e;
-    		if (httpResponseException.getStatusCode() >= 300) {// may be still a successful response
+    		if (httpResponseException.getStatusCode() >= 300 && responseBody != null) {// may be still a successful response
     			try {
 					Object responseObject = this.convertSOAPToObject(responseBody);
 					if (responseObject != null) {
@@ -81,8 +81,8 @@ public class SOAPHttpResponseHandler extends AsyncHttpResponseHandler {
 				}
     		}
     	}
-		ALog.e(TAG, responseBody, e);
-        sendMessage(obtainMessage(FAILURE_MESSAGE, new Object[]{e, responseBody}));
+        
+    	sendMessage(obtainMessage(FAILURE_MESSAGE, new Object[]{e, errorMessage}));
     }
 	
 	private Object convertSOAPToObject(String responseContent) throws UnmarshallException {
@@ -135,12 +135,6 @@ public class SOAPHttpResponseHandler extends AsyncHttpResponseHandler {
                 response = (Object[])msg.obj;
                 handleFailureMessage((Throwable)response[0], (String)response[1]);
                 break;
-            case START_MESSAGE:
-                onStart();
-                break;
-            case FINISH_MESSAGE:
-                onFinish();
-                break;
         }
     }
     
@@ -156,7 +150,9 @@ public class SOAPHttpResponseHandler extends AsyncHttpResponseHandler {
                 responseBody = EntityUtils.toString(entity, "UTF-8");
             }
         } catch(IOException e) {
-            sendFailureMessage(e, (String) null);
+            sendFailureMessage(e, "error to get response body", responseBody);
+            ALog.e(TAG, "error to get response body", e);
+            return;
         }
         
 		if (debug) {
@@ -170,7 +166,7 @@ public class SOAPHttpResponseHandler extends AsyncHttpResponseHandler {
 		}
 
         if(status.getStatusCode() >= 300) {
-            sendFailureMessage(new HttpResponseException(status.getStatusCode(), status.getReasonPhrase()), responseBody);
+            sendFailureMessage(new HttpResponseException(status.getStatusCode(), status.getReasonPhrase()), "http response exception", responseBody);
         } else {
             sendSuccessMessage(status.getStatusCode(), response.getAllHeaders(), responseBody);
         }

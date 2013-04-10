@@ -5,10 +5,10 @@ import ebay.apis.eblbasecomponents.client.ShoppingInterface_XMLClient;
 public class ShoppingServiceClient {
 	
 	// production
-	public static String eBayShoppingServiceURLString = "https://open.api.ebay.com/shopping?";
+	public static String eBayShoppingServiceURLString = "http://open.api.ebay.com/shopping?";
 	// sandbox
 	//public static final String eBayShoppingServiceURLString = "http://open.api.sandbox.ebay.com/shopping";
-	public static String eBayAppId = "ebaysjinternal";
+	public static String eBayAppId = "YOUR APPID HERE";
 	public static String targetAPIVersion = "809";
 	/**
 	for site id list, see http://developer.ebay.com/DevZone/shopping/docs/CallRef/types/SiteCodeType.html

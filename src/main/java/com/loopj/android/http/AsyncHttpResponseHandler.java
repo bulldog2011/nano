@@ -30,7 +30,7 @@ import org.apache.http.client.HttpResponseException;
 import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.util.EntityUtils;
 
-import com.leansoft.nano.ws.SOAPHttpResponseHandler;
+import com.leansoft.nano.log.ALog;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -73,10 +73,10 @@ import android.os.Message;
  */
 public class AsyncHttpResponseHandler {
 	
+    private static final String TAG = AsyncHttpResponseHandler.class.getSimpleName();
+	
     protected static final int SUCCESS_MESSAGE = 0;
     protected static final int FAILURE_MESSAGE = 1;
-    protected static final int START_MESSAGE = 2;
-    protected static final int FINISH_MESSAGE = 3;
 
     private Handler handler;
 
@@ -99,16 +99,6 @@ public class AsyncHttpResponseHandler {
     //
     // Callbacks to be overridden, typically anonymously
     //
-
-    /**
-     * Fired when the request is started, override to handle in your own code
-     */
-    public void onStart() {}
-
-    /**
-     * Fired in all cases when the request is finished, after both success and failure, override to handle in your own code
-     */
-    public void onFinish() {}
 
     /**
      * Fired when a request returns successfully, override to handle in your own code
@@ -163,16 +153,8 @@ public class AsyncHttpResponseHandler {
         sendMessage(obtainMessage(SUCCESS_MESSAGE, new Object[]{new Integer(statusCode), headers, responseBody}));
     }
 
-    protected void sendFailureMessage(Throwable e, String responseBody) {
-        sendMessage(obtainMessage(FAILURE_MESSAGE, new Object[]{e, responseBody}));
-    }
-
-    protected void sendStartMessage() {
-        sendMessage(obtainMessage(START_MESSAGE, null));
-    }
-
-    protected void sendFinishMessage() {
-        sendMessage(obtainMessage(FINISH_MESSAGE, null));
+    protected void sendFailureMessage(Throwable e, String errorMessage, String responseBody) {
+        sendMessage(obtainMessage(FAILURE_MESSAGE, new Object[]{e, errorMessage, responseBody}));
     }
 
 
@@ -184,8 +166,8 @@ public class AsyncHttpResponseHandler {
         onSuccess(statusCode, headers, responseBody);
     }
 
-    protected void handleFailureMessage(Throwable e, String responseBody) {
-        onFailure(e, responseBody);
+    protected void handleFailureMessage(Throwable e, String errorMessage) {
+        onFailure(e, errorMessage);
     }
 
 
@@ -202,12 +184,6 @@ public class AsyncHttpResponseHandler {
             case FAILURE_MESSAGE:
                 response = (Object[])msg.obj;
                 handleFailureMessage((Throwable)response[0], (String)response[1]);
-                break;
-            case START_MESSAGE:
-                onStart();
-                break;
-            case FINISH_MESSAGE:
-                onFinish();
                 break;
         }
     }
@@ -244,11 +220,13 @@ public class AsyncHttpResponseHandler {
                 responseBody = EntityUtils.toString(entity, "UTF-8");
             }
         } catch(IOException e) {
-            sendFailureMessage(e, (String) null);
+            sendFailureMessage(e, "error to get response body", responseBody);
+            ALog.e(TAG, "error to get response body", e);
+            return;
         }
 
         if(status.getStatusCode() >= 300) {
-            sendFailureMessage(new HttpResponseException(status.getStatusCode(), status.getReasonPhrase()), responseBody);
+            sendFailureMessage(new HttpResponseException(status.getStatusCode(), status.getReasonPhrase()), "http response exception", responseBody);
         } else {
             sendSuccessMessage(status.getStatusCode(), response.getAllHeaders(), responseBody);
         }

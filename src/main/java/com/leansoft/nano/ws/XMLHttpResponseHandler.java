@@ -41,8 +41,8 @@ public class XMLHttpResponseHandler extends AsyncHttpResponseHandler {
 	}
 	
 	@Override
-    public void onFailure(Throwable error, String content) {
-        this.callback.onFailure(error, content);
+    public void onFailure(Throwable error, String errorMessage) {
+        this.callback.onFailure(error, errorMessage);
     }
 	
 	
@@ -59,14 +59,14 @@ public class XMLHttpResponseHandler extends AsyncHttpResponseHandler {
 			
 		} catch (UnmarshallException e) {
 			ALog.e(TAG, "Response unmarshalling exception", e);
-			super.sendFailureMessage(e, "Response unmarshalling exception");
+			sendFailureMessage(e, "Response unmarshalling exception", responseBody);
 		}
     }
 	
-    protected void sendFailureMessage(Throwable e, String responseBody) {
+    protected void sendFailureMessage(Throwable e, String errorMessage, String responseBody) {
     	if (e instanceof HttpResponseException) {
     		HttpResponseException httpResponseException = (HttpResponseException)e;
-    		if (httpResponseException.getStatusCode() >= 300) {// may be still a successful response
+    		if (httpResponseException.getStatusCode() >= 300 && responseBody != null) {// may be still a successful response
     			try {
 					Object responseObject = this.convertXMLToObject(responseBody);
 					if (responseObject != null) {
@@ -78,10 +78,8 @@ public class XMLHttpResponseHandler extends AsyncHttpResponseHandler {
 				}
     		}
     	}
-    	if (responseBody != null) {
-    		ALog.e(TAG, responseBody, e);
-    	}
-        sendMessage(obtainMessage(FAILURE_MESSAGE, new Object[]{e, responseBody}));
+
+        sendMessage(obtainMessage(FAILURE_MESSAGE, new Object[]{e, errorMessage}));
     }
 	
 	private Object convertXMLToObject(String responseContent) throws UnmarshallException {
@@ -116,12 +114,6 @@ public class XMLHttpResponseHandler extends AsyncHttpResponseHandler {
                 response = (Object[])msg.obj;
                 handleFailureMessage((Throwable)response[0], (String)response[1]);
                 break;
-            case START_MESSAGE:
-                onStart();
-                break;
-            case FINISH_MESSAGE:
-                onFinish();
-                break;
         }
     }
     
@@ -137,7 +129,9 @@ public class XMLHttpResponseHandler extends AsyncHttpResponseHandler {
                 responseBody = EntityUtils.toString(entity, "UTF-8");
             }
         } catch(IOException e) {
-            sendFailureMessage(e, (String) null);
+            sendFailureMessage(e, "error to get response body", responseBody);
+            ALog.e(TAG, "error to get response body", e);
+            return;
         }
         
 		if (debug) {
@@ -151,7 +145,7 @@ public class XMLHttpResponseHandler extends AsyncHttpResponseHandler {
 		}
 
         if(status.getStatusCode() >= 300) {
-            sendFailureMessage(new HttpResponseException(status.getStatusCode(), status.getReasonPhrase()), responseBody);
+            sendFailureMessage(new HttpResponseException(status.getStatusCode(), status.getReasonPhrase()), "http response exception", responseBody);
         } else {
             sendSuccessMessage(status.getStatusCode(), response.getAllHeaders(), responseBody);
         }
