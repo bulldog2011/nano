@@ -42,7 +42,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void findHalfProducts(FindHalfProductsRequestType requestObject, SOAPServiceCallback<FindHalfProductsResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "FindHalfProducts");
         
         super.invoke(requestObject, serviceCallback, FindHalfProductsResponseType.class);
     }
@@ -52,7 +51,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void findPopularItems(FindPopularItemsRequestType requestObject, SOAPServiceCallback<FindPopularItemsResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "FindPopularItems");
         
         super.invoke(requestObject, serviceCallback, FindPopularItemsResponseType.class);
     }
@@ -62,7 +60,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void findPopularSearches(FindPopularSearchesRequestType requestObject, SOAPServiceCallback<FindPopularSearchesResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "FindPopularSearches");
         
         super.invoke(requestObject, serviceCallback, FindPopularSearchesResponseType.class);
     }
@@ -72,7 +69,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void findProducts(FindProductsRequestType requestObject, SOAPServiceCallback<FindProductsResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "FindProducts");
         
         super.invoke(requestObject, serviceCallback, FindProductsResponseType.class);
     }
@@ -82,7 +78,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void findReviewsAndGuides(FindReviewsAndGuidesRequestType requestObject, SOAPServiceCallback<FindReviewsAndGuidesResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "FindReviewsAndGuides");
         
         super.invoke(requestObject, serviceCallback, FindReviewsAndGuidesResponseType.class);
     }
@@ -92,7 +87,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void getCategoryInfo(GetCategoryInfoRequestType requestObject, SOAPServiceCallback<GetCategoryInfoResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "GetCategoryInfo");
         
         super.invoke(requestObject, serviceCallback, GetCategoryInfoResponseType.class);
     }
@@ -102,7 +96,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void getItemStatus(GetItemStatusRequestType requestObject, SOAPServiceCallback<GetItemStatusResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "GetItemStatus");
         
         super.invoke(requestObject, serviceCallback, GetItemStatusResponseType.class);
     }
@@ -112,7 +105,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void getMultipleItems(GetMultipleItemsRequestType requestObject, SOAPServiceCallback<GetMultipleItemsResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "GetMultipleItems");
         
         super.invoke(requestObject, serviceCallback, GetMultipleItemsResponseType.class);
     }
@@ -122,7 +114,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void getShippingCosts(GetShippingCostsRequestType requestObject, SOAPServiceCallback<GetShippingCostsResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "GetShippingCosts");
         
         super.invoke(requestObject, serviceCallback, GetShippingCostsResponseType.class);
     }
@@ -132,7 +123,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void getSingleItem(GetSingleItemRequestType requestObject, SOAPServiceCallback<GetSingleItemResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "GetSingleItem");
         
         super.invoke(requestObject, serviceCallback, GetSingleItemResponseType.class);
     }
@@ -142,7 +132,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void getUserProfile(GetUserProfileRequestType requestObject, SOAPServiceCallback<GetUserProfileResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "GetUserProfile");
         
         super.invoke(requestObject, serviceCallback, GetUserProfileResponseType.class);
     }
@@ -152,7 +141,6 @@ public class ShoppingInterface_SOAPClient extends NanoSOAPClient {
     */
     public void geteBayTime(GeteBayTimeRequestType requestObject, SOAPServiceCallback<GeteBayTimeResponseType> serviceCallback) {
        
-        super.getAsyncHttpClient().addHeader("X-EBAY-SOA-OPERATION-NAME", "GeteBayTime");
         
         super.invoke(requestObject, serviceCallback, GeteBayTimeResponseType.class);
     }
