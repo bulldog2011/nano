@@ -19,6 +19,7 @@ import com.leansoft.nano.ws.SOAPServiceCallback;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
@@ -30,6 +31,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 
 public class SearchActivity extends ListActivity implements OnScrollListener {
 	
@@ -93,12 +95,13 @@ public class SearchActivity extends ListActivity implements OnScrollListener {
 		
 		// Build request
 		ItemSearch request = new ItemSearch();
-		request.associateTag = "teg"; // seems any tag is ok
+		request.associateTag = "tag"; // seems any tag is ok
 		request.shared = new ItemSearchRequest();
 		request.shared.searchIndex = "Books";
 		request.shared.responseGroup = new ArrayList<String>();
 		request.shared.responseGroup.add("Images");
-		request.shared.responseGroup.add("Small");
+		request.shared.responseGroup.add("ItemAttributes");
+		request.shared.responseGroup.add("Offers");
 		request.shared.keywords = searchKeywords;
 		request.shared.itemPage = BigInteger.valueOf(pageNum);
 		
@@ -213,9 +216,30 @@ public class SearchActivity extends ListActivity implements OnScrollListener {
 						image.setNoImageDrawable(R.drawable.placeholder);
 					}
 				}
+				
+				// once clicked, navigate to item details page
+				v.setOnClickListener(new OnItemClickListener(item, v.getContext()));
 			}
 
 			return v;
+		}
+	}
+	
+	private class OnItemClickListener implements OnClickListener {
+		private Item item;
+		private Context mCxt;
+
+		OnItemClickListener(Item item, Context cxt) {
+			this.item = item;
+			mCxt = cxt;
+		}
+
+		@Override
+		public void onClick(View arg0) {
+			ALog.d(TAG, "onItemClick at item " + item.itemAttributes.title);
+			Intent intent = new Intent(mCxt, DetailsActivity.class);
+			intent.putExtra("ITEM", item);
+			startActivity(intent);
 		}
 	}
 	
