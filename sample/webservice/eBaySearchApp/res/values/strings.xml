@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<string name="app_name">eBay Search</string>
-	<string name="main_no_items">Please enter keyword to search</string>
-	<string name="price">--</string>
-	<string name="timeleft">--</string>
-</resources>
