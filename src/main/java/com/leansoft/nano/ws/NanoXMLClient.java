@@ -27,7 +27,7 @@ public abstract class NanoXMLClient {
 		asyncHttpClient.addHeader("Accept", "text/xml");
 	}
 	
-	protected void invoke(Object requestObject, ServiceCallback<?> callback, Class<?> bindClazz) {
+	protected void invoke(Object requestObject, XMLServiceCallback<?> callback, Class<?> bindClazz) {
 		
 		try {
 			if (endpointUrl == null) {

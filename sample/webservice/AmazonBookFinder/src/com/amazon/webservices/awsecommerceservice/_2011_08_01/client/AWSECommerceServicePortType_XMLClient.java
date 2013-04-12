@@ -3,7 +3,7 @@
 package com.amazon.webservices.awsecommerceservice._2011_08_01.client;
 
 
-import com.leansoft.nano.ws.ServiceCallback;
+import com.leansoft.nano.ws.XMLServiceCallback;
 import com.leansoft.nano.ws.NanoXMLClient;
 import com.amazon.webservices.awsecommerceservice._2011_08_01.CartClear;
 import com.amazon.webservices.awsecommerceservice._2011_08_01.CartModify;
@@ -34,7 +34,7 @@ public class AWSECommerceServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void itemSearch(ItemSearch requestObject, ServiceCallback<ItemSearchResponse> serviceCallback) {
+    public void itemSearch(ItemSearch requestObject, XMLServiceCallback<ItemSearchResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, ItemSearchResponse.class);
@@ -43,7 +43,7 @@ public class AWSECommerceServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void itemLookup(ItemLookup requestObject, ServiceCallback<ItemLookupResponse> serviceCallback) {
+    public void itemLookup(ItemLookup requestObject, XMLServiceCallback<ItemLookupResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, ItemLookupResponse.class);
@@ -52,7 +52,7 @@ public class AWSECommerceServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void browseNodeLookup(BrowseNodeLookup requestObject, ServiceCallback<BrowseNodeLookupResponse> serviceCallback) {
+    public void browseNodeLookup(BrowseNodeLookup requestObject, XMLServiceCallback<BrowseNodeLookupResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, BrowseNodeLookupResponse.class);
@@ -61,7 +61,7 @@ public class AWSECommerceServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void similarityLookup(SimilarityLookup requestObject, ServiceCallback<SimilarityLookupResponse> serviceCallback) {
+    public void similarityLookup(SimilarityLookup requestObject, XMLServiceCallback<SimilarityLookupResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, SimilarityLookupResponse.class);
@@ -70,7 +70,7 @@ public class AWSECommerceServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void cartGet(CartGet requestObject, ServiceCallback<CartGetResponse> serviceCallback) {
+    public void cartGet(CartGet requestObject, XMLServiceCallback<CartGetResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, CartGetResponse.class);
@@ -79,7 +79,7 @@ public class AWSECommerceServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void cartCreate(CartCreate requestObject, ServiceCallback<CartCreateResponse> serviceCallback) {
+    public void cartCreate(CartCreate requestObject, XMLServiceCallback<CartCreateResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, CartCreateResponse.class);
@@ -88,7 +88,7 @@ public class AWSECommerceServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void cartAdd(CartAdd requestObject, ServiceCallback<CartAddResponse> serviceCallback) {
+    public void cartAdd(CartAdd requestObject, XMLServiceCallback<CartAddResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, CartAddResponse.class);
@@ -97,7 +97,7 @@ public class AWSECommerceServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void cartModify(CartModify requestObject, ServiceCallback<CartModifyResponse> serviceCallback) {
+    public void cartModify(CartModify requestObject, XMLServiceCallback<CartModifyResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, CartModifyResponse.class);
@@ -106,7 +106,7 @@ public class AWSECommerceServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void cartClear(CartClear requestObject, ServiceCallback<CartClearResponse> serviceCallback) {
+    public void cartClear(CartClear requestObject, XMLServiceCallback<CartClearResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, CartClearResponse.class);

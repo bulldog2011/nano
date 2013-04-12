@@ -3,7 +3,7 @@
 package com.ebay.finding.api.client;
 
 
-import com.leansoft.nano.ws.ServiceCallback;
+import com.leansoft.nano.ws.XMLServiceCallback;
 import com.leansoft.nano.ws.NanoXMLClient;
 import com.ebay.finding.api.GetHistogramsResponse;
 import com.ebay.finding.api.GetSearchKeywordsRecommendationResponse;
@@ -38,7 +38,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void getSearchKeywordsRecommendation(GetSearchKeywordsRecommendationRequest requestObject, ServiceCallback<GetSearchKeywordsRecommendationResponse> serviceCallback) {
+    public void getSearchKeywordsRecommendation(GetSearchKeywordsRecommendationRequest requestObject, XMLServiceCallback<GetSearchKeywordsRecommendationResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, GetSearchKeywordsRecommendationResponse.class);
@@ -47,7 +47,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findItemsByKeywords(FindItemsByKeywordsRequest requestObject, ServiceCallback<FindItemsByKeywordsResponse> serviceCallback) {
+    public void findItemsByKeywords(FindItemsByKeywordsRequest requestObject, XMLServiceCallback<FindItemsByKeywordsResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, FindItemsByKeywordsResponse.class);
@@ -56,7 +56,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findItemsByCategory(FindItemsByCategoryRequest requestObject, ServiceCallback<FindItemsByCategoryResponse> serviceCallback) {
+    public void findItemsByCategory(FindItemsByCategoryRequest requestObject, XMLServiceCallback<FindItemsByCategoryResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, FindItemsByCategoryResponse.class);
@@ -65,7 +65,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findItemsAdvanced(FindItemsAdvancedRequest requestObject, ServiceCallback<FindItemsAdvancedResponse> serviceCallback) {
+    public void findItemsAdvanced(FindItemsAdvancedRequest requestObject, XMLServiceCallback<FindItemsAdvancedResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, FindItemsAdvancedResponse.class);
@@ -74,7 +74,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findItemsByProduct(FindItemsByProductRequest requestObject, ServiceCallback<FindItemsByProductResponse> serviceCallback) {
+    public void findItemsByProduct(FindItemsByProductRequest requestObject, XMLServiceCallback<FindItemsByProductResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, FindItemsByProductResponse.class);
@@ -83,7 +83,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findItemsIneBayStores(FindItemsIneBayStoresRequest requestObject, ServiceCallback<FindItemsIneBayStoresResponse> serviceCallback) {
+    public void findItemsIneBayStores(FindItemsIneBayStoresRequest requestObject, XMLServiceCallback<FindItemsIneBayStoresResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, FindItemsIneBayStoresResponse.class);
@@ -92,7 +92,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findItemsByImage(FindItemsByImageRequest requestObject, ServiceCallback<FindItemsByImageResponse> serviceCallback) {
+    public void findItemsByImage(FindItemsByImageRequest requestObject, XMLServiceCallback<FindItemsByImageResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, FindItemsByImageResponse.class);
@@ -101,7 +101,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void getHistograms(GetHistogramsRequest requestObject, ServiceCallback<GetHistogramsResponse> serviceCallback) {
+    public void getHistograms(GetHistogramsRequest requestObject, XMLServiceCallback<GetHistogramsResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, GetHistogramsResponse.class);
@@ -110,7 +110,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findCompletedItems(FindCompletedItemsRequest requestObject, ServiceCallback<FindCompletedItemsResponse> serviceCallback) {
+    public void findCompletedItems(FindCompletedItemsRequest requestObject, XMLServiceCallback<FindCompletedItemsResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, FindCompletedItemsResponse.class);
@@ -119,7 +119,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void getVersion(GetVersionRequest requestObject, ServiceCallback<GetVersionResponse> serviceCallback) {
+    public void getVersion(GetVersionRequest requestObject, XMLServiceCallback<GetVersionResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, GetVersionResponse.class);
@@ -128,7 +128,7 @@ public class FindingServicePortType_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findItemsForFavoriteSearch(FindItemsForFavoriteSearchRequest requestObject, ServiceCallback<FindItemsForFavoriteSearchResponse> serviceCallback) {
+    public void findItemsForFavoriteSearch(FindItemsForFavoriteSearchRequest requestObject, XMLServiceCallback<FindItemsForFavoriteSearchResponse> serviceCallback) {
        
         
         super.invoke(requestObject, serviceCallback, FindItemsForFavoriteSearchResponse.class);

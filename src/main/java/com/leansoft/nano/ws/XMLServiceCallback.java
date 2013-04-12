@@ -1,6 +1,6 @@
 package com.leansoft.nano.ws;
 
-public interface ServiceCallback<R> {
+public interface XMLServiceCallback<R> {
 	
 	public void onSuccess(R responseObject);
 	

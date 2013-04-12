@@ -5,7 +5,7 @@ import com.ebay.util.eBayUtil;
 import com.github.droidfu.widgets.WebImageView;
 import com.leansoft.nano.custom.types.Duration;
 import com.leansoft.nano.log.ALog;
-import com.leansoft.nano.ws.ServiceCallback;
+import com.leansoft.nano.ws.XMLServiceCallback;
 
 import com.ebay.shopping.api.AckCodeType;
 import com.ebay.shopping.api.BuyerPaymentMethodCodeType;
@@ -56,7 +56,7 @@ public class DetailActivity extends Activity {
 		ShoppingInterface_XMLClient client = ShoppingServiceClient.getSharedClient();
 		client.setDebug(true);
 		
-		client.getSingleItem(request, new ServiceCallback<GetSingleItemResponseType>() {
+		client.getSingleItem(request, new XMLServiceCallback<GetSingleItemResponseType>() {
 
 			@Override
 			public void onSuccess(GetSingleItemResponseType responseObject) {

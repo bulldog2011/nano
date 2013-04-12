@@ -28,13 +28,13 @@ public class XMLHttpResponseHandler extends AsyncHttpResponseHandler {
     protected static final int SUCCESS_RESPONSE_HANDLING_MESSAGE = 100;
 	
 	@SuppressWarnings("rawtypes")
-	private ServiceCallback callback;
+	private XMLServiceCallback callback;
 	private Class<?> bindClazz;
 	private String charset;
 	private boolean debug;
 	
 	@SuppressWarnings("rawtypes")
-	public XMLHttpResponseHandler(ServiceCallback callback, Class<?> bindClazz) {
+	public XMLHttpResponseHandler(XMLServiceCallback callback, Class<?> bindClazz) {
 		super();
 		this.callback = callback;
 		this.bindClazz = bindClazz;

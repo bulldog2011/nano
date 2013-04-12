@@ -1,7 +1,7 @@
 package com.leansoft.nano.sample;
 
 import com.ebay.service.finding.ShoppingServiceClient;
-import com.leansoft.nano.ws.ServiceCallback;
+import com.leansoft.nano.ws.XMLServiceCallback;
 
 import ebay.apis.eblbasecomponents.AckCodeType;
 import ebay.apis.eblbasecomponents.ErrorType;
@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
 				// only need one item for demo
 				request.maxEntries = 1;
 				
-				client.findPopularItems(request, new ServiceCallback<FindPopularItemsResponseType>() {
+				client.findPopularItems(request, new XMLServiceCallback<FindPopularItemsResponseType>() {
 
 					@Override
 					public void onSuccess(

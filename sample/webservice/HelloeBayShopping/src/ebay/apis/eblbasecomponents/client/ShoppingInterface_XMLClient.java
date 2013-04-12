@@ -3,7 +3,7 @@
 package ebay.apis.eblbasecomponents.client;
 
 
-import com.leansoft.nano.ws.ServiceCallback;
+import com.leansoft.nano.ws.XMLServiceCallback;
 import com.leansoft.nano.ws.NanoXMLClient;
 import ebay.apis.eblbasecomponents.GetSingleItemResponseType;
 import ebay.apis.eblbasecomponents.GetShippingCostsResponseType;
@@ -40,7 +40,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findHalfProducts(FindHalfProductsRequestType requestObject, ServiceCallback<FindHalfProductsResponseType> serviceCallback) {
+    public void findHalfProducts(FindHalfProductsRequestType requestObject, XMLServiceCallback<FindHalfProductsResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "FindHalfProducts");
         
@@ -50,7 +50,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findPopularItems(FindPopularItemsRequestType requestObject, ServiceCallback<FindPopularItemsResponseType> serviceCallback) {
+    public void findPopularItems(FindPopularItemsRequestType requestObject, XMLServiceCallback<FindPopularItemsResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "FindPopularItems");
         
@@ -60,7 +60,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findPopularSearches(FindPopularSearchesRequestType requestObject, ServiceCallback<FindPopularSearchesResponseType> serviceCallback) {
+    public void findPopularSearches(FindPopularSearchesRequestType requestObject, XMLServiceCallback<FindPopularSearchesResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "FindPopularSearches");
         
@@ -70,7 +70,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findProducts(FindProductsRequestType requestObject, ServiceCallback<FindProductsResponseType> serviceCallback) {
+    public void findProducts(FindProductsRequestType requestObject, XMLServiceCallback<FindProductsResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "FindProducts");
         
@@ -80,7 +80,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void findReviewsAndGuides(FindReviewsAndGuidesRequestType requestObject, ServiceCallback<FindReviewsAndGuidesResponseType> serviceCallback) {
+    public void findReviewsAndGuides(FindReviewsAndGuidesRequestType requestObject, XMLServiceCallback<FindReviewsAndGuidesResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "FindReviewsAndGuides");
         
@@ -90,7 +90,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void getCategoryInfo(GetCategoryInfoRequestType requestObject, ServiceCallback<GetCategoryInfoResponseType> serviceCallback) {
+    public void getCategoryInfo(GetCategoryInfoRequestType requestObject, XMLServiceCallback<GetCategoryInfoResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "GetCategoryInfo");
         
@@ -100,7 +100,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void getItemStatus(GetItemStatusRequestType requestObject, ServiceCallback<GetItemStatusResponseType> serviceCallback) {
+    public void getItemStatus(GetItemStatusRequestType requestObject, XMLServiceCallback<GetItemStatusResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "GetItemStatus");
         
@@ -110,7 +110,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void getMultipleItems(GetMultipleItemsRequestType requestObject, ServiceCallback<GetMultipleItemsResponseType> serviceCallback) {
+    public void getMultipleItems(GetMultipleItemsRequestType requestObject, XMLServiceCallback<GetMultipleItemsResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "GetMultipleItems");
         
@@ -120,7 +120,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void getShippingCosts(GetShippingCostsRequestType requestObject, ServiceCallback<GetShippingCostsResponseType> serviceCallback) {
+    public void getShippingCosts(GetShippingCostsRequestType requestObject, XMLServiceCallback<GetShippingCostsResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "GetShippingCosts");
         
@@ -130,7 +130,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void getSingleItem(GetSingleItemRequestType requestObject, ServiceCallback<GetSingleItemResponseType> serviceCallback) {
+    public void getSingleItem(GetSingleItemRequestType requestObject, XMLServiceCallback<GetSingleItemResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "GetSingleItem");
         
@@ -140,7 +140,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void getUserProfile(GetUserProfileRequestType requestObject, ServiceCallback<GetUserProfileResponseType> serviceCallback) {
+    public void getUserProfile(GetUserProfileRequestType requestObject, XMLServiceCallback<GetUserProfileResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "GetUserProfile");
         
@@ -150,7 +150,7 @@ public class ShoppingInterface_XMLClient extends NanoXMLClient {
     /**
      public method
     */
-    public void geteBayTime(GeteBayTimeRequestType requestObject, ServiceCallback<GeteBayTimeResponseType> serviceCallback) {
+    public void geteBayTime(GeteBayTimeRequestType requestObject, XMLServiceCallback<GeteBayTimeResponseType> serviceCallback) {
        
         super.getAsyncHttpClient().addHeader("X-EBAY-API-CALL-NAME", "GeteBayTime");
         
