@@ -12,7 +12,7 @@ A light Web Service client framework targeting Android platform
 4. Built on popular and mature [loopj async http client](https://github.com/loopj/android-async-http) library for Android.
 5. Has been verified with industrial grade Web Service like Amazon ECommerce Web Serivce and eBay Finding/Shopping/Trading Web Service. 
 6. Support asynchronous service invocation, flexible HTTP/SOAP header setting, timeout setting, encoding setting, logging, etc.
-7. Light-weight, the library jar is less than 100K, no external dependencies on Android platform.
+7. Light-weight, the library jar is less than 150K, no external dependencies on Android platform.
 8. Besides Web Service, can also be used as a standalone XML and JSON binding framework.
 
 
