@@ -1,30 +1,35 @@
-Nano
-========
+##_DISCLAIMER_
+#### This library is still under construction. Beta testers are more than welcome.
 
-A super light xml and json binding framework supporting both Java and Android platform.
+# Nano
 
-###Feature Highlight
-1. ***Light-Weight*** : the library jar is less than 70K, no external dependencies on Android platform.
-2. ***Fast*** : performance comparable to Android native xml parser like SAX parser and XmlPull parser, see benchmark [here](http://bulldog2011.github.com/blog/2013/02/08/nano-benchmark-on-android/).
-3. ***Memory-efficient*** : memory usage is minimized by leverging streaming parsing technology.
-4. ***Annotation Driven*** : No custom serialization code is needed, just add a few light annotations to make the class bindable.
-5. ***Support both XML and JSON*** : object instance can be serialized to or deserialized from either XML or JSON.
-6. ***Schema Compiler Provided*** : [compiler tool](https://github.com/bulldog2011/mxjc) to auto generate bindable class from Xml schema or WSDL. 
+A light Web Service client framework targeting Android platform
+
+##Feature Highlight
+1. Support WSDL driven development, [code generator](https://github.com/bulldog2011/mwsc) tool is provided to auto-genearte strongly typed proxy from WSDL. 
+2. Support SOAP 1.1/1.2 and XML based web service. 
+3. Support automatic SOAP/XML to Java object binding, performance is comparable to Android native XML parser.
+4. Built on popular and mature [loopj async http client](https://github.com/loopj/android-async-http) library for Android.
+5. Has been verified with industrial grade Web Service like Amazon ECommerce Web Serivce and eBay Finding/Shopping/Trading Web Service. 
+6. Support asynchronous service invocation, flexible HTTP/SOAP header setting, timeout setting, encoding setting, logging, etc.
+7. Light-weight, the library jar is less than 100K, no external dependencies on Android platform.
+8. Besides Web Service, can also be used as a standalone XML and JSON binding framework.
 
 
-###How to Use
+##How to Use
+You have a few options:
+
 1. Direct jar reference  
-Download latest [0.6.3 release](https://github.com/bulldog2011/bulldog-repo/tree/master/repo/releases/com/leansoft/nano/0.6.3)  
-Note:  
-    * On normal Java platform, Nano depends on KXml and org.json libraries, you can extract these libraries in the nano release zip package.  
-    * On Android plaform, Nano does ***not*** depend on external Kxml and org.json libraries, since these libraries have already been included in Android.   
+Download latest [0.7.0 release](https://github.com/bulldog2011/bulldog-repo/tree/master/repo/releases/com/leansoft/nano/0.7.0)  
 
-2. Maven refereence
+2. Include the whole source of Nano into your project
+
+3. Maven reference
 
 		<dependency>
 		  <groupId>com.leansoft</groupId>
 		  <artifactId>nano</artifactId>
-		  <version>0.6.3</version>
+		  <version>0.7.0</version>
 		</dependency>
 		
 		<repository>
@@ -32,7 +37,69 @@ Note:
 		  <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
 		</repository>
 
-###Docs
+##WSDL Driven Development Flow
+1. Generate Java proxy from WSDL
+2. Create new Android project, add Nano runtime and generated proxy into your project
+3. Implement appliction logic and UI, call proxy to invoke web service as needed.
+
+##Example Usage
+After the service proxy is generated from wsdl, service invocation through Nano runtime is extremely simple:
+
+``` java
+
+			// Get shared client
+			NumberConversionSoapType_SOAPClient client = NumberConversionServiceClient.getSharedClient();
+			client.setDebug(true); // enable soap message logging
+			
+			// build request
+			NumberToWords request = new NumberToWords();
+			try {
+				String number = ((EditText)findViewById(R.id.numerInputText)).getText().toString();
+				request.ubiNum = new BigInteger(number);
+			} catch (NumberFormatException ex) {
+				Toast.makeText(MainActivity.this, "Invalid integer number", Toast.LENGTH_LONG).show();
+				return;
+			}
+			
+			client.numberToWords(request, new SOAPServiceCallback<NumberToWordsResponse>() {
+
+				@Override
+				public void onSuccess(NumberToWordsResponse responseObject) { // success
+					Toast.makeText(MainActivity.this, responseObject.numberToWordsResult, Toast.LENGTH_LONG).show();
+				}
+
+				@Override
+				public void onFailure(Throwable error, String errorMessage) { // http or parsing error
+					Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+				}
+
+				@Override
+				public void onSOAPFault(Object soapFault) { // soap fault
+					Fault fault = (Fault)soapFault;
+					Toast.makeText(MainActivity.this, fault.faultstring, Toast.LENGTH_LONG).show();
+				}
+				
+			});
+
+```
+
+## Web Service Sample List
+All samples are in the [sample](https://github.com/bulldog2011/nano/tree/master/sample/webservices) folder, following samples are included:
+
+* NumberConverter - sample using [Number Conversion Service](http://www.dataaccess.com/webservicesserver/numberconversion.wso) SOAP web service from [Data Access Worldwide](http://www.dataaccess.com/).
+* USZipValidator - sample using [US Zip Validation Service](http://www.webservicemart.com/uszip.asmx) SOAP Web service from [WebServiceMart](http://www.webservicemart.com/)
+* HelloAmazonProductAdvertising - Hello world like sample using [Amazon Product Advertising API](https://affiliate-program.amazon.com/gp/advertising/api/detail/main.html) SOAP call.
+* HelloeBayFinding - Hello world like sample using [eBay Finding API](https://www.x.com/developers/ebay/products/finding-api) SOAP call.
+* HelloeBayShopping - Hello world like sample using [eBay Shopping API](https://www.x.com/developers/ebay/products/shopping-api) XML call.
+* AmazonBookFinder - Sample Amazon Book search and purchase app using Amazon Product Advertising API.
+* eBayDemoApp - Sample eBay Search App using both eBay Finding API and eBay Shopping API.
+
+
+
+##Docs for Web Service
+// TO BE ADDED
+
+##Docs for Binding
 1. [Nano Hello World](http://bulldog2011.github.com/blog/2013/02/05/nano-hello-world/)
 2. [Nano List Handling](http://bulldog2011.github.com/blog/2013/02/05/nano-list-tutorial/)
 3. [Nano Compare to JAXB](http://bulldog2011.github.com/blog/2013/02/06/nano-compare-to-jaxb/)
@@ -44,15 +111,113 @@ Note:
 9. [Schema Driven Web Serivce Client Development on Android, Part 2 : eBay Search App](http://bulldog2011.github.com/blog/2013/02/19/schema-driven-on-android-part-2-ebay-search/)
 
 
-###Compatibility
-1. On Android, Nano has been verified with Android 1.5(API 3), 1.6(API 4), 2.1(API 7) and 2.2(API 8), Nano should work without problem on Android 2.3 and above although this hasn't been verified formally.
-2. On Normal Java, Nano has been verified with Oracle/Sun JDK 1.6.
+##Mapping between XML Schema Types and Java Types 
+
+<table>
+<tr><th>XML Schema Data Types</th><th>Objective-C Data Types</th></tr>
+<tr>
+    <td>xsd:base64Binary</td>
+    <td>byte[]</td>
+</tr>
+<tr>
+    <td>xsd:boolean</td>
+    <td>boolean</td>
+</tr>
+<tr>
+    <td>xsd:byte</td>
+    <td>byte</td>
+</tr>
+<tr>
+    <td>xsd:date</td>
+    <td>java.util.Date</td>
+</tr>
+<tr>
+    <td>xsd:dateTime</td>
+    <td>java.util.Date</td>
+</tr>
+<tr>
+    <td>xsd:decimal</td>
+    <td>java.math.BigDecimal</td>
+</tr>
+<tr>
+    <td>xsd:double</td>
+    <td>double</td>
+</tr>
+<tr>
+    <td>xsd:duration</td>
+    <td>com.leansoft.nano.custom.types.Duration</td>
+</tr>
+<tr>
+    <td>xsd:float</td>
+    <td>float</td>
+</tr>
+<tr>
+    <td>xsd:g</td>
+    <td>java.util.Date</td>
+</tr>
+<tr>
+    <td>xsd:hexBinary</td>
+    <td>byte[]</td>
+</tr>
+<tr>
+    <td>xsd:int</td>
+    <td>int</td>
+</tr>
+<tr>
+    <td>xsd:integer</td>
+    <td>java.lang.BigInteger</td>
+</tr>
+<tr>
+    <td>xsd:long</td>
+    <td>long</td>
+</tr>
+<tr>
+    <td>xsd:NOTATION</td>
+    <td>javax.xml.namespace.QName</td>
+</tr>
+<tr>
+    <td>xsd:Qname</td>
+    <td>javax.xml.namespace.QName</td>
+</tr>
+<tr>
+    <td>xsd:short</td>
+    <td>short</td>
+</tr>
+<tr>
+    <td>xsd:string</td>
+    <td>java.lang.String</td>
+</tr>
+<tr>
+    <td>xsd:time</td>
+    <td>java.util.Date</td>
+</tr>
+<tr>
+    <td>xsd:unsignedByte</td>
+    <td>short</td>
+</tr>
+<tr>
+    <td>xsd:unsignedInt</td>
+    <td>long</td>
+</tr>
+<tr>
+    <td>xsd:unsignedShort</td>
+    <td>int</td>
+</tr>
+</table>
+
+## Version History
+
+#### 0.7.0 - April 14, 2013 [repository](https://github.com/bulldog2011/bulldog-repo/tree/master/repo/releases/com/leansoft/nano/0.7.0)
+  * Initial release supporting SOAP/XML Web Service.
 
 
-###Current Limitation
-1. For Java collection types, only java.util.List is supported, and at most one type parameter is allowed, java.util.Set and java.util.Map are not supported.
-2. Java array is not supported, except byte[] which will be serialized to base64 string.
-2. Not all Java primitives or frequently used types are supported, for support list, see [here](https://github.com/bulldog2011/nano/tree/master/src/main/java/com/leansoft/nano/transform)
+##Compatibility
+Nano has been verified with Android 2.2(API 8) and 2.3.6(API 10), Nano should work without problem on Android 1.8 and above although this hasn't been verified formally.
+
+
+##Current Limitation
+1. Only Document/Literal style Web Service is support, RPC style Web Serivice is not supported.
+2. SOAP attachment is not supported
 
 
 ###Copyright and License
