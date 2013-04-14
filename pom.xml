@@ -3,7 +3,7 @@
 
   <groupId>com.leansoft</groupId>
   <artifactId>nano</artifactId>
-  <version>0.7.0-SNAPSHOT</version>
+  <version>0.7.0</version>
   <packaging>jar</packaging>
 
   <name>nano</name>
@@ -14,6 +14,7 @@
         <connection>scm:git:git@github.com:bulldog2011/nano.git</connection>
         <developerConnection>scm:git:git@github.com:bulldog2011/nano.git</developerConnection>
         <url>https://github.com/bulldog2011/nano</url>
+    <tag>nano-0.7.0</tag>
   </scm>
     <licenses>
         <license>
