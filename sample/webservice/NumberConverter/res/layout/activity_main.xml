@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <EditText
+        android:id="@+id/numerInputText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Input a number" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/numToDollarsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/numToWordsButton"
+        android:layout_below="@+id/numerInputText"
+        android:layout_marginTop="18dp"
+        android:text="Number To Dollars" />
+
+    <Button
+        android:id="@+id/numToWordsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numToDollarsButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="Number To Words" />
+
+</RelativeLayout>

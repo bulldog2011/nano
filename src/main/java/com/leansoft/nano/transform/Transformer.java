@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.xml.namespace.QName;
+
 import com.leansoft.nano.custom.types.Duration;
 
 /**
@@ -79,10 +81,9 @@ public class Transformer {
 	}
 	
 	private static Transformable<?> getTransform(Class<?> type) {
-		Transformable<?> converter = null;
 
 		if (type.isPrimitive()) {
-			converter = getPrimitiveTransform(type);
+			return getPrimitiveTransform(type);
 		}
 		
 		if (type.isArray()) {
@@ -92,31 +93,34 @@ public class Transformer {
 		}
 
 		if (type.isEnum()) {
-			converter = new EnumTransform(type);
+			return new EnumTransform(type);
 		}
 
 		String name = type.getName();
 
 		if (name.startsWith("java.lang")) {
-			converter = getLanguageTransform(type);
+			return getLanguageTransform(type);
 		}
 		if (name.startsWith("java.util")) {
-			converter = getUtilTransform(type);
+			return getUtilTransform(type);
 		}
 		if (name.startsWith("java.math")) {
-			converter = getMathTransform(type);
+			return getMathTransform(type);
 		}
 		if (name.startsWith("java.net")) {
-			converter = new UrlTransform();
+			return new UrlTransform();
 		}
 		if (name.startsWith("java.sql")) {
-			converter = new TimeTransform();
+			return new TimeTransform();
 		}
 		if (name.startsWith("com.leansoft.nano.custom.types")) {
-			converter = getCustomTransform(type);
+			return getCustomTransform(type);
+		}
+		if (type == QName.class) {
+			return new QNameTransform();
 		}
 
-		return converter;
+		return null;
 	}
 	
 	// Get nano framework custom type Transformable

@@ -47,6 +47,9 @@ public class Format {
 	 */
 	public Format(boolean indent, String encoding) {
 		this.encoding = encoding;
+		if (encoding == null) {
+			this.encoding = DEFAULT_ENCODING;
+		}
 		this.indent = indent;
 	}
 	

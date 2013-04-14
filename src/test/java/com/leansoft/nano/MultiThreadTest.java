@@ -73,6 +73,7 @@ public class MultiThreadTest extends TestCase {
 				}
 				queue.offer(Status.SUCCESS);
 			} catch (Exception e) {
+				e.printStackTrace();
 				queue.offer(Status.ERROR);
 			}
 		}

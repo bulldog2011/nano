@@ -24,8 +24,8 @@
   </files>
   <fileSets>
         <fileSet>
-            <directory>test</directory>
-            <outputDirectory>/test</outputDirectory>
+            <directory>sample</directory>
+            <outputDirectory>/sample</outputDirectory>
         </fileSet>
         <fileSet>
             <directory>performance</directory>

@@ -2,6 +2,7 @@ package com.leansoft.nano;
 
 import com.leansoft.nano.impl.JsonReader;
 import com.leansoft.nano.impl.JsonWriter;
+import com.leansoft.nano.impl.XmlDOMReader;
 import com.leansoft.nano.impl.XmlPullWriter;
 import com.leansoft.nano.impl.XmlSAXReader;
 
@@ -15,13 +16,22 @@ import com.leansoft.nano.impl.XmlSAXReader;
 public class NanoFactory {
 	
 	/**
+	 * Reader type setting, current supports DOM(Default) and SAX.
+	 */
+	public static ReaderType readerType = ReaderType.DOM;
+	
+	/**
 	 * Get IReader instance with default format(encoding is utf-8),
 	 * the IReader instance can be used to read XML into Java POJO.
 	 * 
 	 * @return an instance of IReader implementation
 	 */
 	public static IReader getXMLReader() {
-		return new XmlSAXReader();
+		if (readerType == ReaderType.SAX) {
+			return new XmlSAXReader();
+		} else {
+			return new XmlDOMReader();
+		}
 	}
 	
 	/**
@@ -32,7 +42,11 @@ public class NanoFactory {
 	 * @return an instance of IReader implementation
 	 */
 	public static IReader getXMLReader(Format format) {
-		return new XmlSAXReader(format);
+		if (readerType == ReaderType.SAX) {
+			return new XmlSAXReader(format);
+		} else {
+			return new XmlDOMReader(format);
+		}
 	}
 	
 	/**
@@ -95,5 +109,10 @@ public class NanoFactory {
 	 */
 	public static IWriter getJSONWriter(Format format) {
 		return new JsonWriter(format);
+	}
+	
+	public enum ReaderType {
+		SAX,
+		DOM;
 	}
 }

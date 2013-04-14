@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <item type="id" name="gallery_icon">false</item>
+    <item type="id" name="title">false</item>
+    <item type="id" name="price">false</item>
+    <item type="id" name="bids">false</item>
+    <item type="id" name="timeleft">false</item>
+</resources>

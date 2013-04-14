@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.leansoft.nano.util.ThreadLocalDateFormatter;
+import com.leansoft.nano.transform.DateTransform.ThreadLocalDateFormatter;
 
 import junit.framework.TestCase;
 

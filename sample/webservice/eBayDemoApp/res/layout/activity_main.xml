@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<TableLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:stretchColumns="0">
+		<TableRow android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+			<EditText android:id="@+id/edit_input" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:hint="Search eBay"
+				android:singleLine="true" />
+			<Button android:id="@+id/btn_search" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_search" />
+		</TableRow>
+	</TableLayout>
+	<ListView android:id="@+id/android:list" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
+	<TextView android:id="@+id/android:empty"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:text="@string/main_no_items" />
+</LinearLayout>	
+    
+    

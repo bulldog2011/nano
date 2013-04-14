@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<color name="black">#ff000000</color>
+	<color name="white">#ffffffff</color>
+	<color name="gray">#ffb0b0b0</color>
+	<color name="red">#ffff0000</color>
+	<color name="darkgreen">#ff008800</color>
+	<color name="search_box_text">#ff2f429f</color>
+	<color name="search_options_bg">#ffd0d0d0</color>
+	<color name="search_tabs">#ff935912</color>
+	<color name="search_status_bar_bg">#ffff8c00</color>
+	<color name="search_status_labels">#ff5f66ee</color>
+	<color name="search_status_values">#ff000000</color>
+	<color name="viewitem_bg">#ffffffff</color>
+	<color name="viewitem_title_bar">#ffccccff</color>
+	<color name="viewitem_colored_separator">#ff5f66ee</color>
+	<color name="viewitem_ended_title_bar">#ffffcccc</color>
+	<color name="viewitem_ended_colored_separator">#ffff0000</color>
+	<color name="viewitem_title_text">#ff000000</color>
+	<color name="viewitem_muted_colored_separator">#305f66ee</color>
+	<color name="viewitem_labels_text">#ff5f66ee</color>
+	<color name="viewitem_values_text">#ff000000</color>
+	<color name="viewitem_description_tabs">#ff2a2f68</color>
+	<color name="viewitem_status_green">#ff008800</color>
+	<color name="viewitem_status_yellow">#ffdeaf20</color>
+	<color name="viewitem_status_red">#ffff0000</color>
+	<color name="viewitem_status_blue">#ff0000ff</color>
+	<color name="gallery_bg">#ff000000</color>
+	<color name="price_check_bg">#fff8f8f8</color>
+	<color name="price_check_labels">#ff5f66ee</color>
+	<color name="price_check_values">#ff0000ff</color>
+	<color name="current_price_text">#ff0000ff</color>
+	<color name="shipping_cost_text">#ff888888</color>
+	<color name="free_shipping">#ffff8c00</color>
+	<color name="transparent">#00000000</color>
+</resources>

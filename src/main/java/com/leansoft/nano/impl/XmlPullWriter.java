@@ -9,12 +9,17 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
 import com.leansoft.nano.Format;
 import com.leansoft.nano.IWriter;
+import com.leansoft.nano.annotation.schema.AnyElementSchema;
 import com.leansoft.nano.annotation.schema.AttributeSchema;
 import com.leansoft.nano.annotation.schema.ElementSchema;
 import com.leansoft.nano.annotation.schema.RootElementSchema;
@@ -32,11 +37,12 @@ import com.leansoft.nano.util.StringUtil;
  */
 public class XmlPullWriter implements IWriter {
 	
-	private static final String IDENT_PROPERTY = "http://xmlpull.org/v1/doc/features.html#indent-output";
+	protected static final String IDENT_PROPERTY = "http://xmlpull.org/v1/doc/features.html#indent-output";
+	protected static final String PROPERTY_SERIALIZER_INDENTATION = "http://xmlpull.org/v1/doc/properties.html#serializer-indentation";
 
-	private Format format;
+	protected Format format;
 
-	private XmlPullParserFactory factory;
+	protected XmlPullParserFactory factory;
 
 	public XmlPullWriter() {
 		this(new Format());
@@ -61,7 +67,11 @@ public class XmlPullWriter implements IWriter {
 	
 			XmlSerializer serializer = factory.newSerializer();
 			if (format.isIndent()) {
-				serializer.setFeature(IDENT_PROPERTY, true);
+				try {
+					serializer.setFeature(IDENT_PROPERTY, true);
+				} catch (IllegalStateException ise) {
+					serializer.setProperty(PROPERTY_SERIALIZER_INDENTATION, "    ");
+				}
 			}
 			serializer.setOutput(out);
 			serializer.startDocument(format.getEncoding(), null);
@@ -89,7 +99,7 @@ public class XmlPullWriter implements IWriter {
 		}
 	}
 	
-	private void validate(Object source, Writer out) {
+	protected void validate(Object source, Writer out) {
 		if (source == null) {
 			throw new IllegalArgumentException("Can not write null instance!");
 		}
@@ -118,7 +128,7 @@ public class XmlPullWriter implements IWriter {
 		return out.toString();
 	}
 	
-	private void writeObject(XmlSerializer serializer, Object source, String namespace) throws Exception {
+	protected void writeObject(XmlSerializer serializer, Object source, String namespace) throws Exception {
 		MappingSchema ms = MappingSchema.fromObject(source);
 		
 		// write xml attributes first
@@ -127,9 +137,79 @@ public class XmlPullWriter implements IWriter {
 		// write xml value if any
 		writeValue(serializer, source, ms);
 		
-		// write xml elements last
+		// write xml elements
 		writeElements(serializer, source, ms, namespace);
 
+		// write any elements if has
+		writeAnyElements(serializer, source, ms);
+	}
+	
+	private void writeAnyElements(XmlSerializer serializer, Object source, MappingSchema ms) throws Exception {
+		AnyElementSchema anyElementSchema = ms.getAnyElementSchema();
+		if (anyElementSchema != null) {
+			Field field = anyElementSchema.getField();
+			List<?> list = (List<?>) field.get(source);
+			if (list != null) {
+				for(Object entry : list) {
+					if (entry != null) {
+						if (entry instanceof Element) {
+							this.writeDomElement(serializer, (Element)entry);
+						} else {
+							this.writeAnyObject(serializer, entry);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void writeDomElement(XmlSerializer serializer, Element element) throws Exception {
+		if (element == null) return; // be cautious
+		
+		if (!StringUtil.isEmpty(element.getLocalName())) {
+			String namespace = element.getNamespaceURI();
+			
+			serializer.startTag(namespace, element.getLocalName());
+			
+			NamedNodeMap nmap =  element.getAttributes(); // write attributes
+			for(int i = 0; i < nmap.getLength(); i++) {
+				if (nmap.item(i).getNodeType() == Node.ATTRIBUTE_NODE) {
+					String name = nmap.item(i).getNodeName();
+					String value = nmap.item(i).getNodeValue();
+					serializer.attribute(null, name, value);
+				}
+			}
+			
+			if (element.hasChildNodes()) { // write children elements
+				NodeList children = element.getChildNodes();
+				for(int i = 0; i < children.getLength(); i++) {
+					Node child = children.item(i);
+					if (child.getNodeType() == Node.ELEMENT_NODE) {
+						writeDomElement(serializer, (Element)child);
+					} else if (child.getNodeType() == Node.TEXT_NODE) { // write element text
+						String value = child.getNodeValue();
+						if (!StringUtil.isEmpty(value)) { 
+							serializer.text(value);
+						}
+					}
+				}
+			}
+			
+			serializer.endTag(namespace, element.getLocalName());
+		}
+	}
+	
+	private void writeAnyObject(XmlSerializer serializer, Object source) throws Exception {
+		if (source  == null) return; // be cautious
+		
+		MappingSchema ms = MappingSchema.fromObject(source);
+		RootElementSchema res = ms.getRootElementSchema();
+		String namespace = res.getNamespace();
+		String xmlName = res.getXmlName();
+		
+		serializer.startTag(namespace, xmlName);
+		this.writeObject(serializer, source, namespace);
+		serializer.endTag(namespace, xmlName);
 	}
 	
 	private void writeAttributes(XmlSerializer serializer, Object source, MappingSchema ms) throws Exception {

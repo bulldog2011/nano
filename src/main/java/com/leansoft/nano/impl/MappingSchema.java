@@ -1,15 +1,20 @@
 package com.leansoft.nano.impl;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.leansoft.nano.annotation.AnyElement;
 import com.leansoft.nano.annotation.Attribute;
 import com.leansoft.nano.annotation.Default;
 import com.leansoft.nano.annotation.Element;
+import com.leansoft.nano.annotation.Order;
 import com.leansoft.nano.annotation.RootElement;
 import com.leansoft.nano.annotation.Value;
+import com.leansoft.nano.annotation.schema.AnyElementSchema;
 import com.leansoft.nano.annotation.schema.AttributeSchema;
 import com.leansoft.nano.annotation.schema.ElementSchema;
 import com.leansoft.nano.annotation.schema.RootElementSchema;
@@ -36,6 +41,7 @@ class MappingSchema {
 	private Map<String, AttributeSchema> field2AttributeSchemaMapping;
 	private ValueSchema valueSchema;
 	private Map<String, AttributeSchema> xml2AttributeSchemaMapping;
+	private AnyElementSchema anyElementSchema;
 	
 	private Class<?> type;
 	private boolean isDefault;
@@ -91,8 +97,8 @@ class MappingSchema {
 	}
 	
 	private void buildXml2SchemaMapping() {
-		xml2SchemaMapping = new HashMap<String, Object>();
-		xml2AttributeSchemaMapping = new HashMap<String, AttributeSchema>();
+		xml2SchemaMapping = new LinkedHashMap<String, Object>();
+		xml2AttributeSchemaMapping = new LinkedHashMap<String, AttributeSchema>();
 		
 		for(String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
@@ -109,7 +115,7 @@ class MappingSchema {
 	}
 	
 	private void buildField2AttributeSchemaMapping() {
-		field2AttributeSchemaMapping = new HashMap<String, AttributeSchema>();
+		field2AttributeSchemaMapping = new LinkedHashMap<String, AttributeSchema>();
 		
 		for(String fieldName : field2SchemaMapping.keySet()) {
 			Object schemaObj = field2SchemaMapping.get(fieldName);
@@ -120,11 +126,33 @@ class MappingSchema {
 	}
 	
 	private Map<String, Object> scanFieldSchema(Class<?> type) throws MappingException {
-		Map<String, Object> fieldsMap = new HashMap<String, Object>();
+		Map<String, Object> fieldsMap = new LinkedHashMap<String, Object>();
 		Field[] fields = type.getDeclaredFields();
+		
+		// sort fields according to order annotaions
+		Arrays.sort(fields, new Comparator<Field>() {
+
+			@Override
+			public int compare(Field field1, Field field2) {
+				Order order1 = field1.getAnnotation(Order.class);
+				Order order2 = field2.getAnnotation(Order.class);
+				if (order1 != null && order2 != null) {
+					return order1.value() - order2.value();
+				}
+				if (order1 != null && order2 == null) {
+					return -1;
+				}
+				if (order1 == null && order2 != null) {
+					return 1;
+				}
+				return field1.getName().compareTo(field2.getName());
+			}
+			
+		});
 		
 		// used for validation
 		int valueSchemaCount = 0;
+		int anyElementSchemaCount = 0;
 		int elementSchemaCount = 0;
 		
 		for(Field field : fields) {
@@ -188,7 +216,24 @@ class MappingSchema {
 				valueSchema.setData(xmlValue.data());
 				valueSchema.setField(field);
 				
-			} else if (isDefault) { // default to Element
+			} else if (field.isAnnotationPresent(AnyElement.class)) {
+				anyElementSchemaCount++;
+				
+				if (!TypeReflector.collectionAssignable(field.getType())) {
+					throw new MappingException("Current nano framework only supports java.util.List<T> as container of any type, " +
+							"field = " + field.getName() + ", type = " + type.getName());
+				}
+				
+				Class<?> fieldType = field.getType();
+				if (!TypeReflector.isList(fieldType)) {
+					throw new MappingException("Current nano framework only supports java.util.List<T> as collection type, " +
+							"field = " + field.getName() + ", type = " + type.getName());
+				}
+				
+				anyElementSchema = new AnyElementSchema();
+				anyElementSchema.setField(field);
+				
+		    } else if (isDefault) { // default to Element
 				elementSchemaCount++;
 				
 				ElementSchema elementSchema = new ElementSchema();
@@ -207,6 +252,11 @@ class MappingSchema {
 		// more validation
 		if (valueSchemaCount > 1) {
 			throw new MappingException("Value annotation can't annotate more than one fields in same class," + 
+					" type = " + type.getName());
+		}
+		
+		if (anyElementSchemaCount > 1) {
+			throw new MappingException("AnyElement annotation can't annotate more than one fields in same class," + 
 					" type = " + type.getName());
 		}
 		
@@ -287,6 +337,10 @@ class MappingSchema {
 	
 	public ValueSchema getValueSchema() {
 		return valueSchema;
+	}
+	
+	public AnyElementSchema getAnyElementSchema() {
+		return anyElementSchema;
 	}
 	
 	public Map<String, AttributeSchema> getXml2AttributeSchemaMapping() {

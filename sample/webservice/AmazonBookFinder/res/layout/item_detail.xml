@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>	
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:orientation="vertical" >
+    
+   	<TextView android:id="@+id/detail_title"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_gravity="center" android:layout_marginTop="10dip"
+		android:textSize="20sp">
+	</TextView>
+	
+	<com.github.droidfu.widgets.WebImageView  android:id="@+id/detail_image"
+		android:layout_width="100dp" android:layout_height="120dp"
+		android:layout_gravity="center_horizontal"
+		android:visibility="invisible" />
+	
+	<TextView android:id="@+id/detail_price"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textSize="12sp">
+	</TextView>
+	<TextView android:id="@+id/detail_author"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textSize="12sp">
+	</TextView>
+	
+	<TextView android:id="@+id/detail_binding"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textSize="12sp">
+	</TextView>
+
+	<TextView android:id="@+id/detail_edition"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textSize="12sp">
+	</TextView>
+
+	<TextView android:id="@+id/detail_publisher"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textSize="12sp">
+	</TextView>
+	
+	<TextView android:id="@+id/detail_pubdate"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textSize="12sp">
+	</TextView>
+	
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" 
+	    android:paddingLeft="30dp"
+        android:paddingTop="20dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="20dp"
+	    >
+		
+	    <Button
+		    android:id="@+id/btn_add"
+		    style="?android:attr/buttonStyleSmall"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:visibility="invisible"
+		    android:text="Add to Cart" />
+	    
+	    <View android:layout_height="fill_parent"
+		    android:layout_width="10dp"/>
+	
+		<Button
+		    android:id="@+id/btn_purchase"
+		    style="?android:attr/buttonStyleSmall"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:visibility="invisible"
+		    android:text="Purchase on Amazon" />
+	    
+	</LinearLayout>
+	
+</LinearLayout>
