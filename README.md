@@ -26,6 +26,7 @@ Download latest [0.7.0 release](https://github.com/bulldog2011/bulldog-repo/tree
 
 3. Maven reference
 
+``` xml
 		<dependency>
 		  <groupId>com.leansoft</groupId>
 		  <artifactId>nano</artifactId>
@@ -36,6 +37,7 @@ Download latest [0.7.0 release](https://github.com/bulldog2011/bulldog-repo/tree
 		  <id>github.release.repo</id>
 		  <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
 		</repository>
+```
 
 After including Nano into your project, please make sure to add following user permissions in the `AndroidManifest.xml` file for network access:
 
@@ -56,39 +58,39 @@ After the service proxy is generated from wsdl, service invocation through Nano 
 
 ``` java
 
-		// Get shared client
-		NumberConversionSoapType_SOAPClient client = NumberConversionServiceClient.getSharedClient();
-		client.setDebug(true); // enable soap message logging
-		
-		// build request
-		NumberToWords request = new NumberToWords();
-		try {
-			String number = ((EditText)findViewById(R.id.numerInputText)).getText().toString();
-			request.ubiNum = new BigInteger(number);
-		} catch (NumberFormatException ex) {
-			Toast.makeText(MainActivity.this, "Invalid integer number", Toast.LENGTH_LONG).show();
-			return;
+	// Get shared client
+	NumberConversionSoapType_SOAPClient client = NumberConversionServiceClient.getSharedClient();
+	client.setDebug(true); // enable soap message logging
+	
+	// build request
+	NumberToWords request = new NumberToWords();
+	try {
+		String number = ((EditText)findViewById(R.id.numerInputText)).getText().toString();
+		request.ubiNum = new BigInteger(number);
+	} catch (NumberFormatException ex) {
+		Toast.makeText(MainActivity.this, "Invalid integer number", Toast.LENGTH_LONG).show();
+		return;
+	}
+	
+	client.numberToWords(request, new SOAPServiceCallback<NumberToWordsResponse>() {
+
+		@Override
+		public void onSuccess(NumberToWordsResponse responseObject) { // success
+			Toast.makeText(MainActivity.this, responseObject.numberToWordsResult, Toast.LENGTH_LONG).show();
+		}
+
+		@Override
+		public void onFailure(Throwable error, String errorMessage) { // http or parsing error
+			Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+		}
+
+		@Override
+		public void onSOAPFault(Object soapFault) { // soap fault
+			Fault fault = (Fault)soapFault;
+			Toast.makeText(MainActivity.this, fault.faultstring, Toast.LENGTH_LONG).show();
 		}
 		
-		client.numberToWords(request, new SOAPServiceCallback<NumberToWordsResponse>() {
-
-			@Override
-			public void onSuccess(NumberToWordsResponse responseObject) { // success
-				Toast.makeText(MainActivity.this, responseObject.numberToWordsResult, Toast.LENGTH_LONG).show();
-			}
-
-			@Override
-			public void onFailure(Throwable error, String errorMessage) { // http or parsing error
-				Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-			}
-
-			@Override
-			public void onSOAPFault(Object soapFault) { // soap fault
-				Fault fault = (Fault)soapFault;
-				Toast.makeText(MainActivity.this, fault.faultstring, Toast.LENGTH_LONG).show();
-			}
-			
-		});
+	});
 
 ```
 
@@ -221,7 +223,7 @@ All samples are in the [sample](https://github.com/bulldog2011/nano/tree/master/
 
 
 ##Compatibility
-Nano has been verified with Android 2.2(API 8) and 2.3.6(API 10), Nano should work without problem on Android 1.8 and above although this hasn't been verified formally.
+Nano has been verified with Android 2.2(API 8) and 2.3.6(API 10), Nano should work without problem on Android 2.2 and above although this hasn't been verified formally.
 
 
 ##Current Limitation
