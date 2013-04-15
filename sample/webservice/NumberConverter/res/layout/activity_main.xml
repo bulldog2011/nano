@@ -12,7 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Input a number" >
+        android:hint="Input a number"
+        android:singleLine="true">
 
         <requestFocus />
     </EditText>
