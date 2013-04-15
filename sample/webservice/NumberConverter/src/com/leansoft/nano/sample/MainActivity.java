@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// Get shared client
+				// get shared client
 				NumberConversionSoapType_SOAPClient client = NumberConversionServiceClient.getSharedClient();
 				client.setDebug(true); // enable soap message logging
 				
@@ -47,6 +47,7 @@ public class MainActivity extends Activity {
 					return;
 				}
 				
+				// make API call and register callbacks
 				client.numberToWords(request, new SOAPServiceCallback<NumberToWordsResponse>() {
 
 					@Override
@@ -77,7 +78,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// Get shared client
+				// get shared client
 				NumberConversionSoapType_SOAPClient client = NumberConversionServiceClient.getSharedClient();
 				client.setDebug(true); // enable soap message logging
 				
@@ -91,6 +92,7 @@ public class MainActivity extends Activity {
 					return;
 				}
 				
+				// make API call and register callbacks
 				client.numberToDollars(request, new SOAPServiceCallback<NumberToDollarsResponse>() {
 
 					@Override

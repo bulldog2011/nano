@@ -12,7 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="19dp"
         android:ems="10"
-        android:hint="Enter US Zip Code" >
+        android:hint="Enter US Zip Code"
+        android:singleLine="true" >
 
         <requestFocus />
     </EditText>
