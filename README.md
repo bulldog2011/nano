@@ -15,6 +15,8 @@ A light Web Service client framework targeting Android platform
 7. Light-weight, the library jar is less than 150K, no external dependencies on Android platform.
 8. Besides Web Service, can also be used as a standalone XML and JSON binding framework.
 
+## The Big Picture
+// TO BE ADDED
 
 ##How to Use
 You have a few options:
@@ -26,24 +28,23 @@ Download latest [0.7.0 release](https://github.com/bulldog2011/bulldog-repo/tree
 
 3. Maven reference
 
-		<dependency>
-		  <groupId>com.leansoft</groupId>
-		  <artifactId>nano</artifactId>
-		  <version>0.7.0</version>
-		</dependency>
-		
-		<repository>
-		  <id>github.release.repo</id>
-		  <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
-		</repository>
-
+``` xml
+	<dependency>
+	  <groupId>com.leansoft</groupId>
+	  <artifactId>nano</artifactId>
+	  <version>0.7.0</version>
+	</dependency>
+	
+	<repository>
+	  <id>github.release.repo</id>
+	  <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
+	</repository>
+```
 After including Nano into your project, please make sure to add following user permissions in the `AndroidManifest.xml` file for network access:
 
 ``` xml
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
 ```
 
 ##WSDL Driven Development Flow
