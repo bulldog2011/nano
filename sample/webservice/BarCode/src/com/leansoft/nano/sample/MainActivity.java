@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
 				// get shared client
 				BarCodeSoap_SOAPClient client = BarCodeServiceClient.getSharedClient();
-				client.setDebug(true);
+				client.setDebug(true); // enable soap message logging
 				
 				// build request
 				BarCodeData barCodeData = new BarCodeData();
@@ -71,7 +71,8 @@ public class MainActivity extends Activity {
 					@Override
 					public void onSuccess(GenerateBarCodeResponse responseObject) { // success
 						ImageView barCodeImage = (ImageView)findViewById(R.id.barCodeImage);
-						Bitmap bitmap = BitmapFactory.decodeByteArray(responseObject.generateBarCodeResult, 0, responseObject.generateBarCodeResult.length);
+						byte[] imageData = responseObject.generateBarCodeResult;
+						Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
 						barCodeImage.setImageBitmap(bitmap);
 					}
 					
