@@ -99,6 +99,7 @@ All samples are in the [sample](https://github.com/bulldog2011/nano/tree/master/
 
 * NumberConverter - sample using [Number Conversion Service](http://www.dataaccess.com/webservicesserver/numberconversion.wso) SOAP web service from [Data Access Worldwide](http://www.dataaccess.com/).
 * USZipValidator - sample using [US Zip Validation Service](http://www.webservicemart.com/uszip.asmx) SOAP Web service from [WebServiceMart](http://www.webservicemart.com/)
+* BarCode - Demo app using [BarcodeGenerator](http://www.webservicex.net/ws/WSDetails.aspx?CATID=8&WSID=76) SOAP web serivce from webserviceX.NET
 * HelloAmazonProductAdvertising - Hello world like sample using [Amazon Product Advertising API](https://affiliate-program.amazon.com/gp/advertising/api/detail/main.html) SOAP call.
 * HelloeBayFinding - Hello world like sample using [eBay Finding API](https://www.x.com/developers/ebay/products/finding-api) SOAP call.
 * HelloeBayShopping - Hello world like sample using [eBay Shopping API](https://www.x.com/developers/ebay/products/shopping-api) XML call.
