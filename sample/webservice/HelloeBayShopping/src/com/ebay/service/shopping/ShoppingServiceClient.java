@@ -1,4 +1,4 @@
-package com.ebay.service.finding;
+package com.ebay.service.shopping;
 
 import ebay.apis.eblbasecomponents.client.ShoppingInterface_XMLClient;
 
