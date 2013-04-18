@@ -1,6 +1,6 @@
 package com.leansoft.nano.sample;
 
-import com.ebay.service.finding.ShoppingServiceClient;
+import com.ebay.service.shopping.ShoppingServiceClient;
 import com.leansoft.nano.ws.XMLServiceCallback;
 
 import ebay.apis.eblbasecomponents.AckCodeType;
