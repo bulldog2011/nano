@@ -103,6 +103,7 @@ All samples are in the [sample](https://github.com/bulldog2011/nano/tree/master/
 * HelloAmazonProductAdvertising - Hello world like sample using [Amazon Product Advertising API](https://affiliate-program.amazon.com/gp/advertising/api/detail/main.html) SOAP call.
 * HelloeBayFinding - Hello world like sample using [eBay Finding API](https://www.x.com/developers/ebay/products/finding-api) SOAP call.
 * HelloeBayShopping - Hello world like sample using [eBay Shopping API](https://www.x.com/developers/ebay/products/shopping-api) XML call.
+* HelloeBayTrading - Hello world like sample using [eBay Trading API](https://www.x.com/developers/ebay/products/trading-api) SOAP call.
 * AmazonBookFinder - Sample Amazon Book search and purchase app using Amazon Product Advertising API.
 * eBayDemoApp - Sample eBay Search App using both eBay Finding API and eBay Shopping API.
 
