@@ -5,9 +5,9 @@ import com.ebay.shopping.api.client.ShoppingInterface_XMLClient;
 public class ShoppingServiceClient {
 	
 	// production
-	public static String eBayShoppingServiceURLString = "http://open.api.ebay.com/shopping?";
+	//public static String eBayShoppingServiceURLString = "http://open.api.ebay.com/shopping?";
 	// sandbox
-	//public static final String eBayShoppingServiceURLString = "http://open.api.sandbox.ebay.com/shopping";
+	public static final String eBayShoppingServiceURLString = "http://open.api.sandbox.ebay.com/shopping";
 	public static String eBayAppId = "YOUR APPID HERE";
 	public static String targetAPIVersion = "809";
 	/**

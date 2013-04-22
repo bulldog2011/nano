@@ -5,7 +5,11 @@ import com.leansoft.nano.ws.SOAPVersion;
 
 public class FindingServiceClient {
 	
-	public static String eBayFindingServiceURLString = "http://svcs.ebay.com/services/search/FindingService/v1";
+	
+	// production
+	//public static String eBayFindingServiceURLString = "http://svcs.ebay.com/services/search/FindingService/v1";
+	// sandbox
+	public static String eBayFindingServiceURLString = "https://svcs.sandbox.ebay.com/services/search/FindingService/v1";
 	public static String eBayAppId = "YOUR APPID HERE";
 	
 	private static volatile FindingServicePortType_SOAPClient client = null;
