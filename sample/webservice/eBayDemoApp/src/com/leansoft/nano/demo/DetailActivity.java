@@ -1,10 +1,13 @@
 package com.leansoft.nano.demo;
 
+import java.util.ArrayList;
+
 import com.ebay.shopping.ShoppingServiceClient;
 import com.ebay.util.eBayUtil;
 import com.github.droidfu.widgets.WebImageView;
 import com.leansoft.nano.custom.types.Duration;
 import com.leansoft.nano.log.ALog;
+import com.leansoft.nano.ws.SOAPServiceCallback;
 import com.leansoft.nano.ws.XMLServiceCallback;
 
 import com.ebay.shopping.api.AckCodeType;
@@ -14,6 +17,10 @@ import com.ebay.shopping.api.GetSingleItemResponseType;
 import com.ebay.shopping.api.ListingTypeCodeType;
 import com.ebay.shopping.api.SimpleItemType;
 import com.ebay.shopping.api.client.ShoppingInterface_XMLClient;
+import com.ebay.trading.TradingServiceClient;
+import com.ebay.trading.api.AddToWatchListRequestType;
+import com.ebay.trading.api.AddToWatchListResponseType;
+import com.ebay.trading.api.client.EBayAPIInterface_SOAPClient;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +33,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 public class DetailActivity extends Activity {
 	
@@ -216,17 +224,17 @@ public class DetailActivity extends Activity {
 				item.viewItemURLForNaturalSearch));
 		viewBtn.setVisibility(View.VISIBLE);
 		
-//		// watch item
-//		final Button watchBtn = (Button) findViewById(R.id.btn_watch);
-//		watchBtn.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				addToWatchList(item.getItemID());
-//			}
-//			
-//		});
-//		watchBtn.setVisibility(View.VISIBLE);
+		// watch item
+		final Button watchBtn = (Button) findViewById(R.id.btn_watch);
+		watchBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				addToWatchList(item.itemID);
+			}
+			
+		});
+		watchBtn.setVisibility(View.VISIBLE);
 	}
 
 	// view item on eBay moile web
@@ -245,6 +253,70 @@ public class DetailActivity extends Activity {
 		
 		}
 		
+	}
+	
+	// call eBay Trading addToWatchList API
+	private void addToWatchList(String itemId) {
+    	progressDialog = ProgressDialog.show(DetailActivity.this,
+        		"Please wait...", "Adding to watch...", true, true);
+    	
+    	AddToWatchListRequestType  request = new AddToWatchListRequestType ();
+    	request.itemID = new ArrayList<String>();
+    	request.itemID.add(itemId);
+    	
+    	EBayAPIInterface_SOAPClient client = TradingServiceClient.getSharedClient();
+    	client.setDebug(true);
+    	
+    	client.addToWatchList(request, new SOAPServiceCallback<AddToWatchListResponseType>() {
+
+			@Override
+			public void onFailure(Throwable error, String errorMessage) {
+			    if (progressDialog != null) {
+			    	progressDialog.dismiss();
+			        progressDialog = null;
+			    }
+				if (errorMessage != null) {
+					Toast.makeText(DetailActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(DetailActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+				}
+				
+			}
+
+			@Override
+			public void onSuccess(AddToWatchListResponseType responseObject) {
+			   if (progressDialog != null) {
+				   progressDialog.dismiss();
+			       progressDialog = null;
+			   }
+
+			   // need more error handling logic in real app
+			   if (responseObject.ack != com.ebay.trading.api.AckCodeType.FAILURE) {
+			    	Toast.makeText(DetailActivity.this,
+			                       "Item was added to watch list successfully",
+			        Toast.LENGTH_LONG).show();
+			   } else {
+			    	String errorMessage = responseObject.errors.get(0).longMessage;
+			        ALog.e(TAG, errorMessage);
+			        Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+			   }
+				
+			}
+
+			@Override
+			public void onSOAPFault(Object soapFault) {
+			   if (progressDialog != null) {
+				   progressDialog.dismiss();
+			       progressDialog = null;
+			   }
+				
+			   com.leansoft.nano.soap11.Fault fault = (com.leansoft.nano.soap11.Fault)soapFault;
+			   Toast.makeText(DetailActivity.this, fault.faultstring, Toast.LENGTH_LONG).show();	
+				
+			}
+    		
+    	});
+    	
 	}
 
 }

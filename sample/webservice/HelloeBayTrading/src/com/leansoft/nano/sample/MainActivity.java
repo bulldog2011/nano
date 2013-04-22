@@ -2,10 +2,10 @@ package com.leansoft.nano.sample;
 
 import java.text.SimpleDateFormat;
 
-import com.ebay.api.trading.GeteBayOfficialTimeRequestType;
-import com.ebay.api.trading.GeteBayOfficialTimeResponseType;
-import com.ebay.api.trading.client.EBayAPIInterface_SOAPClient;
-import com.ebay.service.trading.TradingServiceClient;
+import com.ebay.trading.api.GeteBayOfficialTimeRequestType;
+import com.ebay.trading.api.GeteBayOfficialTimeResponseType;
+import com.ebay.trading.api.client.EBayAPIInterface_SOAPClient;
+import com.ebay.trading.TradingServiceClient;
 import com.leansoft.nano.ws.SOAPServiceCallback;
 
 import android.os.Bundle;
