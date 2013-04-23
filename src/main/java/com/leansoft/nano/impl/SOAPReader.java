@@ -21,6 +21,9 @@ import com.leansoft.nano.impl.MappingSchema;
 
 public class SOAPReader extends XmlDOMReader {
 	
+	public static final String SOAP11_NS = "http://schemas.xmlsoap.org/soap/envelope/";
+	public static final String SOAP12_NS = "http://www.w3.org/2003/05/soap-envelope";
+	
 	private static final ThreadLocal<ReadContext> CONTEXT =
 		    new ThreadLocal<ReadContext>() {
 		        @Override 
@@ -43,7 +46,10 @@ public class SOAPReader extends XmlDOMReader {
 		
 		super.validate(soapClazz, source);
 		
-		if (soapClazz != com.leansoft.nano.soap11.Envelope.class && soapClazz != com.leansoft.nano.soap12.Envelope.class) {
+		boolean soap11 = soapClazz == com.leansoft.nano.soap11.Envelope.class;
+		boolean soap12 = soapClazz == com.leansoft.nano.soap12.Envelope.class;
+		
+		if (!soap11 && !soap12) {
 			throw new ReaderException("Can't read non-soap class : " + soapClazz.getName());
 		}
 		
@@ -64,6 +70,13 @@ public class SOAPReader extends XmlDOMReader {
 			// simple validation only for root element
 			if (!xmlName.equalsIgnoreCase(rootElement.getLocalName())) {
 				throw new ReaderException("Root element name mismatch, " + rootElement.getLocalName() + " != " + xmlName);
+			}
+			
+			String soapNs = rootElement.getNamespaceURI();
+			if (soap11 && soapNs.equals(SOAP12_NS)) {
+				throw new ReaderException("Expecting SOAP 1.1 response, but got SOAP 1.2 resposne");
+			} else if (soap12 && soapNs.equals(SOAP11_NS)) {
+				throw new ReaderException("Expecting SOAP 1.2 response, but got SOAP 1.1 resposne");
 			}
 			
 			ReadContext readContext = CONTEXT.get();
