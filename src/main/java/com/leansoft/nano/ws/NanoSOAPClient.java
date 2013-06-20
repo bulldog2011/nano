@@ -9,6 +9,8 @@ import com.leansoft.nano.log.ALog;
 import com.leansoft.nano.util.MapPrettyPrinter;
 import com.loopj.android.http.AsyncHttpClient;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +38,8 @@ public abstract class NanoSOAPClient {
 	private List<Object> customSOAPHeaders = null;
 	
 	private AsyncHttpClient asyncHttpClient = null;
+   
+   private Context context = null;
 	
     private final Map<String, String> urlParams = new HashMap<String, String>();
 	
@@ -43,6 +47,11 @@ public abstract class NanoSOAPClient {
 		asyncHttpClient = new AsyncHttpClient();
 		asyncHttpClient.addHeader("Accept", "text/xml");
 	}
+   
+   public void setContext(Context context)
+   {
+      this.context = context;
+   }
 	
 	protected void invoke(Object requestObject, SOAPServiceCallback<?> callback, Class<?> bindClazz) {
 		
@@ -82,7 +91,7 @@ public abstract class NanoSOAPClient {
 				ALog.debugLongMessage(TAG, soapMessage);
 			}
 			
-			asyncHttpClient.post(null, urlWithQueryString, null, soapEntiry, contentType, soapHttpResponseHandler);
+			asyncHttpClient.post(context, urlWithQueryString, null, soapEntiry, contentType, soapHttpResponseHandler);
 			
 		} catch (Exception e) {
 			ALog.e(TAG, "Fail to send request", e);
