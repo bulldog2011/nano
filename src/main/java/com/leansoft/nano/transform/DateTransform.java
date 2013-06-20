@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Transformer between a string and a java.util.Date object
@@ -14,7 +16,13 @@ import java.util.TimeZone;
  * @author bulldog
  *
  */
-class DateTransform implements Transformable<Date> {
+public class DateTransform implements Transformable<Date> {
+
+   public static interface PatternChecker
+   {
+      public String getPattern(String text);
+      public String transform(String text);
+   }
 	
 	public static String FULL = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 	   
@@ -25,9 +33,17 @@ class DateTransform implements Transformable<Date> {
 	public static String SHORT = "yyyy-MM-dd";
 	
 	public static String TIME_ZONE = "GMT";
+   
+   private static final List<PatternChecker> patterns = new LinkedList<PatternChecker>();
+   
+   public static void addPattern(PatternChecker checker)
+   {
+      patterns.add(checker);
+   }
 
 	public Date read(String value) throws Exception {
 		String pattern = getPattern(value);
+      value = transform(value);
 		Date date = ThreadLocalDateFormatter.parse(value, pattern);
 		return date;
 	}
@@ -36,20 +52,40 @@ class DateTransform implements Transformable<Date> {
 		String text = ThreadLocalDateFormatter.format(value, FULL);
 		return text;
 	}
+   
+   private static String transform(String text) {
+      String szRet = text;
+      for (PatternChecker checker : patterns) {
+         String val = checker.transform(text);
+         if (val != null)
+         {
+            szRet = val;
+            break;
+         }
+      }
+      return szRet;
+   }
 	
 	public static String getPattern(String text) {
-        int length = text.length();
+      for (PatternChecker checker : patterns) {
+         String szPattern = checker.getPattern(text);
+         if (szPattern != null)
+         {
+            return szPattern;
+         }
+      }
+      int length = text.length();
 
-        if(length > 23) {
-           return FULL;
-        }
-        if(length > 20) {
-           return LONG;
-        }
-        if(length > 11) {
-           return NORMAL;
-        }
-        return SHORT;
+      if(length > 23) {
+         return FULL;
+      }
+      if(length > 20) {
+         return LONG;
+      }
+      if(length > 11) {
+         return NORMAL;
+      }
+      return SHORT;
 	}
 	
 	public static class ThreadLocalDateFormatter {
