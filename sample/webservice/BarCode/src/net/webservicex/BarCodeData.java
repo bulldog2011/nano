@@ -5,75 +5,76 @@ package net.webservicex;
 import java.io.Serializable;
 import com.leansoft.nano.annotation.*;
 
+
 public class BarCodeData implements Serializable {
 
     private static final long serialVersionUID = -1L;
 
-	@Element(name = "Height")
+	@Element(name = "Height")    
 	@Order(value=0)
 	public int height;	
 	
-	@Element(name = "Width")
+	@Element(name = "Width")    
 	@Order(value=1)
 	public int width;	
 	
-	@Element(name = "Angle")
+	@Element(name = "Angle")    
 	@Order(value=2)
 	public int angle;	
 	
-	@Element(name = "Ratio")
+	@Element(name = "Ratio")    
 	@Order(value=3)
 	public int ratio;	
 	
-	@Element(name = "Module")
+	@Element(name = "Module")    
 	@Order(value=4)
 	public int module;	
 	
-	@Element(name = "Left")
+	@Element(name = "Left")    
 	@Order(value=5)
 	public int left;	
 	
-	@Element(name = "Top")
+	@Element(name = "Top")    
 	@Order(value=6)
 	public int top;	
 	
-	@Element(name = "CheckSum")
+	@Element(name = "CheckSum")    
 	@Order(value=7)
 	public boolean checkSum;	
 	
-	@Element(name = "FontName")
+	@Element(name = "FontName")    
 	@Order(value=8)
 	public String fontName;	
 	
-	@Element(name = "BarColor")
+	@Element(name = "BarColor")    
 	@Order(value=9)
 	public String barColor;	
 	
-	@Element(name = "BGColor")
+	@Element(name = "BGColor")    
 	@Order(value=10)
 	public String bgColor;	
 	
-	@Element(name = "FontSize")
+	@Element(name = "FontSize")    
 	@Order(value=11)
 	public float fontSize;	
 	
-	@Element
+	@Element    
 	@Order(value=12)
 	public BarcodeOption barcodeOption;	
 	
-	@Element
+	@Element    
 	@Order(value=13)
 	public BarcodeType barcodeType;	
 	
-	@Element
+	@Element    
 	@Order(value=14)
 	public CheckSumMethod checkSumMethod;	
 	
-	@Element
+	@Element    
 	@Order(value=15)
 	public ShowTextPosition showTextPosition;	
 	
-	@Element(name = "BarCodeImageFormat")
+	@Element(name = "BarCodeImageFormat")    
 	@Order(value=16)
 	public ImageFormats barCodeImageFormat;	
 	

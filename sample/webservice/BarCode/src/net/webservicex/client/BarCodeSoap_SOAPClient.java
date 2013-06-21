@@ -20,6 +20,7 @@ public class BarCodeSoap_SOAPClient extends NanoSOAPClient {
     */
     public void generateBarCode(GenerateBarCode requestObject, SOAPServiceCallback<GenerateBarCodeResponse> serviceCallback) {
        
+        super.getAsyncHttpClient().addHeader("SOAPAction", "http://www.webservicex.net/GenerateBarCode"); 
         
         super.invoke(requestObject, serviceCallback, GenerateBarCodeResponse.class);
     }

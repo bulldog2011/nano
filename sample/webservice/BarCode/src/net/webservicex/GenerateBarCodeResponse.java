@@ -5,12 +5,13 @@ package net.webservicex;
 import java.io.Serializable;
 import com.leansoft.nano.annotation.*;
 
-@RootElement(name = "GenerateBarCodeResponse", namespace = "http://www.webservicex.net/")
+
+@com.leansoft.nano.annotation.RootElement(name = "GenerateBarCodeResponse", namespace = "http://www.webservicex.net/")
 public class GenerateBarCodeResponse implements Serializable {
 
     private static final long serialVersionUID = -1L;
 
-	@Element(name = "GenerateBarCodeResult")
+	@Element(name = "GenerateBarCodeResult")    
 	@Order(value=0)
 	public byte[] generateBarCodeResult;	
 	
