@@ -49,10 +49,22 @@ public class ALog {
 	
 	private static void println(final String tag, String msg) {
 		if (msg == null) return;
-	    int l = msg.length();
+
+	    int length = msg.length();
 	    int c = Log.println(Log.DEBUG, tag, msg);
-	    if (c < l) {
-	       println(tag, msg.substring(c+1));
+       final int len = c;
+	    while (c < length)
+       {
+          String str = null;
+          if (c + len > length)
+          {
+             str = msg.substring(c, length);
+          }
+          else
+          {
+             str = msg.substring(c, c + len);
+          }
+	       c += Log.println(Log.DEBUG, tag, msg);
 	    }
 	}
     
