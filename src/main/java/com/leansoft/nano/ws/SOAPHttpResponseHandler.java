@@ -13,6 +13,7 @@ import org.apache.http.util.EntityUtils;
 
 import android.os.Message;
 
+import com.leansoft.nano.ws.SoapQueryHandler;
 import com.leansoft.nano.Format;
 import com.leansoft.nano.exception.UnmarshallException;
 import com.leansoft.nano.impl.SOAPReader;
@@ -34,13 +35,15 @@ public class SOAPHttpResponseHandler extends AsyncHttpResponseHandler {
 	private SOAPVersion soapVersion;
 	private String charset;
 	private boolean debug;
+   private SoapQueryHandler soapHandler;
 	
 	@SuppressWarnings("rawtypes")
-	public SOAPHttpResponseHandler(SOAPServiceCallback callback, Class<?> bindClazz, SOAPVersion soapVersion) {
+	public SOAPHttpResponseHandler(SoapQueryHandler soapHandler, SOAPServiceCallback callback, Class<?> bindClazz, SOAPVersion soapVersion) {
 		super();
 		this.callback = callback;
 		this.bindClazz = bindClazz;
 		this.soapVersion = soapVersion;
+      this.soapHandler = soapHandler;
 	}
 	
 	@Override
@@ -154,7 +157,10 @@ public class SOAPHttpResponseHandler extends AsyncHttpResponseHandler {
             ALog.e(TAG, "error to get response body", e);
             return;
         }
-        
+      if (soapHandler != null)
+      {
+         soapHandler.handleResponse(status.getStatusCode(), MapPrettyPrinter.printMap(this.getHeaderMap(response)), responseBody);
+      }
 		if (debug) {
 			ALog.d(TAG, "Response HTTP status : " + status.getStatusCode());
 			Map<String, String> headerMap = this.getHeaderMap(response);
