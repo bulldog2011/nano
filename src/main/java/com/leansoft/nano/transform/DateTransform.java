@@ -19,6 +19,8 @@ class DateTransform implements Transformable<Date> {
 	public static String FULL = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 	   
 	public static String LONG = "yyyy-MM-dd HH:mm:ss z";
+
+    public static String yyyyMMdd_T_HHmmss = "yyyy-MM-dd'T'HH:mm:ss";
 	
 	public static String NORMAL = "yyyy-MM-dd z";
 	
@@ -45,6 +47,9 @@ class DateTransform implements Transformable<Date> {
         }
         if(length > 20) {
            return LONG;
+        }
+        if (length > 18) {
+            return yyyyMMdd_T_HHmmss;
         }
         if(length > 11) {
            return NORMAL;
