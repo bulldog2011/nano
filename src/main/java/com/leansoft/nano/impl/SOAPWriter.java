@@ -1,14 +1,17 @@
 package com.leansoft.nano.impl;
 
-import java.io.Writer;
-
-import org.xmlpull.v1.XmlSerializer;
-
 import com.leansoft.nano.Format;
+import com.leansoft.nano.annotation.RootElement;
 import com.leansoft.nano.annotation.schema.RootElementSchema;
 import com.leansoft.nano.exception.MappingException;
 import com.leansoft.nano.exception.WriterException;
 import com.leansoft.nano.util.StringUtil;
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.Writer;
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.HashSet;
 
 public class SOAPWriter extends XmlPullWriter {
 	
@@ -60,13 +63,33 @@ public class SOAPWriter extends XmlPullWriter {
 			
 			// set default namespace without prefix
 			String innerNamespace = this.findInnerClassNamespace(source);
-			if (!StringUtil.isEmpty(innerNamespace)) {
-				if (serializer.getPrefix(innerNamespace, false) == null) {
-					serializer.setPrefix("", innerNamespace);
-				}
-			}
-			
-			serializer.startTag(namespace, xmlName);
+            HashSet<RootElement> rootElements = scanNamesSpaces(source);
+            boolean hasPrefix = false;
+            for (RootElement rootElement : rootElements) {
+                if(rootElement.namespace().equals(innerNamespace)){
+                    hasPrefix=true;
+                    break;
+                }
+            }
+            if(!hasPrefix){
+                if (!StringUtil.isEmpty(innerNamespace)) {
+                    if (serializer.getPrefix(innerNamespace, false) == null) {
+                        serializer.setPrefix("", innerNamespace);
+                    }
+                }
+            }
+
+            int rootElementIndex = 1;
+            for (RootElement rootElement : rootElements) {
+                if (!rootElement.namespace().equals("http://schemas.xmlsoap.org/soap/envelope/"))
+                    if (rootElement.prefix().length() > 0) {
+                        serializer.setPrefix(rootElement.prefix(), rootElement.namespace());
+                    } else {
+                        serializer.setPrefix("cns" + rootElementIndex++, rootElement.namespace());
+                    }
+            }
+
+            serializer.startTag(namespace, xmlName);
 			this.writeObject(serializer, source, namespace);
 			serializer.endTag(namespace, xmlName);
 			
@@ -106,4 +129,29 @@ public class SOAPWriter extends XmlPullWriter {
 		return null;
 	}
 
+    private HashSet<RootElement> scanNamesSpaces(Object obj) {
+        HashSet<RootElement> nsList = new HashSet<RootElement>();
+        Class objClass = obj.getClass();
+        if (objClass.isAnnotationPresent(RootElement.class)) {
+            RootElement rootElement = (RootElement) objClass.getAnnotation(RootElement.class);
+            if (!nsList.contains(rootElement)) nsList.add(rootElement);
+        }
+        if (obj instanceof Collection) {
+            Collection collection = (Collection) obj;
+            for (Object colObj : collection) {
+                nsList.addAll(scanNamesSpaces(colObj));
+            }
+        } else {
+            for (Field field : objClass.getFields()) {
+                try {
+                    Object fldObj = field.get(obj);
+                    if (fldObj != null)
+                        nsList.addAll(scanNamesSpaces(fldObj));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return nsList;
+    }
 }

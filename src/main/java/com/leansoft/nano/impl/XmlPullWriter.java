@@ -1,14 +1,12 @@
 package com.leansoft.nano.impl;
 
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
+import com.leansoft.nano.Format;
+import com.leansoft.nano.IWriter;
+import com.leansoft.nano.annotation.schema.*;
+import com.leansoft.nano.exception.MappingException;
+import com.leansoft.nano.exception.WriterException;
+import com.leansoft.nano.transform.Transformer;
+import com.leansoft.nano.util.StringUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -17,17 +15,10 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
-import com.leansoft.nano.Format;
-import com.leansoft.nano.IWriter;
-import com.leansoft.nano.annotation.schema.AnyElementSchema;
-import com.leansoft.nano.annotation.schema.AttributeSchema;
-import com.leansoft.nano.annotation.schema.ElementSchema;
-import com.leansoft.nano.annotation.schema.RootElementSchema;
-import com.leansoft.nano.annotation.schema.ValueSchema;
-import com.leansoft.nano.exception.MappingException;
-import com.leansoft.nano.exception.WriterException;
-import com.leansoft.nano.transform.Transformer;
-import com.leansoft.nano.util.StringUtil;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 
 /**
  * IWriter implementation using kxml pull parser.
@@ -297,8 +288,17 @@ public class XmlPullWriter implements IWriter {
 			
 			return;
 		}
-		
-		// object
+
+        // object
+        MappingSchema ms = MappingSchema.fromObject(source);
+        RootElementSchema res = ms.getRootElementSchema();
+        String namespaceSrc = res.getNamespace();
+        if(namespaceSrc!=null && !namespaceSrc.equals(namespace)) {
+            namespace = namespaceSrc;
+        }
+
+
+        // object
 		serializer.startTag(namespace, xmlName);
 		this.writeObject(serializer, source, namespace);
 		serializer.endTag(namespace, xmlName);
