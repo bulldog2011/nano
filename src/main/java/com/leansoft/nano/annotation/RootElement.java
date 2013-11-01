@@ -29,13 +29,4 @@ public @interface RootElement {
      * @return namespace
      */
     public String namespace() default "";
-
-    /**
-     * The namespace prefix of the root XML element
-     *
-     * @return namespace prefix
-     */
-    public String prefix() default "";
-
-
 }
