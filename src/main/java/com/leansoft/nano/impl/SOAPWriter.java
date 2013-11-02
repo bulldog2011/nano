@@ -137,10 +137,11 @@ public class SOAPWriter extends XmlPullWriter {
             for (Object colObj : collection) {
                 nsList.addAll(scanNamesSpaces(colObj));
             }
-        } else {
+        } else if (!(obj instanceof Boolean) && !(obj instanceof Number) && !(obj instanceof String)) {
             for (Field field : objClass.getFields()) {
                 try {
                     Object fldObj = field.get(obj);
+                    System.out.println("objClass[" + objClass.getName() + "].field[" + field.getName() + "] " + fldObj);
                     if (fldObj != null)
                         nsList.addAll(scanNamesSpaces(fldObj));
                 } catch (IllegalAccessException e) {
