@@ -141,7 +141,7 @@ public class SOAPWriter extends XmlPullWriter {
             for (Field field : objClass.getFields()) {
                 try {
                     Object fldObj = field.get(obj);
-                    System.out.println("objClass[" + objClass.getName() + "].field[" + field.getName() + "] " + fldObj);
+                    //System.out.println("objClass[" + objClass.getName() + "].field[" + field.getName() + "] " + fldObj);
                     if (fldObj != null)
                         nsList.addAll(scanNamesSpaces(fldObj));
                 } catch (IllegalAccessException e) {
