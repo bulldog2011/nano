@@ -29,5 +29,4 @@ public @interface RootElement {
      * @return namespace
      */
     public String namespace() default "";
-	
 }
